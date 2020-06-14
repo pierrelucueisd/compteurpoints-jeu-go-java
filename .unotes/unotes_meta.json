@@ -1,0 +1,31 @@
+{
+  "name": "",
+  "isOrdered": true,
+  "folders": {
+    "conception": {
+      "name": "conception",
+      "isOrdered": true,
+      "folders": {
+        "plm": {
+          "name": "plm",
+          "isOrdered": true,
+          "folders": {},
+          "files": {
+            "diagramme": 0,
+            "conception": 1
+          }
+        }
+      },
+      "files": {}
+    },
+    "src": {
+      "name": "src",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    }
+  },
+  "files": {
+    "readme": 0
+  }
+}
