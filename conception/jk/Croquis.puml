@@ -1,30 +1,33 @@
 @startuml
 
 class Player{
-- name: String
+- name: PlayerColor
 - prisoners: ArrayList<Stone>
 - stones: ArrayList<Chain>
-- nbPoint: int
-+ playStone(t:Turn)
-+ pass(t: Turn)
++ playStone(s: Stone)
++ pass()
 }
 class Board{
 - dimension: int
 + new(d: int, i: Intersection[])
++ howManyNeighbor()
++ isNeighbor(Intersection)
 }
 
 class BoardController{
 - logs: ArrayList<Turn>
 + createBoard()
 + deleteBoard()
++ validateAction(a: Action)
++ updateBoard()
 + calculateScore()
-+ logTurn(t: Turn)
++ logAction(a:Action)
 + getLogs()
 
 }
 
-class Turn{
-- action: Enum
+class Action{
+- actionType: ActionType
 }
 
 class Chain{
@@ -34,13 +37,10 @@ class Chain{
 }
 
 
-
 class Stone{
-- color: Enum
-- deadOrAlive: Enum
 - liberties: int
 - position: Intersection
-- voisins: Intersection[]
++ isDead()
 }
 class Intersection{
 - occupation: bool
@@ -48,21 +48,31 @@ class Intersection{
 - column: Column
 }
 
-enum Line{}
+enum ActionType{
+PLAY
+PASS
+}
+
+enum PlayerColor{
+BLACK
+WHITE
+}
 
 enum Column{}
+
+enum Line{}
+
 
 Board --* Intersection
 Stone -- Intersection
 Player -- Board
 Chain --* Stone
 Player --* Chain
-BoardController -- Turn
+BoardController -- Action
 BoardController --"2" Player
-Player -- Turn
+Player -- Action
 Intersection --"9" Line
 Intersection --"9" Column
-
 
 @enduml
 
