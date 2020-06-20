@@ -1,5 +1,97 @@
 @startuml
-title Jeu Go
 
+title Diagramme de classe du jeu de go
+
+class GameController {
+    - players: OrderedList<Player>
+    + startGame()
+    - playTurn()
+    - endGame()
+}
+
+class GameConsole {
+    + promptAction(Player, List<Action>): Action
+    + printBoard(string)
+    + printActionError(ResultType)
+    + printWinner(Player)
+}
+
+class Action {
+    - type: ActionType
+    + execute(Player, Board, Position): Result
+}
+
+enum ActionType {
+    PASS
+    PLAY
+}
+
+class Result {
+   type: ResultType
+   success: boolean
+}
+
+enum ResultType {
+    IntersectionTaken
+    Eternity
+    StonePut
+    StonePut
+}
+
+class Player{
+    - color: PlayerColor
+    + hasPassed: boolean
+    + pass()
+    + resetPassState()
+}
+
+enum PlayerColor{
+    BLACK
+    WHITE
+}
+
+class Board {
+    - size: int
+    + resetAllKo()
+    + putStone(Position, PlayerColor): Result
+    - getIntersection(Position)
+    - intersectionHasLiberty(Intersection): boolean
+    + removeDeadStone(): void
+    + calculateScore(PlayerColor): int
+}
+
+class Intersection {
+    - koActived: boolean
+    - stone: PlayerColor
+    - position: Position
+    + isFree()
+    + resetKo()
+}
+
+class Position {
+    Position() // x = y = -1
+    Position(x,y)
+    - int x
+    - int y
+}
+
+Action --> ActionType
+Action -.> Player
+Action -.> Board
+Action -.> Result
+
+Result --> ResultType
+
+Intersection --> Position
+
+Board *--> Intersection
+Board -.> Result
+
+GameController --> Action
+GameController --> Board
+GameController --> Player
+GameController -> GameConsole
+
+Player --> PlayerColor
 
 @enduml
