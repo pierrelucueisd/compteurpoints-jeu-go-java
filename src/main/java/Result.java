@@ -6,4 +6,12 @@ public class Result {
         this.type = type;
         this.success = success;
     }
+
+    public ResultType getType() {
+        return type;
+    }
+
+    public boolean failed() {
+        return !success;
+    }
 }

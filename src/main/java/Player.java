@@ -7,6 +7,14 @@ public class Player {
         this.hasPassed = false;
     }
 
+    public PlayerColor getColor() {
+        return color;
+    }
+
+    public boolean hasPassed() {
+        return hasPassed;
+    }
+
     public void pass() {
         this.hasPassed = true;
     }

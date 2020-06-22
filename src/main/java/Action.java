@@ -8,4 +8,8 @@ public class Action {
     public Result execute(Board b, Player p, Position pos) {
         return null;
     }
+
+    public boolean hasType(ActionType type) {
+        return this.type == type;
+    }
 }

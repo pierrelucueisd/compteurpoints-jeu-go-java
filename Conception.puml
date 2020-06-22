@@ -52,7 +52,6 @@ enum PlayerColor{
 
 class Board {
     - size: int
-    + resetAllKo()
     + putStone(Position, PlayerColor): Result
     - getIntersection(Position)
     - intersectionHasLiberty(Intersection): boolean
@@ -61,11 +60,9 @@ class Board {
 }
 
 class Intersection {
-    - koActived: boolean
     - stone: PlayerColor
     - position: Position
     + isFree()
-    + resetKo()
 }
 
 class Position {

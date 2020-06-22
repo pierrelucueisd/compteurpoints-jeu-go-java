@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -36,13 +37,7 @@ public class Board {
         return null;
     }
 
-    public void resetAllKo() {
-
-    }
-
-    public void removeDeadStone() {
-
-    }
+    public void removeDeadStone() { }
 
     public Integer calculateScore(PlayerColor c) {
         return 0;
@@ -51,5 +46,19 @@ public class Board {
     @Override
     public String toString() {
         return "Board";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Board board = (Board) o;
+        return Objects.equals(size, board.size) &&
+                Objects.equals(intersections, board.intersections);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(size, intersections);
     }
 }
