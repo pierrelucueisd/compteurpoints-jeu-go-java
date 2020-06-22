@@ -1,51 +1,69 @@
 @startuml
 
 class Player{
-- name: PlayerColor
-- prisoners: ArrayList<Stone>
+- color: PlayerColor
 - stones: ArrayList<Chain>
-+ playStone(s: Stone)
++ play(s: Stone, Intersection i)
 + pass()
 }
+
 class Board{
-- dimension: int
+- size: int
 + new(d: int, i: Intersection[])
-+ howManyNeighbor()
-+ isNeighbor(Intersection)
++ isNeighbor(Intersections)
++ calculateLiberties(Chain c)
++ atariRule()
++ koRule()
++ suicideRule()
 }
 
-class BoardController{
-- logs: ArrayList<Turn>
-+ createBoard()
-+ deleteBoard()
-+ validateAction(a: Action)
-+ updateBoard()
-+ calculateScore()
+class GameConsole{
++ printAction()
++ printBoard()
++ printActionError()
+}
+
+class GameLogger{
+- logs: ArrayList<Action>
 + logAction(a:Action)
 + getLogs()
++ getLastAction()
+}
 
+class GameController{
+- players: OrderedList<Player>
++ startGame()
++ putStone()
++ endGame()
++ validateAction(a: Action)
++ removePrisoners()
 }
 
 class Action{
-- actionType: ActionType
+- player: Player
+- action: ActionType
++ executeAction()
 }
 
 class Chain{
 - stones: ArrayList<Stone>
-+ getLiberties()
-+ atariState()
+- owner: Player
++ addStone()
++ removeLiberty()
 }
-
 
 class Stone{
 - liberties: int
 - position: Intersection
 + isDead()
+
 }
+
 class Intersection{
-- occupation: bool
-- line: Line
-- column: Column
+- vacancy: bool
+- line: int
+- column: int
++ isVacant()
 }
 
 enum ActionType{
@@ -58,21 +76,16 @@ BLACK
 WHITE
 }
 
-enum Column{}
-
-enum Line{}
-
 
 Board --* Intersection
 Stone -- Intersection
 Player -- Board
 Chain --* Stone
 Player --* Chain
-BoardController -- Action
-BoardController --"2" Player
+GameController -- Action
+GameController --"2" Player
 Player -- Action
-Intersection --"9" Line
-Intersection --"9" Column
+
 
 @enduml
 
