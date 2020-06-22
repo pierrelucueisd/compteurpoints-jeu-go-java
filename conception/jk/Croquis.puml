@@ -1,25 +1,29 @@
 @startuml
 
 class Player{
-- name: PlayerColor
-- prisoners: ArrayList<Stone>
+- color: PlayerColor
 - stones: ArrayList<Chain>
 + playStone(s: Stone)
 + pass()
 }
 class Board{
-- dimension: int
+- size: int
 + new(d: int, i: Intersection[])
-+ howManyNeighbor()
-+ isNeighbor(Intersection)
++ isNeighbor(Intersections)
++ calculateLiberties(Chain c)
++ atariRule()
++ koRule()
++ suicideRule()
 }
 
 class BoardController{
 - logs: ArrayList<Turn>
-+ createBoard()
-+ deleteBoard()
-+ validateAction(a: Action)
++ startGame()
 + updateBoard()
++ endGame()
++ validateAction(a: Action)
++ getLastAction()
++ removePrisoners()
 + calculateScore()
 + logAction(a:Action)
 + getLogs()
@@ -32,20 +36,20 @@ class Action{
 
 class Chain{
 - stones: ArrayList<Stone>
-+ getLiberties()
-+ atariState()
+- owner: Player
 }
-
 
 class Stone{
 - liberties: int
 - position: Intersection
 + isDead()
 }
+
 class Intersection{
-- occupation: bool
-- line: Line
-- column: Column
+- vacancy: bool
+- line: int
+- column: int
++ isVacant()
 }
 
 enum ActionType{
@@ -58,9 +62,7 @@ BLACK
 WHITE
 }
 
-enum Column{}
 
-enum Line{}
 
 
 Board --* Intersection
