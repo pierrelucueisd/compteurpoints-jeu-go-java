@@ -3,9 +3,10 @@
 class Player{
 - color: PlayerColor
 - stones: ArrayList<Chain>
-+ playStone(s: Stone)
++ play(s: Stone, Intersection i)
 + pass()
 }
+
 class Board{
 - size: int
 + new(d: int, i: Intersection[])
@@ -16,33 +17,46 @@ class Board{
 + suicideRule()
 }
 
-class BoardController{
-- logs: ArrayList<Turn>
-+ startGame()
-+ updateBoard()
-+ endGame()
-+ validateAction(a: Action)
-+ getLastAction()
-+ removePrisoners()
-+ calculateScore()
+class GameConsole{
++ printAction()
++ printBoard()
++ printActionError()
+}
+
+class GameLogger{
+- logs: ArrayList<Action>
 + logAction(a:Action)
 + getLogs()
++ getLastAction()
+}
 
+class GameController{
+- players: OrderedList<Player>
++ startGame()
++ putStone()
++ endGame()
++ validateAction(a: Action)
++ removePrisoners()
 }
 
 class Action{
-- actionType: ActionType
+- player: Player
+- action: ActionType
++ executeAction()
 }
 
 class Chain{
 - stones: ArrayList<Stone>
 - owner: Player
++ addStone()
++ removeLiberty()
 }
 
 class Stone{
 - liberties: int
 - position: Intersection
 + isDead()
+
 }
 
 class Intersection{
@@ -63,18 +77,15 @@ WHITE
 }
 
 
-
-
 Board --* Intersection
 Stone -- Intersection
 Player -- Board
 Chain --* Stone
 Player --* Chain
-BoardController -- Action
-BoardController --"2" Player
+GameController -- Action
+GameController --"2" Player
 Player -- Action
-Intersection --"9" Line
-Intersection --"9" Column
+
 
 @enduml
 
