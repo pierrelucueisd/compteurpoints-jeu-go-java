@@ -1,0 +1,91 @@
+@startuml
+
+class Player{
+- color: PlayerColor
+- stones: ArrayList<Chain>
++ play(s: Stone, Intersection i)
++ pass()
+}
+
+class Board{
+- size: int
++ new(d: int, i: Intersection[])
++ isNeighbor(Intersections)
++ calculateLiberties(Chain c)
++ atariRule()
++ koRule()
++ suicideRule()
+}
+
+class GameConsole{
++ printAction()
++ printBoard()
++ printActionError()
+}
+
+class GameLogger{
+- logs: ArrayList<Action>
++ logAction(a:Action)
++ getLogs()
++ getLastAction()
+}
+
+class GameController{
+- players: OrderedList<Player>
++ startGame()
++ putStone()
++ endGame()
++ validateAction(a: Action)
++ removePrisoners()
+}
+
+class Action{
+- player: Player
+- action: ActionType
++ executeAction()
+}
+
+class Chain{
+- stones: ArrayList<Stone>
+- owner: Player
++ addStone()
++ removeLiberty()
+}
+
+class Stone{
+- liberties: int
+- position: Intersection
++ isDead()
+
+}
+
+class Intersection{
+- vacancy: bool
+- line: int
+- column: int
++ isVacant()
+}
+
+enum ActionType{
+PLAY
+PASS
+}
+
+enum PlayerColor{
+BLACK
+WHITE
+}
+
+
+Board --* Intersection
+Stone -- Intersection
+Player -- Board
+Chain --* Stone
+Player --* Chain
+GameController -- Action
+GameController --"2" Player
+Player -- Action
+
+
+@enduml
+

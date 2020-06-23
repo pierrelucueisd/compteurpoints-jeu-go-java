@@ -1,5 +1,125 @@
 @startuml
-title Jeu Go
 
+title Diagramme de classe du jeu de go
+
+class GameController {
+    + startGame()
+    - playTurn()
+    - endGame()
+    - allPlayerHavePassed()
+}
+
+class GameConsole {
+    + promptAction(Player): Action
+    + printBoard(string)
+    + printActionError(ErrorType)
+    + printWinner(Player)
+}
+
+interface Deserializer {
+    + deserialize(string)
+    - validate(Object)
+}
+
+class PositionDeserializer {
+}
+
+class Action {
+    - pos: Position
+    - type: ActionType
+    - error: ErrorType
+    + execute(Player, Board)
+    + isAllowed(Player, Board)
+}
+
+enum ActionType {
+    PASS
+    PLAY
+}
+
+enum ErrorType {
+    Ko
+    None
+    Suicide
+    InvalidPosition
+    IntersectionTaken
+}
+
+class Player{
+    - color: Color
+    + hasPassed: boolean
+    + pass()
+    + resetPassState()
+}
+
+enum Color{
+    BLACK
+    WHITE
+}
+
+class Board {
+    - size: int
+    - intersections: List<Intersection>
+    - logger: BoardLogger
+    + isPositionValid(Position): boolean
+    + isIntersectionVacant(Position): boolean
+    + isSuicide(Positon, Color)
+    + isKo(Position, Color)
+    + putStone(Position, Color)
+    + removeDeadStone(): void
+    - getIntersection(Position): Intersection
+    - stoneGroupHasLiberty(List<Stone>) : boolean
+    - getStoneGroup(Stone, List<Optional<Color>>)
+    - removePrisoners(): void
+}
+
+class BoardLogger {
+    - List<Board> boardHistory;
+    + addBoard(Board);
+    + getLastBoard(): Board;
+}
+
+class Chain? {
+- head: Position
+- stones: ArrayList<Position>
+- color: Color
++ addStone()
+}
+
+class Intersection {
+    - vacancy: boolean
+    - position: Position
+    - stone: Color
+    + isVacant()
+    + hasPosition(Position)
+}
+
+class Position {
+    Position() // x = y = -1
+    Position(x,y)
+    - int x
+    - int y
+}
+
+Action --> ActionType
+Action -.> Player
+Action -.> Board
+Action --> ErrorType
+
+Intersection --> Position
+
+Board *--> Intersection
+Board -.> BoardLogger
+
+GameController --> Action
+GameController --> Board
+GameController --> Player
+GameController --> GameConsole
+
+GameConsole --> Deserializer
+
+PositionDeserializer -> Deserializer
+
+Player --> Color
 
 @enduml
