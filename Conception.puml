@@ -3,22 +3,33 @@
 title Diagramme de classe du jeu de go
 
 class GameController {
-    - players: OrderedList<Player>
     + startGame()
     - playTurn()
     - endGame()
+    - allPlayerHavePassed()
 }
 
 class GameConsole {
-    + promptAction(Player, List<Action>): Action
+    + promptAction(Player): Action
     + printBoard(string)
-    + printActionError(ResultType)
+    + printActionError(ErrorType)
     + printWinner(Player)
 }
 
+interface Deserializer {
+    + deserialize(string)
+    - validate(Object)
+}
+
+class PositionDeserializer {
+}
+
 class Action {
+    - pos: Position
     - type: ActionType
-    + execute(Player, Board, Position): Result
+    - error: ErrorType
+    + execute(Player, Board)
+    + isAllowed(Player, Board)
 }
 
 enum ActionType {
@@ -26,43 +37,61 @@ enum ActionType {
     PLAY
 }
 
-class Result {
-   type: ResultType
-   success: boolean
-}
-
-enum ResultType {
+enum ErrorType {
+    Ko
+    None
+    Suicide
+    InvalidPosition
     IntersectionTaken
-    Eternity
-    StonePut
-    StonePut
 }
 
 class Player{
-    - color: PlayerColor
+    - color: Color
     + hasPassed: boolean
     + pass()
     + resetPassState()
 }
 
-enum PlayerColor{
+enum Color{
     BLACK
     WHITE
 }
 
 class Board {
     - size: int
-    + putStone(Position, PlayerColor): Result
-    - getIntersection(Position)
-    - intersectionHasLiberty(Intersection): boolean
+    - intersections: List<Intersection>
+    - logger: BoardLogger
+    + isPositionValid(Position): boolean
+    + isIntersectionVacant(Position): boolean
+    + isSuicide(Positon, Color)
+    + isKo(Position, Color)
+    + putStone(Position, Color)
     + removeDeadStone(): void
-    + calculateScore(PlayerColor): int
+    - getIntersection(Position): Intersection
+    - stoneGroupHasLiberty(List<Stone>) : boolean
+    - getStoneGroup(Stone, List<Optional<Color>>)
+    - removePrisoners(): void
+}
+
+class BoardLogger {
+    - List<Board> boardHistory;
+    + addBoard(Board);
+    + getLastBoard(): Board;
+}
+
+class Chain? {
+- head: Position
+- stones: ArrayList<Position>
+- color: Color
++ addStone()
 }
 
 class Intersection {
-    - stone: PlayerColor
+    - vacancy: boolean
     - position: Position
-    + isFree()
+    - stone: Color
+    + isVacant()
+    + hasPosition(Position)
 }
 
 class Position {
@@ -75,20 +104,22 @@ class Position {
 Action --> ActionType
 Action -.> Player
 Action -.> Board
-Action -.> Result
-
-Result --> ResultType
+Action --> ErrorType
 
 Intersection --> Position
 
 Board *--> Intersection
-Board -.> Result
+Board -.> BoardLogger
 
 GameController --> Action
 GameController --> Board
 GameController --> Player
-GameController -> GameConsole
+GameController --> GameConsole
 
-Player --> PlayerColor
+GameConsole --> Deserializer
+
+PositionDeserializer -> Deserializer
+
+Player --> Color
 
 @enduml

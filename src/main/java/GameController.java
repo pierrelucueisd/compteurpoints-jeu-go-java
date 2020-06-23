@@ -1,9 +1,5 @@
-import org.javatuples.Pair;
-
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class GameController {
@@ -13,7 +9,7 @@ public class GameController {
 
     public GameController(int size) {
         this.board = new Board(size);
-        this.players = Arrays.stream(PlayerColor.values())
+        this.players = Arrays.stream(Color.values())
                 .map(Player::new)
                 .collect(Collectors.toList());
     }
@@ -21,36 +17,27 @@ public class GameController {
     public void startGame () {
         while (!allPlayersHavePassed())
             playTurn();
-        board.removeDeadStone();
-        GameConsole.printWinner(getWinner());
         endGame();
-    }
-
-    private Player getWinner() {
-        return Objects.requireNonNull(players.stream()
-                .map(p -> new Pair<>(p, board.calculateScore(p.getColor())))
-                .max(Comparator.comparing(Pair::getValue1))
-                .orElse(null))
-                .getValue0();
     }
 
     private void playTurn() {
         for (Player p: players) {
-            Result res;
+            p.resetPassState();
+            boolean isAllowed;
             do {
-                Action chosenAction = GameConsole.promptAction(p, ActionType.values());
-                Position pos = chosenAction.hasType(ActionType.Play) ?
-                        GameConsole.promptPosition() : new Position();
-                res = chosenAction.execute(board, p, pos);
-                if (res.failed())
-                    GameConsole.printResultError(res.getType());
-            } while (res.failed());
-            GameConsole.printBoard(board.toString());
+                Action chosenAction = GameConsole.promptAction(p);
+                isAllowed = chosenAction.isAllowed(board, p);
+                if (isAllowed)
+                    chosenAction.execute(board, p);
+                else
+                    GameConsole.printResultError(chosenAction.getError());
+            } while (!isAllowed);
         }
     }
 
     private void endGame() {
-
+        board.removeDeadStone();
+        GameConsole.printBoard(board.toString());
     }
 
     private boolean allPlayersHavePassed() {

@@ -2,28 +2,35 @@ import java.util.Objects;
 
 public class Intersection {
     private final Position position;
-    private PlayerColor stone;
+    private Color stone;
+    private boolean vacancy;
 
     public Intersection(Position position) {
         this.position = position;
         this.stone = null;
+        this.vacancy = true;
     }
 
-    public PlayerColor getStone() {
+    public Color getStone() {
         return stone;
     }
 
-
-    public void setStone(PlayerColor stone) {
+    public void setStone(Color stone) {
         this.stone = stone;
+        vacancy = false;
+    }
+
+    public void removeStone() {
+        stone = null;
+        vacancy = true;
     }
 
     public boolean hasPosition(Position p) {
         return position.equals(p);
     }
 
-    public boolean isFree() {
-        return stone == null;
+    public boolean isVacant() {
+        return vacancy;
     }
 
     @Override

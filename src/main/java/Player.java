@@ -1,13 +1,13 @@
 public class Player {
-    private final PlayerColor color;
+    private final Color color;
     private boolean hasPassed;
 
-    public Player(PlayerColor color) {
+    public Player(Color color) {
         this.color = color;
         this.hasPassed = false;
     }
 
-    public PlayerColor getColor() {
+    public Color getColor() {
         return color;
     }
 

@@ -1,9 +1,7 @@
-import java.util.List;
-
 public class GameConsole {
 
-    public static Action promptAction(Player p, ActionType[] actions) {
-        return new Action(ActionType.Play);
+    public static Action promptAction(Player p) {
+        return new Action(ActionType.Play, new Position());
     }
 
     public static Position promptPosition() {
@@ -14,7 +12,7 @@ public class GameConsole {
 
     }
 
-    public static void printResultError(ResultType type) {
+    public static void printResultError(ErrorType type) {
 
     }
 

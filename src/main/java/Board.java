@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -7,6 +8,7 @@ import java.util.stream.IntStream;
 public class Board {
     private final Integer size;
     private final List<Intersection> intersections;
+    private final BoardLogger logger = new BoardLogger();
 
     public Board(Integer size) {
         this.size = size;
@@ -22,26 +24,34 @@ public class Board {
                 .collect(Collectors.toList());
     }
 
-    private Intersection getIntersection(Position p) {
-        return intersections.stream()
-                .filter(i -> i.hasPosition(p))
-                .findAny()
-                .orElse(null);
+    public boolean isPositionValid(Position pos) {
+        return pos.getX() < size && pos.getY() < size;
     }
 
-    private boolean intersectionHasLiberty(Intersection i) {
+    public boolean isIntersectionVacant(Position pos) {
+        return getIntersection(pos).isVacant();
+    }
+
+    public void putStone(Color color, Position pos) {
+        getIntersection(pos).setStone(color);
+        // Get other colors thant the one played
+        Color[] otherColors = Arrays.stream(Color.values())
+                .filter(c -> c != color)
+                .toArray(Color[]::new);
+        for (Color c: otherColors)
+                removePrisoners(pos, c);
+    }
+
+    public boolean isSuicide(Position pos, Color color) {
+        List<Intersection> group = getStoneGroup(pos, color, Color.values());
+        return groupHasNoLiberty(group);
+    }
+
+    public boolean isKo(Position pos, Color c) {
         return false;
     }
 
-    public Result putStone(PlayerColor c, Position p) {
-        return null;
-    }
-
     public void removeDeadStone() { }
-
-    public Integer calculateScore(PlayerColor c) {
-        return 0;
-    }
 
     @Override
     public String toString() {
@@ -60,5 +70,26 @@ public class Board {
     @Override
     public int hashCode() {
         return Objects.hash(size, intersections);
+    }
+
+    private boolean groupHasNoLiberty(List<Intersection> group) {
+        return false;
+    }
+
+    private List<Intersection> getStoneGroup(Position pos, Color color, Color[] values) {
+        return null;
+    }
+
+    private void removePrisoners(Position pos, Color color) {
+        List<Intersection> group = getStoneGroup(pos, color, Color.values());
+        //if (groupHasNoLiberty(group))
+            // do something
+    }
+
+    private Intersection getIntersection(Position pos) {
+        return Objects.requireNonNull(intersections.stream()
+                .filter(i -> i.hasPosition(pos))
+                .findFirst()
+                .orElse(null));
     }
 }
