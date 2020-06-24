@@ -1,27 +1,19 @@
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Board {
     private final Integer size;
-    private final List<Intersection> intersections;
+    private final Intersection[][] intersections;
     private final BoardLogger logger = new BoardLogger();
 
     public Board(Integer size) {
         this.size = size;
-        intersections = initIntersections();
-    }
+        intersections = new Intersection[size][size];
+        for(int y = 0; y < size; y++)
+            for (int x = 0; x < size; x++)
+                intersections[y][x] = new Intersection(new Position(x,y));
 
-    private List<Intersection> initIntersections() {
-        return IntStream.range(0, size)
-                .mapToObj(i -> IntStream.range(0, size)
-                    .mapToObj(j -> new Position(i,j))
-                    .map(Intersection::new))
-                .flatMap(Function.identity())
-                .collect(Collectors.toList());
     }
 
     public boolean isPositionValid(Position pos) {
@@ -55,7 +47,15 @@ public class Board {
 
     @Override
     public String toString() {
-        return "Board";
+        StringBuilder board = new StringBuilder();
+        for(int y = 0; y < size; y++) {
+            for (int x = 0; x < size; x++) {
+                Intersection i = getIntersection(new Position(x, y));
+                board.append(i.isVacant() ? "+" : i.getStone().getSymbol());
+                board.append((x == size - 1) ? "\n" : "-");
+            }
+        }
+        return board.toString();
     }
 
     @Override
@@ -64,7 +64,7 @@ public class Board {
         if (o == null || getClass() != o.getClass()) return false;
         Board board = (Board) o;
         return Objects.equals(size, board.size) &&
-                Objects.equals(intersections, board.intersections);
+                Arrays.deepEquals(intersections, board.intersections);
     }
 
     @Override
@@ -87,9 +87,8 @@ public class Board {
     }
 
     private Intersection getIntersection(Position pos) {
-        return Objects.requireNonNull(intersections.stream()
-                .filter(i -> i.hasPosition(pos))
-                .findFirst()
-                .orElse(null));
+        int x = pos.getX();
+        int y = pos.getY();
+        return intersections[x][y];
     }
 }
