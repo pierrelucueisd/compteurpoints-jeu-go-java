@@ -16,13 +16,13 @@ public class GameController {
                 .collect(Collectors.toList());
     }
 
-    public void startGame () {
+    public void startGame () throws Exception {
         while (!allPlayersHavePassed())
             playTurn();
         endGame();
     }
 
-    private void playTurn() {
+    private void playTurn() throws Exception {
         for (Player p: players) {
             p.resetPassState();
             boolean isAllowed;

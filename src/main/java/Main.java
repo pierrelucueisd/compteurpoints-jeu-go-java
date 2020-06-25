@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Scanner s = new Scanner(System.in);
 
-       /* List<String> listOfString=new ArrayList<String>();
+        /*List<String> listOfString=new ArrayList<String>();
         for(int i=1;i<=2; i++){
             System.out.print("Input name, age, address, city: ");
             String data= s.nextLine();
@@ -20,7 +20,13 @@ public class Main {
             }
         }*/
 
-        GameController gc = new GameController(9, new GameConsole(new Scanner(System.in)));
+        int boardSize = 9;
+
+        GameController gc = new GameController(
+                boardSize,
+                new GameConsole(new Scanner(System.in),
+                new PositionDeserializer(boardSize))
+        );
         gc.startGame();
     }
 }
