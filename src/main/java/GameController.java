@@ -6,8 +6,10 @@ public class GameController {
 
     Board board;
     List<Player> players;
+    GameConsole gameConsole;
 
-    public GameController(int size) {
+    public GameController(int size, GameConsole gameConsole) {
+        this.gameConsole = gameConsole;
         this.board = new Board(size);
         this.players = Arrays.stream(Color.values())
                 .map(Player::new)
@@ -25,7 +27,7 @@ public class GameController {
             p.resetPassState();
             boolean isAllowed;
             do {
-                Action chosenAction = GameConsole.promptAction(p);
+                Action chosenAction = gameConsole.promptAction(p);
                 isAllowed = chosenAction.isAllowed(board, p);
                 if (isAllowed)
                     chosenAction.execute(board, p);

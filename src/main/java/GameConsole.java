@@ -1,11 +1,22 @@
+import java.util.Optional;
+import java.util.Scanner;
+
 public class GameConsole {
 
-    public static Action promptAction(Player p) {
-        return new Action(ActionType.Play, new Position());
+    Scanner scaner;
+
+    public GameConsole(Scanner sc){
+        this.scaner = sc;
     }
 
-    public static Position promptPosition() {
-        return null;
+    public Action promptAction(Player p) {
+        Optional<Position> pos = promptPosition();
+        if(pos.isPresent()) return new Action(ActionType.Play, pos);
+        else return new Action(ActionType.Pass, pos);
+    }
+
+    public Optional<Position> promptPosition() {
+        return Optional.empty();
     }
 
     public static void printBoard(String board) {
