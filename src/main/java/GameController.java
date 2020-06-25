@@ -6,26 +6,28 @@ public class GameController {
 
     Board board;
     List<Player> players;
+    GameConsole gameConsole;
 
-    public GameController(int size) {
+    public GameController(int size, GameConsole gameConsole) {
+        this.gameConsole = gameConsole;
         this.board = new Board(size);
         this.players = Arrays.stream(Color.values())
                 .map(Player::new)
                 .collect(Collectors.toList());
     }
 
-    public void startGame () {
+    public void startGame () throws Exception {
         while (!allPlayersHavePassed())
             playTurn();
         endGame();
     }
 
-    private void playTurn() {
+    private void playTurn() throws Exception {
         for (Player p: players) {
             p.resetPassState();
             boolean isAllowed;
             do {
-                Action chosenAction = GameConsole.promptAction(p);
+                Action chosenAction = gameConsole.promptAction(p);
                 isAllowed = chosenAction.isAllowed(board, p);
                 if (isAllowed)
                     chosenAction.execute(board, p);
