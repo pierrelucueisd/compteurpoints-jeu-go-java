@@ -69,14 +69,14 @@ public class GameController {
         return Optional.empty();
     }
 
-    // faire ici les modifs
+    // faire ici les modifs pour que la fonction fonctionne
     private boolean isActionSuicide(Action action, Player p) {
         Board bC = board.deepClone();
         Player pC = p.deepClone(p.getColor());
         action.execute(bC, pC);
         Optional<Position> pos = action.getPosition();
         if(!pos.isPresent()) return false;
-        return board.isSuicide(pos.get(), pC.getColor());
+        return board.isASurrondedGroup(pos.get());
     }
 
     private boolean isActionKo(Action action, Player p) {

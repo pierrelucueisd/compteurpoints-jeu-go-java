@@ -13,6 +13,10 @@ public class Board {
                 intersections[y][x] = new Intersection(new Position(x,y));
     }
 
+    private int getNbIntersections() {
+        return size*size;
+    }
+
     public boolean isPositionValid(Position pos) {
         return pos.getX() < size && pos.getY() < size &&
                 pos.getX() >=0 && pos.getY()>= 0;
@@ -44,13 +48,18 @@ public class Board {
     }
 
 
-    /* précondition il faut tester sur la pierre jouré donc la case à position contient la pierre pour le moment
-    * cette fonction ne fonctionne pas correctement*/
-    public boolean isSuicide(Position pos, Color color) {
+    /* regarde si pos est dans un groupe de pierre connectées entourés par un autre joueur*/
+    public boolean isASurrondedGroup(Position pos) {
         Optional<Intersection> interPot = getIntersection(pos);
         if(!interPot.isPresent()) return false;
         Intersection intersection = interPot.get();
         List<Intersection> group = getConnectedIntersectionOfSameOccupation(intersection);
+
+        //@TODO ? éventuelleemnt vérifier si on peut éviter de calculer 2 fois les borders
+        //vérification que la zone ne soit pas trop grande
+        List<Intersection> groupBorder = getGroupBorder(group);
+        if(group.size()+groupBorder.size() > getNbIntersections()) return false;
+
         return isGroupSurroundedByOneColor(group);
     }
 
@@ -184,8 +193,9 @@ public class Board {
         return board.toString();
     }
 
+    // @TODO remplacer par un vrai code de copie;
     public Board deepClone() {
-        return new Board(9); // @TODO remplacer par un vrai code de copie;
+        return new Board(9);
     }
 
     @Override
