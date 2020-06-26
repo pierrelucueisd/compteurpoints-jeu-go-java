@@ -1,22 +1,16 @@
 import java.util.Optional;
 
 public class PassAction implements Action {
-    private final ActionType type;
-    private final Optional<Position> position;
 
-    public PassAction(ActionType type, Optional<Position> position) {
-        this.position = position;
-        this.type = type;
-    }
+    public PassAction() {}
 
     public ActionType getType() {
         return ActionType.Pass;
     }
 
     public Optional<Position> getPosition() {
-        return position;
+        return Optional.empty();
     }
 
-    public void execute(Board b, Player p) {
-    }
+    public void execute(Board b, Player p) {}
 }

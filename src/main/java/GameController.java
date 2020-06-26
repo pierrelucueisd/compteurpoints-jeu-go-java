@@ -37,7 +37,6 @@ public class GameController {
             Player p = carousel.getCurrentPlayer();
             Optional<Action> chosenActionT = gameConsole.readAction(scanner.next());
             Optional<ErrorType> error = Optional.empty();
-            int i =0;
             while(( !chosenActionT.isPresent() || (error = getFirstInvalidityErrorOf(chosenActionT.get())).isPresent())
                     && scanner.hasNext()
             ) {

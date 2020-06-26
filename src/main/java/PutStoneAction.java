@@ -1,12 +1,10 @@
 import java.util.Optional;
 
 public class PutStoneAction implements Action {
-    private final ActionType type;
     private final Optional<Position> position;
 
-    public PutStoneAction(ActionType type, Optional<Position> position) {
+    public PutStoneAction(Optional<Position> position) {
         this.position = position;
-        this.type = type;
     }
 
     public ActionType getType() {

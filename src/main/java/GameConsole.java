@@ -4,14 +4,13 @@ public class GameConsole {
 
     public Optional<Action> readAction(String input){
         Deserializer<Position> pd = new PositionDeserializer();
-        Optional<Position> vacant = Optional.empty();
         if (input.toLowerCase().equals("pass"))
-            return Optional.of(new PassAction(ActionType.Pass, vacant));
+            return Optional.of(new PassAction());
         Optional<Position> pos = pd.deserialize(input);
         if(!pos.isPresent())
             return Optional.empty();
         else
-            return Optional.of(new PutStoneAction(ActionType.Play, pos));
+            return Optional.of(new PutStoneAction(pos));
     }
 
     public void printBoard(String board) {
