@@ -39,4 +39,13 @@ public class Intersection {
     public int hashCode() {
         return Objects.hash(position, occupation);
     }
+
+    public Intersection(Intersection other) {
+        this.position = new Position(other.position);
+        if(other.occupation.isPresent()) {
+            this.occupation = Optional.of(other.occupation.get());
+        }else {
+            this.occupation = Optional.empty();
+        }
+    }
 }

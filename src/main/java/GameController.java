@@ -46,7 +46,7 @@ public class GameController {
             Action action = chosenActionT.get();
             action.execute(board, p);
             logActionTypes.add(action.getType());
-            logger.addBoard(board.deepClone());
+            logger.addBoard(new Board(board));
         }
         endGame();
     }
@@ -74,8 +74,8 @@ public class GameController {
 
     // faire ici les modifs pour que la fonction fonctionne
     private boolean isActionSuicide(Action actionT, Player p) {
-        Board bC = board.deepClone();
-        Player pC = p.deepClone(p.getColor());
+        Board bC = new Board(board);
+        Player pC = new Player(p);
         actionT.execute(bC, pC);
         Optional<Position> pos = actionT.getPosition();
         if(!pos.isPresent()) return false;
@@ -83,8 +83,8 @@ public class GameController {
     }
 
     private boolean isActionKo(Action actionT, Player p) {
-        Board bC = board.deepClone();
-        Player pl = p.deepClone(p.getColor());
+        Board bC = new Board(board);
+        Player pl = new Player(p);
         actionT.execute(bC, pl);
         Optional<Board> lastBoard = logger.getLastBoard();
         if(!lastBoard.isPresent()) return false;

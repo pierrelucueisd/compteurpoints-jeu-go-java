@@ -13,6 +13,15 @@ public class Board {
                 intersections[y][x] = new Intersection(new Position(x,y));
     }
 
+    public Board(Board other) {
+        this.size = other.size;
+        this.intersections = new Intersection[other.size][other.size];
+        for(int i = 0; i< size; i++) {
+            for(int j = 0; j < size; j++)
+                this.intersections[i][j] = new Intersection(other.intersections[i][j]);
+        }
+    }
+
     private int getNbIntersections() {
         return size*size;
     }
@@ -208,11 +217,6 @@ public class Board {
             }
         }
         return board.toString();
-    }
-
-    // @TODO remplacer par un vrai code de copie;
-    public Board deepClone() {
-        return new Board(9);
     }
 
     @Override
