@@ -43,6 +43,7 @@ public class GameController {
             }
             chosenAction.execute(board, p);
             logActionTypes.add(chosenAction.getType());
+            logger.addBoard(board.deepClone());
         }
         endGame();
     }
@@ -62,7 +63,7 @@ public class GameController {
                 return Optional.of(ErrorType.IntersectionTaken);
             if(isActionSuicide(action, p))
                 return Optional.of(ErrorType.Suicide);
-            if(board.isKo(pos.get(), p.getColor()))
+            if(isActionKo(action, p))
                 return Optional.of(ErrorType.Ko);
         }
         return Optional.empty();
@@ -75,5 +76,12 @@ public class GameController {
         Optional<Position> pos = action.getPosition();
         if(!pos.isPresent()) return false;
         return board.isSuicide(pos.get(), pl.getColor());
+    }
+
+    private boolean isActionKo(Action action, Player p) {
+        Board bC = board.deepClone();
+        Player pl = p.deepClone(p.getColor());
+        action.execute(bC, pl);
+        return logger.getLastBoard().equals(bC);
     }
 }

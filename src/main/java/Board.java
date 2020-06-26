@@ -54,10 +54,6 @@ public class Board {
         return isGroupSurroundedByOneColor(group);
     }
 
-    public boolean isKo(Position pos, Color c) {
-        return false;
-    }
-
     public void removeDeadStone() { }
 
     private boolean isGroupSurroundedByOneColor(List<Intersection> group) { //is surrondedByAnotherplayer
