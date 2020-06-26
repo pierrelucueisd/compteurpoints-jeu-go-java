@@ -14,9 +14,9 @@ public class Board {
                 intersections[y][x] = new Intersection(new Position(x,y));
     }
 
-    public boolean isPositionInvalid(Position pos) {
-        return pos.getX() >= size || pos.getY() >= size ||
-                pos.getX() < 0 || pos.getY() < 0;
+    public boolean isPositionValid(Position pos) {
+        return pos.getX() < size && pos.getY() < size &&
+                pos.getX() >=0 && pos.getY()>= 0;
     }
 
     public boolean isIntersectionVacant(Position pos) {
@@ -25,17 +25,15 @@ public class Board {
     }
 
     public void putStone(Color color, Position pos) {
-        Intersection intersection = getIntersection(pos).orElse(null);
-        if (intersection != null) {
-            intersection.setOccupation(Optional.of(color));
+        Intersection intersection = getIntersection(pos).get(); //@todo Atenttion le code ici n'est pas robuste
+        intersection.setOccupation(Optional.of(color));
 
-            List<Intersection> adjacences = getAdjacencyOf(intersection);
-            ArrayList<Color> otherColors = getOtherColor(color);
-            for(Intersection inter : adjacences) {
-                //System.out.println(inter.getPosition().toString()); @todo enlever une fois termnié
-                if(inter.getOccupation().isPresent() && otherColors.contains(inter.getOccupation().get())) {
-                    removePrisoners(inter); //remove seulement si groupe sans liberté
-                }
+        List<Intersection> adjacences = getAdjacencyOf(intersection);
+        ArrayList<Color> otherColors = getOtherColor(color);
+        for(Intersection inter : adjacences) {
+            //System.out.println(inter.getPosition().toString()); @todo enlever une fois termnié
+            if(inter.getOccupation().isPresent() && otherColors.contains(inter.getOccupation().get())) {
+                removePrisoners(inter); //remove seulement si groupe sans liberté
             }
         }
     }
@@ -46,8 +44,14 @@ public class Board {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+
+    /* précondition il faut tester sur la pierre jouré donc la case à position contient la pierre pour le moment
+    * cette fonction ne fonctionne pas correctement*/
     public boolean isSuicide(Position pos, Color color) {
-        List<Intersection> group = getStoneGroup(pos, color);
+        Optional<Intersection> interPot = getIntersection(pos);
+        if(!interPot.isPresent()) return false;
+        Intersection intersection = interPot.get();
+        List<Intersection> group = getConnectedIntersectionOfSameOccupation(intersection);
         return isGroupSurroundedByOneColor(group);
     }
 
@@ -58,29 +62,19 @@ public class Board {
     public void removeDeadStone() { }
 
     private boolean isGroupSurroundedByOneColor(List<Intersection> group) { //is surrondedByAnotherplayer
-        List<Optional<Color>> occupationGroup = getGroupOccupations(group);
+        List<Optional<Color>> groupOccupations = getGroupOccupations(group);
         List<Intersection> border = getGroupBorder(group);
         List<Optional<Color>> occupationBorder = getGroupOccupations(border);
         Optional<Color> vacant = Optional.empty();
-        if(occupationBorder.contains(vacant) && occupationBorder.size() != 1) return false;
+        if(occupationBorder.size() != 1 || occupationBorder.contains(vacant)) return false;
         Optional<Color> occupationB = occupationBorder.get(0);
-        if(occupationGroup.contains(occupationB)) return false;
+        if(groupOccupations.contains(occupationB)) return false;
         return true;
-        /*List<Color> BorderColor = new ArrayList<>();
-        if(group.size() > 1 && group.get(1).getOccupation().isPresent()) {
-            Color color = group.get(1).getOccupation().get();
-            for(Intersection borderInter : getGroupBorder(group)) {
-                if(!borderInter.getOccupation().isPresent()) return false;
-                Color borderColor = borderInter.getOccupation().get();
-                if(color != borderColor && !BorderColor.contains(borderColor)) BorderColor.add(borderColor);
-            }
-        }
-        return BorderColor.size()==1;*/
     }
 
     private List<Optional<Color>> getGroupOccupations(List<Intersection> group) {
         List<Optional<Color>> occupations = new ArrayList<>();
-        for(Intersection inter : intersections) {
+        for(Intersection inter : group) {
             Optional<Color> occupation = inter.getOccupation();
             if(!occupations.contains(occupation)) occupations.add(occupation);
         }
@@ -99,22 +93,15 @@ public class Board {
         return border;
     }
 
-    private List<Intersection> getStoneGroup(Position pos, Color color) {
-        Optional<Intersection> interPot = getIntersection(pos);
-        List<Intersection> group = new ArrayList<>();
-        if(interPot.isPresent()){
-            Intersection inter = interPot.get();
-            List<Optional<Color>> occupations = new ArrayList<>();
-            occupations.add(Optional.of(color));
-            group = getConnectedIntersectionWithOccupationsOf(inter, occupations);
-        }
-        return group;
+    private List<Intersection> getConnectedIntersectionOfSameOccupation(Intersection inter) {
+        List<Optional<Color>> occupations = new ArrayList<>();
+        occupations.add(inter.getOccupation());
+        return getConnectedIntersectionWithOccupationsOf(inter, occupations);
     }
 
     private void removePrisoners(Intersection inter) {
         if(inter.getOccupation().isPresent()) {
-            Color color = inter.getOccupation().get();
-            List<Intersection> group = getStoneGroup(inter.getPosition(), color);
+            List<Intersection> group = getConnectedIntersectionOfSameOccupation(inter);
             if (isGroupSurroundedByOneColor(group)){
                 Optional<Color> vacant = Optional.empty();
                 setIntersectionsOccupancy(group, vacant);
@@ -149,7 +136,7 @@ public class Board {
     }
 
     private Optional<Intersection> getIntersection(Position pos) {
-        if(isPositionInvalid(pos)) return Optional.empty();
+        if(!isPositionValid(pos)) return Optional.empty();
         return Optional.of(intersections[pos.getY()][pos.getX()]);
     }
 

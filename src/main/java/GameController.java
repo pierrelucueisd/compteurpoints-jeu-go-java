@@ -34,12 +34,12 @@ public class GameController {
         while(!actionTypeLogHaveTwoLasPass() && scanner.hasNext()) {
             carousel.nextTurn();
             Player p = carousel.getCurrentPlayer();
-            Action chosenAction = gameConsole.readAction(scanner.next());
+            Action chosenAction = gameConsole.readAction(scanner.next(), this);
             while(!chosenAction.isAllowed(board, p) && scanner.hasNext()) {
                 gameConsole.printResultError(chosenAction.getError());
-                chosenAction = gameConsole.readAction(scanner.next());
+                chosenAction = gameConsole.readAction(scanner.next(), this);
             }
-            chosenAction.execute(board, p);
+            chosenAction.execute(p);
             logActionTypes.add(chosenAction.getType());
         }
         endGame();

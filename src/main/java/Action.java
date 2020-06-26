@@ -1,12 +1,16 @@
+import java.util.Optional;
+
 public class Action {
     private final ActionType type;
     private ErrorType error;
-    private final Position position;
+    private final Optional<Position> position;
+    private GameController gameControler;
 
-    public Action(ActionType type, Position position) {
+    public Action(ActionType type, Optional<Position> position, GameController gC) {
         this.position = position;
         this.error = ErrorType.None;
         this.type = type;
+        this.gameControler = gC;
     }
 
     public ActionType getType() {
@@ -17,27 +21,28 @@ public class Action {
         return error;
     }
 
-    public void execute(Board b, Player p) {
+    public void execute(Player p) {
         switch (type) {
             case Pass:
                 break;
             case Play:
-                b.putStone(p.getColor(), position);
+                Board board = gameControler.getBoard();
+                board.putStone(p.getColor(), position.get());
                 break;
         }
     }
 
     public boolean isAllowed(Board b, Player p) {
-        if(type == ActionType.Pass)
-            return true;
-        else if(type == ActionType.Invalid || b.isPositionInvalid(position))
-            error = ErrorType.InvalidPosition;
-        else if (!b.isIntersectionVacant(position))
-            error =  ErrorType.IntersectionTaken;
-        else if(b.isSuicide(position, p.getColor()))
-            error = ErrorType.Suicide;
-        else if(b.isKo(position, p.getColor()))
-            error =  ErrorType.Ko;
+        if(position.isPresent()) {
+            if(!b.isPositionValid(position.get()))
+                error = ErrorType.InvalidPosition;
+            if (!b.isIntersectionVacant(position.get()))
+                error =  ErrorType.IntersectionTaken;
+            if(b.isSuicide(position.get(), p.getColor()))
+                error = ErrorType.Suicide;
+            if(b.isKo(position.get(), p.getColor()))
+                error =  ErrorType.Ko;
+        }
 
         return error == ErrorType.None;
     }
