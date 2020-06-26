@@ -36,13 +36,23 @@ public class Board {
     }
 
     public void putStone(Color color, Position pos) {
-        getIntersection(pos).get().setOccupation(Optional.of(color)); // @todo Atenttion le code ici n'est pas robuste
-        // Get other colors thant the one played
-        Color[] otherColors = Arrays.stream(Color.values())
+        Intersection intersection = getIntersection(pos).get(); //@todo Atenttion le code ici n'est pas robuste
+        intersection.setOccupation(Optional.of(color));
+
+        List<Intersection> adjacences = getAdjacencyOf(intersection);
+        ArrayList<Color> otherColors = getOtherColor(color);
+        for(Intersection inter : adjacences) {
+            System.out.println(inter.getPosition().toString());
+            if(inter.getOccupation().isPresent() && otherColors.contains(inter.getOccupation().get())) {
+                //ici inter contient une pierre de couleur différente removePrisoners(pos, c);
+            }
+        }
+    }
+
+    public ArrayList<Color> getOtherColor(Color color) {
+        return Arrays.stream(Color.values())
                 .filter(c -> c != color)
-                .toArray(Color[]::new);
-        for (Color c: otherColors)
-                removePrisoners(pos, c);
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public boolean isSuicide(Position pos, Color color) {
@@ -73,6 +83,7 @@ public class Board {
     }
 
     private Optional<Intersection> getIntersection(Position pos) {
+        if(!isPositionValid(pos)) return Optional.empty();
         Intersection intersect =  Objects.requireNonNull(intersections.stream()
                 .filter(i -> i.hasPosition(pos))
                 .findFirst()
@@ -82,6 +93,7 @@ public class Board {
     }
 
     private Optional<Intersection> getLeftIntersectionOf(Intersection intersection) {
+
         Position pos = intersection.getPosition();
         Position leftPos = new Position(pos.getX()-1, pos.getY());
         return getIntersection(leftPos);
