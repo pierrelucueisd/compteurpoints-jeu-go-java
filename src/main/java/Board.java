@@ -76,7 +76,15 @@ public class Board {
     }
 
     private boolean isGroupSuroundedByOneColor(List<Intersection> group) { //is surrondedByAnotherplayer
-        List<Color> BorderColor = new ArrayList<>();
+        List<Optional<Color>> occupationGroup = getGroupOccupations(group);
+        List<Intersection> border = getGroupBorder(group);
+        List<Optional<Color>> occupationBorder = getGroupOccupations(border);
+        Optional<Color> vacant = Optional.empty();
+        if(occupationBorder.contains(vacant) && occupationBorder.size() != 1) return false;
+        Optional<Color> occupationB = occupationBorder.get(0);
+        if(occupationGroup.contains(occupationB)) return false;
+        return true;
+        /*List<Color> BorderColor = new ArrayList<>();
         if(group.size() > 1 && group.get(1).getOccupation().isPresent()) {
             Color color = group.get(1).getOccupation().get();
             for(Intersection borderInter : getGroupBorder(group)) {
@@ -85,7 +93,16 @@ public class Board {
                 if(color != borderColor && !BorderColor.contains(borderColor)) BorderColor.add(borderColor);
             }
         }
-        return BorderColor.size()==1;
+        return BorderColor.size()==1;*/
+    }
+
+    private List<Optional<Color>> getGroupOccupations(List<Intersection> group) {
+        List<Optional<Color>> occupations = new ArrayList<>();
+        for(Intersection inter : intersections) {
+            Optional<Color> occupation = inter.getOccupation();
+            if(!occupations.contains(occupation)) occupations.add(occupation);
+        }
+        return occupations;
     }
 
     private List<Intersection> getGroupBorder(List<Intersection> group) {
