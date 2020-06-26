@@ -57,7 +57,7 @@ public class Board {
 
     public boolean isSuicide(Position pos, Color color) {
         List<Intersection> group = getStoneGroup(pos, color);
-        return groupHasNoLiberty(group);
+        return isGroupSuroundedByOneColor(group);
     }
 
     public boolean isKo(Position pos, Color c) {
@@ -75,11 +75,36 @@ public class Board {
         return false;
     }
 
-    private boolean groupHasNoLiberty(List<Intersection> group) {
-        for(Intersection inter: group) {
-            if(intersectionHasLiberty(inter)) return false;
+    /* @todo l'utilisation de cette fonction est un problème si on ajoute plus d'un joueur
+        on devrait plutôt utiliser une fonction get surronding Intersection et vérifier si
+        elles sont toutes de la même couleur
+        précondidtions même couleur
+     */
+    private boolean isGroupSuroundedByOneColor(List<Intersection> group) { //is surrondedByAnotherplayer
+        List<Color> BorderColor = new ArrayList<>();
+        if(group.size() > 1 && group.get(1).getOccupation().isPresent()) {
+            Color color = group.get(1).getOccupation().get();
+            for(Intersection borderInter : getGroupBorder(group)) {
+                if(!borderInter.getOccupation().isPresent()) return false;
+                Color borderColor = borderInter.getOccupation().get();
+                if(color != borderColor && !BorderColor.contains(borderColor)) BorderColor.add(borderColor);
+            }
         }
-        return true;
+        return BorderColor.size()==1;
+    }
+
+    private List<Intersection> getGroupBorder(List<Intersection> group) {
+        List<Intersection> border = new ArrayList<>();
+        List<Intersection> adjacencesGlobales = new ArrayList<>();
+        for(Intersection inter: group) {
+            for(Intersection adj : getAdjacencyOf(inter)) {
+                adjacencesGlobales.add(adj);
+            }
+        }
+        for(Intersection adj: adjacencesGlobales) {
+            if(!group.contains(adj)) border.add(adj);
+        }
+        return border;
     }
 
     private List<Intersection> getStoneGroup(Position pos, Color color) {
@@ -98,7 +123,7 @@ public class Board {
         if(inter.getOccupation().isPresent()) {
             Color color = inter.getOccupation().get();
             List<Intersection> group = getStoneGroup(inter.getPosition(), color);
-            if (groupHasNoLiberty(group)){
+            if (isGroupSuroundedByOneColor(group)){
                 Optional<Color> vacant = Optional.empty();
                 setIntersectionsOccupancy(group, vacant);
             }
