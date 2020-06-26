@@ -1,5 +1,8 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Scanner;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MainTest {
@@ -12,8 +15,9 @@ class MainTest {
     }
 
     void testBoard(String input, String expected) {
-        gc.startGame(input);
-        String result = gc.board.toString();
+        Scanner scanner = new Scanner(input);
+        gc.startGame(scanner);
+        String result = gc.getBoard().toString();
         assertEquals(result, expected);
     }
 

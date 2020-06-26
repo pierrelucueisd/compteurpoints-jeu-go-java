@@ -30,7 +30,7 @@ public class Action {
     public boolean isAllowed(Board b, Player p) {
         if(type == ActionType.Pass)
             return true;
-        else if(type == ActionType.Invalid || !b.isPositionValid(position))
+        else if(type == ActionType.Invalid || b.isPositionInvalid(position))
             error = ErrorType.InvalidPosition;
         else if (!b.isIntersectionVacant(position))
             error =  ErrorType.IntersectionTaken;

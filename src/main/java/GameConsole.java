@@ -1,15 +1,12 @@
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class GameConsole {
 
-    public List<Action> readActions(String input) {
-        List<String> inputAction = Arrays.asList(input.split(" "));
-        return inputAction.stream()
-                .map(this::readAction)
-                .collect(Collectors.toList());
+    public Action readAction(String input){
+        Deserializer<Position> pd = new PositionDeserializer();
+        if (input.toLowerCase().equals("pass")) return new Action(ActionType.Pass, null);
+        Optional<Position> pos = pd.deserialize(input);
+        return pos.map(position -> new Action(ActionType.Play, position)).orElseGet(() -> new Action(ActionType.Invalid, null));
     }
 
     public void printBoard(String board) {
@@ -30,12 +27,5 @@ public class GameConsole {
             case Ko:
                 System.out.println("The entered position is refused because of the eternity rule(Ko).");
         }
-    }
-
-    private Action readAction(String input){
-        Deserializer<Position> pd = new PositionDeserializer();
-        if (input.toLowerCase().equals("pass")) return new Action(ActionType.Pass, null);
-        Optional<Position> pos = pd.deserialize(input);
-        return pos.map(position -> new Action(ActionType.Play, position)).orElseGet(() -> new Action(ActionType.Invalid, null));
     }
 }
