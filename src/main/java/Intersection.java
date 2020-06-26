@@ -22,10 +22,6 @@ public class Intersection {
         return occupation;
     }
 
-    public boolean hasPosition(Position p) {
-        return position.equals(p);
-    }
-
     public boolean isVacant() {
         return !occupation.isPresent();
     }

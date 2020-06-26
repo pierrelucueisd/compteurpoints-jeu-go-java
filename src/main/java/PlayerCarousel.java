@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerCaroussel {
+public class PlayerCarousel {
     int nbIter;
     ArrayList<Player> players;
-    public PlayerCaroussel(List<Player> pl) {
+    public PlayerCarousel(List<Player> pl) {
         this.players = (ArrayList<Player>)pl;
         nbIter = 0;
     }

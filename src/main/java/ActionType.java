@@ -1,4 +1,5 @@
 public enum ActionType {
     Pass,
-    Play
+    Play,
+    Invalid
 }
