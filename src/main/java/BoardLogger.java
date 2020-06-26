@@ -9,7 +9,7 @@ public class BoardLogger {
     }
 
     public Board getLastBoard() {
-        return null;
+        return new Board(9);
     }
 
 }

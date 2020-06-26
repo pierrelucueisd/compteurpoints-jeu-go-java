@@ -15,6 +15,10 @@ public class Action {
         return type;
     }
 
+    public Optional<Position> getPosition() {
+        return position;
+    }
+
     public ErrorType getError() {
         return error;
     }
@@ -27,20 +31,5 @@ public class Action {
                 b.putStone(p.getColor(), position.get());
                 break;
         }
-    }
-
-    public boolean isAllowed(Board b, Player p) {
-        if(position.isPresent()) {
-            if(!b.isPositionValid(position.get()))
-                error = ErrorType.InvalidPosition;
-            if (!b.isIntersectionVacant(position.get()))
-                error =  ErrorType.IntersectionTaken;
-            if(b.isSuicide(position.get(), p.getColor()))
-                error = ErrorType.Suicide;
-            if(b.isKo(position.get(), p.getColor()))
-                error =  ErrorType.Ko;
-        }
-
-        return error == ErrorType.None;
     }
 }

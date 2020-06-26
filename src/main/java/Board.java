@@ -4,7 +4,6 @@ import java.util.stream.Collectors;
 public class Board {
     private final Integer size;
     private final Intersection[][] intersections;
-    private final BoardLogger logger = new BoardLogger();
 
     public Board(Integer size) {
         this.size = size;

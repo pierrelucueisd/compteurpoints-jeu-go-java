@@ -7,6 +7,7 @@ public class GameController {
     private final GameConsole gameConsole;
     private final ArrayList<ActionType> logActionTypes;
     private final PlayerCarousel carousel;
+    private final BoardLogger logger = new BoardLogger();
 
     public Board getBoard() {
         return board;
@@ -35,8 +36,9 @@ public class GameController {
             carousel.nextTurn();
             Player p = carousel.getCurrentPlayer();
             Action chosenAction = gameConsole.readAction(scanner.next());
-            while(!chosenAction.isAllowed(board, p) && scanner.hasNext()) {
-                gameConsole.printResultError(chosenAction.getError());
+            Optional<ErrorType> error;
+            while((error = getFirstInvalidityErrorOf(chosenAction)).isPresent() && scanner.hasNext()) {
+                gameConsole.printResultError(error.get());
                 chosenAction = gameConsole.readAction(scanner.next());
             }
             chosenAction.execute(board, p);
@@ -48,5 +50,21 @@ public class GameController {
     private void endGame() {
         board.removeDeadStone();
         gameConsole.printBoard(board.toString());
+    }
+
+    private Optional<ErrorType> getFirstInvalidityErrorOf(Action action) {
+        Optional<Position> pos = action.getPosition();
+        Player p = carousel.getCurrentPlayer();
+        if(pos.isPresent()) {
+            if(!board.isPositionValid(pos.get()))
+                return Optional.of(ErrorType.InvalidPosition);
+            if (!board.isIntersectionVacant(pos.get()))
+                return Optional.of(ErrorType.IntersectionTaken);
+            if(board.isSuicide(pos.get(), p.getColor()))
+                return Optional.of(ErrorType.Suicide);
+            if(board.isKo(pos.get(), p.getColor()))
+                return Optional.of(ErrorType.Ko);
+        }
+        return Optional.empty();
     }
 }
