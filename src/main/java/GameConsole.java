@@ -14,11 +14,11 @@ public class GameConsole {
         this.deserializer = ds;
     }
 
-    public Action promptAction(Player p) throws Exception {
+    public Action promptAction(Player p, GameController gC) throws Exception {
         String mot = scaner.nextLine();
-        if(mot.toLowerCase().equals("pass")) return new Action(ActionType.Pass, Optional.empty());
+        if(mot.toLowerCase().equals("pass")) return new Action(ActionType.Pass, Optional.empty(), gC);
         Optional<Position> pos = this.deserializer.deserialize(mot);
-        if(pos.isPresent()) return new Action(ActionType.Play, pos);
+        if(pos.isPresent()) return new Action(ActionType.Play, pos, gC);
         else throw new Exception("Attention le mot: \"" + mot + "\" est incorrect!");
     }
 

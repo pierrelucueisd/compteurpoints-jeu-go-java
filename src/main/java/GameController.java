@@ -20,6 +20,10 @@ public class GameController {
         this.caroussel = new PlayerCaroussel(this.players);
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
     public boolean actionTypeLogHaveTwoLasPass() {
         int taille = logActionTypes.size();
         return taille >= 2
@@ -31,12 +35,12 @@ public class GameController {
         while(!actionTypeLogHaveTwoLasPass()) {
             caroussel.nextTurn();
             Player p = caroussel.getCurrentPlayer();
-            Action chosenAction = gameConsole.promptAction(p);
+            Action chosenAction = gameConsole.promptAction(p, this);
             while(!chosenAction.isAllowed(board, p)) {
                 GameConsole.printResultError(chosenAction.getError());
-                chosenAction = gameConsole.promptAction(p);
+                chosenAction = gameConsole.promptAction(p, this);
             }
-            chosenAction.execute(board, p);
+            chosenAction.execute(p);
             logActionTypes.add(chosenAction.getType());
         }
         endGame();
