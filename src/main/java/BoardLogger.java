@@ -9,10 +9,11 @@ public class BoardLogger {
         history.add(b);
     }
 
-    // @todo remplacer lorsque la fonction board.deepClone sera implémentée
     public Optional<Board> getLastBoard() {
-        Board b = new Board(9);
-        return Optional.of(b);
+        if(history.isEmpty()) return  Optional.empty();
+        else {
+            return Optional.of(history.get(history.size()-1));
+        }
     }
 
 }
