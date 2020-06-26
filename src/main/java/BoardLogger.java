@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class BoardLogger {
     private List<Board> history = new ArrayList<>();
@@ -8,8 +9,9 @@ public class BoardLogger {
 
     }
 
-    public Board getLastBoard() {
-        return new Board(9);
+    public Optional<Board> getLastBoard() {
+        Board b = new Board(9);
+        return Optional.of(b);
     }
 
 }
