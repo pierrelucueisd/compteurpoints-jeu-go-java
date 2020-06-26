@@ -41,7 +41,7 @@ public class Board {
         }
     }
 
-    public ArrayList<Color> getOtherColor(Color color) {
+    private ArrayList<Color> getOtherColor(Color color) {
         return Arrays.stream(Color.values())
                 .filter(c -> c != color)
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -63,7 +63,24 @@ public class Board {
         return isGroupSurroundedByOneColor(group);
     }
 
-    public void removeDeadStone() { }
+    public void removeDeadStone() {
+        for(int i = 0; i< size; i++) {
+            for(int j = 0; i < size; j++) {
+                Optional<Intersection> inter =  getIntersection(new Position(i, j));
+                if(!inter.isPresent()) return;
+                Intersection intersection = inter.get();
+                Optional<Color> occupation = intersection.getOccupation();
+                if(occupation.isPresent()){
+                    List<Optional<Color>> occupations = new ArrayList<>();
+                    occupations.add(occupation);
+                    occupations.add(Optional.empty());
+                    List<Intersection> group = getConnectedIntersectionWithOccupationsOf(intersection, occupations);
+                    if(isGroupSurroundedByOneColor(group))
+                        setIntersectionsOccupancy(group, Optional.empty());
+                }
+            }
+        }
+    }
 
     private boolean isGroupSurroundedByOneColor(List<Intersection> group) { //is surrondedByAnotherplayer
         List<Optional<Color>> groupOccupations = getGroupOccupations(group);

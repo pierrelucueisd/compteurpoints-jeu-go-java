@@ -10,7 +10,7 @@ public class GameConsole {
         if(!pos.isPresent())
             return Optional.empty();
         else
-            return Optional.of(new PutStoneAction(pos));
+            return Optional.of(new PutStoneAction(pos.get()));
     }
 
     public void printBoard(String board) {

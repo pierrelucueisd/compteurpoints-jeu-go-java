@@ -1,9 +1,9 @@
 import java.util.Optional;
 
 public class PutStoneAction implements Action {
-    private final Optional<Position> position;
+    private final Position position;
 
-    public PutStoneAction(Optional<Position> position) {
+    public PutStoneAction(Position position) {
         this.position = position;
     }
 
@@ -13,10 +13,10 @@ public class PutStoneAction implements Action {
     }
 
     public Optional<Position> getPosition() {
-        return position;
+        return Optional.of(position);
     }
 
     public void execute(Board b, Player p) {
-        b.putStone(p.getColor(), position.get());
+        b.putStone(p.getColor(), position);
     }
 }
