@@ -60,11 +60,20 @@ public class GameController {
                 return Optional.of(ErrorType.InvalidPosition);
             if (!board.isIntersectionVacant(pos.get()))
                 return Optional.of(ErrorType.IntersectionTaken);
-            if(board.isSuicide(pos.get(), p.getColor()))
+            if(isActionSuicide(action, p))
                 return Optional.of(ErrorType.Suicide);
             if(board.isKo(pos.get(), p.getColor()))
                 return Optional.of(ErrorType.Ko);
         }
         return Optional.empty();
+    }
+
+    private boolean isActionSuicide(Action action, Player p) {
+        Board bC = board.deepClone();
+        Player pl = p.deepClone(p.getColor());
+        action.execute(bC, pl);
+        Optional<Position> pos = action.getPosition();
+        if(!pos.isPresent()) return false;
+        return board.isSuicide(pos.get(), pl.getColor());
     }
 }

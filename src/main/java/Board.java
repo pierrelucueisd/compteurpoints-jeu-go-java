@@ -188,6 +188,10 @@ public class Board {
         return board.toString();
     }
 
+    public Board deepClone() {
+        return new Board(9); // @TODO remplacer par un vrai code de copie;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
