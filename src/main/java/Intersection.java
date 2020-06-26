@@ -1,45 +1,42 @@
 import java.util.Objects;
+import java.util.Optional;
 
 public class Intersection {
     private final Position position;
-    private Color stone;
-    private boolean vacancy;
+    private Optional<Color> occupation;
 
     public Intersection(Position position) {
         this.position = position;
-        this.stone = Color.None;
-        this.vacancy = true;
+        this.occupation = Optional.empty();
     }
 
-    public Color getStone() {
-        return stone;
+    public void setOccupation(Optional<Color> occupation) {
+        this.occupation = occupation;
     }
 
-    public void setStone(Color stone) {
-        this.stone = stone;
-        vacancy = false;
+    public Position getPosition() {
+        return position;
     }
 
-    public void removeStone() {
-        stone = null;
-        vacancy = true;
+    public Optional<Color> getOccupation() {
+        return occupation;
     }
 
     public boolean isVacant() {
-        return vacancy;
+        return !occupation.isPresent();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Intersection)) return false;
         Intersection that = (Intersection) o;
         return Objects.equals(position, that.position) &&
-                stone == that.stone;
+                Objects.equals(occupation, that.occupation);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(position, stone);
+        return Objects.hash(position, occupation);
     }
 }

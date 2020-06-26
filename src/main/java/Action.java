@@ -9,6 +9,10 @@ public class Action {
         this.type = type;
     }
 
+    public ActionType getType() {
+        return type;
+    }
+
     public ErrorType getError() {
         return error;
     }
@@ -16,7 +20,6 @@ public class Action {
     public void execute(Board b, Player p) {
         switch (type) {
             case Pass:
-                p.pass();
                 break;
             case Play:
                 b.putStone(p.getColor(), position);

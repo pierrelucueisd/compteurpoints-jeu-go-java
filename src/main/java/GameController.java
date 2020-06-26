@@ -3,50 +3,48 @@ import java.util.stream.Collectors;
 
 public class GameController {
 
-    Board board;
-    List<Player> players;
-    GameConsole gameConsole;
+    private Board board;
+    private List<Player> players;
+    private GameConsole gameConsole;
+    private ArrayList<ActionType> logActionTypes;
+    private PlayerCaroussel caroussel;
+
 
     public GameController(int size) {
         this.board = new Board(size);
+        logActionTypes = new ArrayList<ActionType>();
         this.gameConsole = new GameConsole();
         this.players = Arrays.stream(Color.values())
                 .filter(c -> c != Color.None)
                 .map(Player::new)
                 .collect(Collectors.toList());
+        this.caroussel = new PlayerCaroussel(this.players);
     }
 
-    public void startGame (String input) {
-        List<Action> readActions = gameConsole.readActions(input);
-        Collections.reverse(readActions);
-        Stack<Action> actions = new Stack<>();
-        actions.addAll(readActions);
-        while (!allPlayersHavePassed() && !actions.empty())
-            playTurn(actions);
-        endGame();
+    public boolean actionTypeLogHaveTwoLasPass() {
+        int taille = logActionTypes.size();
+        return taille >= 2
+                && logActionTypes.get(taille-1)== ActionType.Pass
+                && logActionTypes.get(taille-2)== ActionType.Pass;
     }
 
-    private void playTurn(Stack<Action> actions) {
-        for (Player p: players) {
-            p.resetPassState();
-            boolean isAllowed = false;
-            while (!isAllowed && !actions.empty()) {
-                Action chosenAction = actions.pop();
-                isAllowed = chosenAction.isAllowed(board, p);
-                if (isAllowed)
-                    chosenAction.execute(board, p);
-                else
-                    gameConsole.printResultError(chosenAction.getError());
+    public void startGame () throws Exception {
+        while(!actionTypeLogHaveTwoLasPass()) {
+            caroussel.nextTurn();
+            Player p = caroussel.getCurrentPlayer();
+            Action chosenAction = gameConsole.promptAction(p);
+            while(!chosenAction.isAllowed(board, p)) {
+                GameConsole.printResultError(chosenAction.getError());
+                chosenAction = gameConsole.promptAction(p);
             }
+            chosenAction.execute(board, p);
+            logActionTypes.add(chosenAction.getType());
         }
+        endGame();
     }
 
     private void endGame() {
         board.removeDeadStone();
         gameConsole.printBoard(board.toString());
-    }
-
-    private boolean allPlayersHavePassed() {
-        return players.stream().allMatch(Player::hasPassed);
     }
 }
