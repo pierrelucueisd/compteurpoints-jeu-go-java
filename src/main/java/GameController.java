@@ -35,14 +35,16 @@ public class GameController {
         while(!actionTypeLogHaveTwoLasPass() && scanner.hasNext()) {
             carousel.nextTurn();
             Player p = carousel.getCurrentPlayer();
-            Action chosenAction = gameConsole.readAction(scanner.next());
+            Action chosenActionT = gameConsole.readAction(scanner.next());
             Optional<ErrorType> error;
-            while((error = getFirstInvalidityErrorOf(chosenAction)).isPresent() && scanner.hasNext()) {
+            while(scanner.hasNext()
+                    && (error = getFirstInvalidityErrorOf(chosenActionT)).isPresent()
+            ) {
                 gameConsole.printResultError(error.get());
-                chosenAction = gameConsole.readAction(scanner.next());
+                chosenActionT = gameConsole.readAction(scanner.next());
             }
-            chosenAction.execute(board, p);
-            logActionTypes.add(chosenAction.getType());
+            chosenActionT.execute(board, p);
+            logActionTypes.add(chosenActionT.getType());
             logger.addBoard(board.deepClone());
         }
         endGame();
@@ -53,36 +55,36 @@ public class GameController {
         gameConsole.printBoard(board.toString());
     }
 
-    private Optional<ErrorType> getFirstInvalidityErrorOf(Action action) {
-        Optional<Position> pos = action.getPosition();
+    private Optional<ErrorType> getFirstInvalidityErrorOf(Action actionT) {
+        Optional<Position> pos = actionT.getPosition();
         Player p = carousel.getCurrentPlayer();
         if(pos.isPresent()) {
             if(!board.isPositionValid(pos.get()))
                 return Optional.of(ErrorType.InvalidPosition);
             if (!board.isIntersectionVacant(pos.get()))
                 return Optional.of(ErrorType.IntersectionTaken);
-            if(isActionSuicide(action, p))
+            if(isActionSuicide(actionT, p))
                 return Optional.of(ErrorType.Suicide);
-            if(isActionKo(action, p))
+            if(isActionKo(actionT, p))
                 return Optional.of(ErrorType.Ko);
         }
         return Optional.empty();
     }
 
     // faire ici les modifs pour que la fonction fonctionne
-    private boolean isActionSuicide(Action action, Player p) {
+    private boolean isActionSuicide(Action actionT, Player p) {
         Board bC = board.deepClone();
         Player pC = p.deepClone(p.getColor());
-        action.execute(bC, pC);
-        Optional<Position> pos = action.getPosition();
+        actionT.execute(bC, pC);
+        Optional<Position> pos = actionT.getPosition();
         if(!pos.isPresent()) return false;
         return board.isASurrondedGroup(pos.get());
     }
 
-    private boolean isActionKo(Action action, Player p) {
+    private boolean isActionKo(Action actionT, Player p) {
         Board bC = board.deepClone();
         Player pl = p.deepClone(p.getColor());
-        action.execute(bC, pl);
+        actionT.execute(bC, pl);
         Optional<Board> lastBoard = logger.getLastBoard();
         if(!lastBoard.isPresent()) return false;
         return lastBoard.get().equals(bC);
