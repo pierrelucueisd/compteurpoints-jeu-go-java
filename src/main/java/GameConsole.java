@@ -1,36 +1,35 @@
-import javax.sql.rowset.serial.SerialException;
-import javax.swing.text.html.Option;
 import java.util.Optional;
-import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
 
 public class GameConsole {
 
-    Scanner scaner;
-    PositionDeserializer deserializer;
-
-    public GameConsole(Scanner sc, PositionDeserializer ds){
-        this.scaner = sc;
-        this.deserializer = ds;
+    public Action readAction(String input, GameController gc){
+        Deserializer<Position> pd = new PositionDeserializer();
+        Optional<Position> vacant = Optional.empty();
+        if (input.toLowerCase().equals("pass")) return new Action(ActionType.Pass, vacant, gc);
+        Optional<Position> pos = pd.deserialize(input);
+        if(!pos.isPresent())
+            return new Action(ActionType.Invalid, vacant, gc);
+        else
+            return new Action(ActionType.Play, pos, gc);
     }
 
-    public Action promptAction(Player p, GameController gC) throws Exception {
-        String mot = scaner.nextLine();
-        if(mot.toLowerCase().equals("pass")) return new Action(ActionType.Pass, Optional.empty(), gC);
-        Optional<Position> pos = this.deserializer.deserialize(mot);
-        if(pos.isPresent()) return new Action(ActionType.Play, pos, gC);
-        else throw new Exception("Attention le mot: \"" + mot + "\" est incorrect!");
+    public void printBoard(String board) {
+        System.out.println(board);
     }
 
-    public static void printBoard(String board) {
-
-    }
-
-    public static void printResultError(ErrorType type) {
-
-    }
-
-    public static void printWinner(Player p) {
-
+    public void printResultError(ErrorType type) {
+        switch (type){
+            case InvalidPosition:
+                System.out.println("The entered position is invalid.");
+                break;
+            case Suicide:
+                System.out.println("The entered position is a suicide move.");
+                break;
+            case IntersectionTaken:
+                System.out.println("The entered position is already taken.");
+                break;
+            case Ko:
+                System.out.println("The entered position is refused because of the eternity rule(Ko).");
+        }
     }
 }

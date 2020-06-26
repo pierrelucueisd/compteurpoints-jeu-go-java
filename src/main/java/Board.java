@@ -1,25 +1,17 @@
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Board {
     private final Integer size;
-    private final List<Intersection> intersections;
+    private final Intersection[][] intersections;
     private final BoardLogger logger = new BoardLogger();
 
     public Board(Integer size) {
         this.size = size;
-        intersections = initIntersections();
-    }
-
-    private List<Intersection> initIntersections() {
-        return IntStream.range(0, size)
-                .mapToObj(i -> IntStream.range(0, size)
-                    .mapToObj(j -> new Position(i,j))
-                    .map(Intersection::new))
-                .flatMap(Function.identity())
-                .collect(Collectors.toList());
+        intersections = new Intersection[size][size];
+        for(int y = 0; y < size; y++)
+            for (int x = 0; x < size; x++)
+                intersections[y][x] = new Intersection(new Position(x,y));
     }
 
     public boolean isPositionValid(Position pos) {
@@ -29,8 +21,7 @@ public class Board {
 
     public boolean isIntersectionVacant(Position pos) {
         Optional<Intersection> inter = getIntersection(pos);
-        if(!inter.isPresent() || !inter.get().isVacant()) return false;
-        else return true;
+        return inter.isPresent() && inter.get().isVacant();
     }
 
     public void putStone(Color color, Position pos) {
@@ -61,7 +52,7 @@ public class Board {
         if(!interPot.isPresent()) return false;
         Intersection intersection = interPot.get();
         List<Intersection> group = getConnectedIntersectionOfSameOccupation(intersection);
-        return isGroupSuroundedByOneColor(group);
+        return isGroupSurroundedByOneColor(group);
     }
 
     public boolean isKo(Position pos, Color c) {
@@ -70,29 +61,20 @@ public class Board {
 
     public void removeDeadStone() { }
 
-
-    private boolean intersectionHasLiberty(Intersection inter) {
-        for(Intersection adj : getAdjacencyOf(inter)) {
-            Optional<Color> vacant = Optional.empty();
-            if(adj.getOccupation() == vacant) return true;
-        }
-        return false;
-    }
-
-    private boolean isGroupSuroundedByOneColor(List<Intersection> group) { //is surrondedByAnotherplayer
-        List<Optional<Color>> occupationGroup = getGroupOccupations(group);
+    private boolean isGroupSurroundedByOneColor(List<Intersection> group) { //is surrondedByAnotherplayer
+        List<Optional<Color>> groupOccupations = getGroupOccupations(group);
         List<Intersection> border = getGroupBorder(group);
         List<Optional<Color>> occupationBorder = getGroupOccupations(border);
         Optional<Color> vacant = Optional.empty();
-        if(occupationBorder.contains(vacant) && occupationBorder.size() != 1) return false;
+        if(occupationBorder.size() != 1 || occupationBorder.contains(vacant)) return false;
         Optional<Color> occupationB = occupationBorder.get(0);
-        if(occupationGroup.contains(occupationB)) return false;
+        if(groupOccupations.contains(occupationB)) return false;
         return true;
     }
 
     private List<Optional<Color>> getGroupOccupations(List<Intersection> group) {
         List<Optional<Color>> occupations = new ArrayList<>();
-        for(Intersection inter : intersections) {
+        for(Intersection inter : group) {
             Optional<Color> occupation = inter.getOccupation();
             if(!occupations.contains(occupation)) occupations.add(occupation);
         }
@@ -103,9 +85,7 @@ public class Board {
         List<Intersection> border = new ArrayList<>();
         List<Intersection> adjacencesGlobales = new ArrayList<>();
         for(Intersection inter: group) {
-            for(Intersection adj : getAdjacencyOf(inter)) {
-                adjacencesGlobales.add(adj);
-            }
+            adjacencesGlobales.addAll(getAdjacencyOf(inter));
         }
         for(Intersection adj: adjacencesGlobales) {
             if(!group.contains(adj)) border.add(adj);
@@ -122,7 +102,7 @@ public class Board {
     private void removePrisoners(Intersection inter) {
         if(inter.getOccupation().isPresent()) {
             List<Intersection> group = getConnectedIntersectionOfSameOccupation(inter);
-            if (isGroupSuroundedByOneColor(group)){
+            if (isGroupSurroundedByOneColor(group)){
                 Optional<Color> vacant = Optional.empty();
                 setIntersectionsOccupancy(group, vacant);
             }
@@ -157,16 +137,10 @@ public class Board {
 
     private Optional<Intersection> getIntersection(Position pos) {
         if(!isPositionValid(pos)) return Optional.empty();
-        Intersection intersect =  Objects.requireNonNull(intersections.stream()
-                .filter(i -> i.hasPosition(pos))
-                .findFirst()
-                .orElse(null));
-        if(intersect == null) return Optional.empty();
-        else return Optional.of(intersect);
+        return Optional.of(intersections[pos.getY()][pos.getX()]);
     }
 
     private Optional<Intersection> getLeftIntersectionOf(Intersection intersection) {
-
         Position pos = intersection.getPosition();
         Position leftPos = new Position(pos.getX()-1, pos.getY());
         return getIntersection(leftPos);
@@ -190,28 +164,29 @@ public class Board {
         return getIntersection(leftPos);
     }
 
-    private List<Intersection> getAdjacencyOf(Intersection intersec) {
-        List<Intersection> intersections = new ArrayList<Intersection>();
-        Optional<Intersection> inter;
-        inter = getLeftIntersectionOf(intersec);
-        if(inter.isPresent()) intersections.add(inter.get());
-
-        inter = getTopIntersectionOf(intersec);
-        if(inter.isPresent()) intersections.add(inter.get());
-
-        inter = getRightIntersectionOf(intersec);
-        if(inter.isPresent()) intersections.add(inter.get());
-
-        inter = getBottomIntersectionOf(intersec);
-        if(inter.isPresent()) intersections.add(inter.get());
+    private List<Intersection> getAdjacencyOf(Intersection i) {
+        List<Intersection> intersections = new ArrayList<>();
+        getLeftIntersectionOf(i).ifPresent(intersections::add);
+        getTopIntersectionOf(i).ifPresent(intersections::add);
+        getRightIntersectionOf(i).ifPresent(intersections::add);
+        getBottomIntersectionOf(i).ifPresent(intersections::add);
         return intersections;
     }
 
-
-
     @Override
     public String toString() {
-        return "Board";
+        StringBuilder board = new StringBuilder();
+        for(int y = size - 1; y >= 0; y--) {
+            for (int x = 0; x < size; x++) {
+                Intersection i = getIntersection(new Position(x, y)).orElse(null);
+                if (i != null) {
+                    String symbol = i.getOccupation().orElse(Color.None).getSymbol();
+                    board.append(symbol);
+                    board.append((x == size - 1) ? "\n" : "-");
+                }
+            }
+        }
+        return board.toString();
     }
 
     @Override
@@ -220,7 +195,7 @@ public class Board {
         if (o == null || getClass() != o.getClass()) return false;
         Board board = (Board) o;
         return Objects.equals(size, board.size) &&
-                Objects.equals(intersections, board.intersections);
+                Arrays.deepEquals(intersections, board.intersections);
     }
 
     @Override
