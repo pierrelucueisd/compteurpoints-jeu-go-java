@@ -2,7 +2,7 @@ import java.util.Optional;
 
 public class GameConsole {
 
-    public Optional<Action> readAction(String input){
+    public Optional<Action> readAction(String input, Player p){
         Deserializer<Position> pd = new PositionDeserializer();
         if (input.toLowerCase().equals("pass"))
             return Optional.of(new PassAction());
