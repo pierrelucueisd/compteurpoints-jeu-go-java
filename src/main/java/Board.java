@@ -42,9 +42,9 @@ public class Board {
         List<Intersection> adjacences = getAdjacencyOf(intersection);
         ArrayList<Color> otherColors = getOtherColor(color);
         for(Intersection inter : adjacences) {
-            System.out.println(inter.getPosition().toString());
+            //System.out.println(inter.getPosition().toString()); @todo enlever une fois termnié
             if(inter.getOccupation().isPresent() && otherColors.contains(inter.getOccupation().get())) {
-                //ici inter contient une pierre de couleur différente removePrisoners(pos, c);
+                removePrisoners(inter); //remove seulement si groupe sans liberté
             }
         }
     }
@@ -56,7 +56,7 @@ public class Board {
     }
 
     public boolean isSuicide(Position pos, Color color) {
-        List<Intersection> group = getStoneGroup(pos, color, Color.values());
+        List<Intersection> group = getStoneGroup(pos, color);
         return groupHasNoLiberty(group);
     }
 
@@ -67,19 +67,68 @@ public class Board {
     public void removeDeadStone() { }
 
 
-
-    private boolean groupHasNoLiberty(List<Intersection> group) {
+    private boolean intersectionHasLiberty(Intersection inter) {
+        for(Intersection adj : getAdjacencyOf(inter)) {
+            Optional<Color> vacant = Optional.empty();
+            if(adj.getOccupation() == vacant) return true;
+        }
         return false;
     }
 
-    private List<Intersection> getStoneGroup(Position pos, Color color, Color[] values) {
-        return null;
+    private boolean groupHasNoLiberty(List<Intersection> group) {
+        for(Intersection inter: group) {
+            if(intersectionHasLiberty(inter)) return false;
+        }
+        return true;
     }
 
-    private void removePrisoners(Position pos, Color color) {
-        List<Intersection> group = getStoneGroup(pos, color, Color.values());
-        //if (groupHasNoLiberty(group))
-            // do something
+    private List<Intersection> getStoneGroup(Position pos, Color color) {
+        Optional<Intersection> interPot = getIntersection(pos);
+        List<Intersection> group = new ArrayList<>();
+        if(interPot.isPresent()){
+            Intersection inter = interPot.get();
+            List<Optional<Color>> occupations = new ArrayList<>();
+            occupations.add(Optional.of(color));
+            group = getConnectedIntersectionWithOccupationsOf(inter, occupations);
+        }
+        return group;
+    }
+
+    private void removePrisoners(Intersection inter) {
+        if(inter.getOccupation().isPresent()) {
+            Color color = inter.getOccupation().get();
+            List<Intersection> group = getStoneGroup(inter.getPosition(), color);
+            if (groupHasNoLiberty(group)){
+                Optional<Color> vacant = Optional.empty();
+                setIntersectionsOccupancy(group, vacant);
+            }
+        }
+    }
+
+    private void setIntersectionsOccupancy(List<Intersection> intersections, Optional<Color> occupation) {
+        for(Intersection inter : intersections) {
+            inter.setOccupation(occupation);
+        }
+    }
+
+    private List<Intersection> getConnectedIntersectionWithOccupationsOf(
+            Intersection interStart, List<Optional<Color>> occupations) {
+        List<Intersection> visited = new ArrayList<>();
+        Stack<Intersection> stackATraiter = new Stack<>();
+        List<Intersection> conected = new ArrayList<>();
+
+        stackATraiter.push(interStart);
+        do  {
+            Intersection aTraiter = stackATraiter.pop();
+            visited.add(aTraiter);
+            if(occupations.contains(interStart.getOccupation())){
+                conected.add(aTraiter);
+                for(Intersection inter : getAdjacencyOf(aTraiter))
+                    if(!visited.contains(inter)) stackATraiter.push(inter);
+            }
+        }while (!stackATraiter.empty());
+
+        return conected;
     }
 
     private Optional<Intersection> getIntersection(Position pos) {

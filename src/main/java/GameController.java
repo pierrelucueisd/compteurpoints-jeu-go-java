@@ -22,7 +22,7 @@ public class GameController {
 
     public boolean actionTypeLogHaveTwoLasPass() {
         int taille = logActionTypes.size();
-        return !logActionTypes.isEmpty()
+        return taille >= 2
                 && logActionTypes.get(taille-1)== ActionType.Pass
                 && logActionTypes.get(taille-2)== ActionType.Pass;
     }
