@@ -75,11 +75,6 @@ public class Board {
         return false;
     }
 
-    /* @todo l'utilisation de cette fonction est un problème si on ajoute plus d'un joueur
-        on devrait plutôt utiliser une fonction get surronding Intersection et vérifier si
-        elles sont toutes de la même couleur
-        précondidtions même couleur
-     */
     private boolean isGroupSuroundedByOneColor(List<Intersection> group) { //is surrondedByAnotherplayer
         List<Color> BorderColor = new ArrayList<>();
         if(group.size() > 1 && group.get(1).getOccupation().isPresent()) {
