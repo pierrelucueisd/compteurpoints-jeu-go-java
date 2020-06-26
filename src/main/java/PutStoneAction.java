@@ -10,7 +10,7 @@ public class PutStoneAction implements Action {
     }
 
     public ActionType getType() {
-        return type;
+        return ActionType.Play;
     }
 
     public Optional<Position> getPosition() {

@@ -10,7 +10,7 @@ public class PassAction implements Action {
     }
 
     public ActionType getType() {
-        return type;
+        return ActionType.Pass;
     }
 
     public Optional<Position> getPosition() {

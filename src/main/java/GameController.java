@@ -35,16 +35,18 @@ public class GameController {
         while(!actionTypeLogHaveTwoLasPass() && scanner.hasNext()) {
             carousel.nextTurn();
             Player p = carousel.getCurrentPlayer();
-            Action chosenActionT = gameConsole.readAction(scanner.next());
-            Optional<ErrorType> error;
-            while(scanner.hasNext()
-                    && (error = getFirstInvalidityErrorOf(chosenActionT)).isPresent()
+            Optional<Action> chosenActionT = gameConsole.readAction(scanner.next());
+            Optional<ErrorType> error = Optional.empty();
+            int i =0;
+            while(( !chosenActionT.isPresent() || (error = getFirstInvalidityErrorOf(chosenActionT.get())).isPresent())
+                    && scanner.hasNext()
             ) {
-                gameConsole.printResultError(error.get());
+                if(error.isPresent()) gameConsole.printResultError(error.get());
                 chosenActionT = gameConsole.readAction(scanner.next());
             }
-            chosenActionT.execute(board, p);
-            logActionTypes.add(chosenActionT.getType());
+            Action action = chosenActionT.get();
+            action.execute(board, p);
+            logActionTypes.add(action.getType());
             logger.addBoard(board.deepClone());
         }
         endGame();
