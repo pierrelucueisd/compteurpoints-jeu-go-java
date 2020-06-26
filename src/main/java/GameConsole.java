@@ -2,15 +2,15 @@ import java.util.Optional;
 
 public class GameConsole {
 
-    public Action readAction(String input, GameController gc){
+    public Action readAction(String input){
         Deserializer<Position> pd = new PositionDeserializer();
         Optional<Position> vacant = Optional.empty();
-        if (input.toLowerCase().equals("pass")) return new Action(ActionType.Pass, vacant, gc);
+        if (input.toLowerCase().equals("pass")) return new Action(ActionType.Pass, vacant);
         Optional<Position> pos = pd.deserialize(input);
         if(!pos.isPresent())
-            return new Action(ActionType.Invalid, vacant, gc);
+            return new Action(ActionType.Invalid, vacant);
         else
-            return new Action(ActionType.Play, pos, gc);
+            return new Action(ActionType.Play, pos);
     }
 
     public void printBoard(String board) {
