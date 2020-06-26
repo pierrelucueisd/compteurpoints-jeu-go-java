@@ -7,7 +7,7 @@ public class Intersection {
 
     public Intersection(Position position) {
         this.position = position;
-        this.stone = null;
+        this.stone = Color.None;
         this.vacancy = true;
     }
 
@@ -23,10 +23,6 @@ public class Intersection {
     public void removeStone() {
         stone = null;
         vacancy = true;
-    }
-
-    public boolean hasPosition(Position p) {
-        return position.equals(p);
     }
 
     public boolean isVacant() {

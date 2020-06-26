@@ -1,36 +1,41 @@
-import javax.sql.rowset.serial.SerialException;
-import javax.swing.text.html.Option;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 public class GameConsole {
 
-    Scanner scaner;
-    PositionDeserializer deserializer;
-
-    public GameConsole(Scanner sc, PositionDeserializer ds){
-        this.scaner = sc;
-        this.deserializer = ds;
+    public List<Action> readActions(String input) {
+        List<String> inputAction = Arrays.asList(input.split(" "));
+        return inputAction.stream()
+                .map(this::readAction)
+                .collect(Collectors.toList());
     }
 
-    public Action promptAction(Player p) throws Exception {
-        String mot = scaner.nextLine();
-        if(mot.toLowerCase().equals("pass")) return new Action(ActionType.Pass, Optional.empty());
-        Optional<Position> pos = this.deserializer.deserialize(mot);
-        if(pos.isPresent()) return new Action(ActionType.Play, pos);
-        else throw new Exception("Attention le mot: \"" + mot + "\" est incorrect!");
+    public void printBoard(String board) {
+        System.out.println(board);
     }
 
-    public static void printBoard(String board) {
-
+    public void printResultError(ErrorType type) {
+        switch (type){
+            case InvalidPosition:
+                System.out.println("The entered position is invalid.");
+                break;
+            case Suicide:
+                System.out.println("The entered position is a suicide move.");
+                break;
+            case IntersectionTaken:
+                System.out.println("The entered position is already taken.");
+                break;
+            case Ko:
+                System.out.println("The entered position is refused because of the eternity rule(Ko).");
+        }
     }
 
-    public static void printResultError(ErrorType type) {
-
-    }
-
-    public static void printWinner(Player p) {
-
+    private Action readAction(String input){
+        Deserializer<Position> pd = new PositionDeserializer();
+        if (input.toLowerCase().equals("pass")) return new Action(ActionType.Pass, null);
+        Optional<Position> pos = pd.deserialize(input);
+        return pos.map(position -> new Action(ActionType.Play, position)).orElseGet(() -> new Action(ActionType.Invalid, null));
     }
 }

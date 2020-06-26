@@ -118,7 +118,7 @@ GameController --> GameConsole
 
 GameConsole --> Deserializer
 
-PositionDeserializer -> Deserializer
+ActionDeserializer -> Deserializer
 
 Player --> Color
 

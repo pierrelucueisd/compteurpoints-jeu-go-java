@@ -13,10 +13,10 @@ public class Board {
         for(int y = 0; y < size; y++)
             for (int x = 0; x < size; x++)
                 intersections[y][x] = new Intersection(new Position(x,y));
-
     }
 
     public boolean isPositionValid(Position pos) {
+        System.out.println(pos);
         return pos.getX() < size && pos.getY() < size;
     }
 
@@ -48,7 +48,7 @@ public class Board {
     @Override
     public String toString() {
         StringBuilder board = new StringBuilder();
-        for(int y = 0; y < size; y++) {
+        for(int y = size - 1; y >= 0; y--) {
             for (int x = 0; x < size; x++) {
                 Intersection i = getIntersection(new Position(x, y));
                 board.append(i.isVacant() ? "+" : i.getStone().getSymbol());
@@ -89,6 +89,6 @@ public class Board {
     private Intersection getIntersection(Position pos) {
         int x = pos.getX();
         int y = pos.getY();
-        return intersections[x][y];
+        return intersections[y][x];
     }
 }
