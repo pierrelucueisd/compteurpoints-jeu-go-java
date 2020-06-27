@@ -1,7 +1,24 @@
+#Projet de session - INF5153
 
+##Description 
+Ce projet est réalisé dans le carde du cours Génie logiciel: conception (INF5153) offert par l'Université du Québec À 
+Montréal (UQAM). Le projet consiste en l'implémentation d'un jeu de Go. 
 
-## Ébauches de conception
-#### Note
-les représentations graphiques sont actualisés 5 minutes après un push à cause du système de cache des fichiers raw de git. 
+##Règle du Jeu de GO
 
-* [Ébauche Pierre-Luc Maître](conception/plm/conception.md)
+##Fonctionnement
+
+##Contenu du projet
+
+##Auteurs
+* Pierre-Luc Maître ()
+* David Quirion (QUID26099001)
+* Jennifer-Kim Garand (GARJ07599504)
+* Alexandre-Thibault ARCOLE (ARCA83030008)
+
+##License 
+
+Le projet est sous licence MIT X11.
+
+Consulter le fichier [LICENSE.md](LICENSE.md) pour les détails de la licence.
+

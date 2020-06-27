@@ -10,7 +10,7 @@ class GameController {
 }
 
 class GameConsole {
-    + promptAction(Player): Action
+    + promptAction(Player): ActionT
     + printBoard(string)
     + printActionError(ErrorType)
     + printWinner(Player)
@@ -24,7 +24,7 @@ interface Deserializer {
 class PositionDeserializer {
 }
 
-class Action {
+class ActionT {
     - pos: Position
     - type: ActionType
     - error: ErrorType
@@ -101,24 +101,24 @@ class Position {
     - int y
 }
 
-Action --> ActionType
-Action -.> Player
-Action -.> Board
-Action --> ErrorType
+ActionT --> ActionType
+ActionT -.> Player
+ActionT -.> Board
+ActionT --> ErrorType
 
 Intersection --> Position
 
 Board *--> Intersection
 Board -.> BoardLogger
 
-GameController --> Action
+GameController --> ActionT
 GameController --> Board
 GameController --> Player
 GameController --> GameConsole
 
 GameConsole --> Deserializer
 
-PositionDeserializer -> Deserializer
+ActionDeserializer -> Deserializer
 
 Player --> Color
 

@@ -1,33 +1,35 @@
 import java.util.Optional;
-import java.util.Scanner;
 
 public class GameConsole {
 
-    Scanner scaner;
-
-    public GameConsole(Scanner sc){
-        this.scaner = sc;
+    public Optional<Action> readAction(String input, Player p){
+        Deserializer<Position> pd = new PositionDeserializer();
+        if (input.toLowerCase().equals("pass"))
+            return Optional.of(new PassAction());
+        Optional<Position> pos = pd.deserialize(input);
+        if(!pos.isPresent())
+            return Optional.empty();
+        else
+            return Optional.of(new PutStoneAction(pos.get()));
     }
 
-    public Action promptAction(Player p) {
-        Optional<Position> pos = promptPosition();
-        if(pos.isPresent()) return new Action(ActionType.Play, pos);
-        else return new Action(ActionType.Pass, pos);
+    public void printBoard(String board) {
+        System.out.println(board);
     }
 
-    public Optional<Position> promptPosition() {
-        return Optional.empty();
-    }
-
-    public static void printBoard(String board) {
-
-    }
-
-    public static void printResultError(ErrorType type) {
-
-    }
-
-    public static void printWinner(Player p) {
-
+    public void printResultError(ErrorType type) {
+        switch (type){
+            case InvalidPosition:
+                System.out.println("The entered position is invalid.");
+                break;
+            case Suicide:
+                System.out.println("The entered position is a suicide move.");
+                break;
+            case IntersectionTaken:
+                System.out.println("The entered position is already taken.");
+                break;
+            case Ko:
+                System.out.println("The entered position is refused because of the eternity rule(Ko).");
+        }
     }
 }
