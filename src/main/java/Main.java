@@ -1,26 +1,24 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        Scanner s = new Scanner(System.in);
+        int boardSize = 9;
+        GameController gc = new GameController(boardSize);
 
-       /* List<String> listOfString=new ArrayList<String>();
-        for(int i=1;i<=2; i++){
-            System.out.print("Input name, age, address, city: ");
-            String data= s.nextLine();
-            listOfString.add(data);
-        }
-        for(String data:listOfString){
-            String[] splitData= data.split("\\s+");
-            for(int i=0;i<splitData.length;i++){
-                System.out.print(splitData[i] + "\n");
+        Scanner scanner;
+        if (args.length > 0)
+            try {
+                scanner = new Scanner(new File(args[0]));
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found.");
+                scanner = new Scanner(System.in);
             }
-        }*/
+        else
+            scanner = new Scanner(System.in);
 
-        GameController gc = new GameController(9, new GameConsole(new Scanner(System.in)));
-        gc.startGame();
+        gc.startGame(scanner);
     }
 }

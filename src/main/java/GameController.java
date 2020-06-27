@@ -1,48 +1,93 @@
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GameController {
 
-    Board board;
-    List<Player> players;
-    GameConsole gameConsole;
+    private final Board board;
+    private final GameConsole gameConsole;
+    private final ArrayList<ActionType> logActionTypes;
+    private final PlayerCarousel carousel;
+    private final BoardLogger logger = new BoardLogger();
 
-    public GameController(int size, GameConsole gameConsole) {
-        this.gameConsole = gameConsole;
+    public Board getBoard() {
+        return board;
+    }
+
+    public GameController(int size) {
         this.board = new Board(size);
-        this.players = Arrays.stream(Color.values())
+        logActionTypes = new ArrayList<>();
+        this.gameConsole = new GameConsole();
+        List<Player> players = Arrays.stream(Color.values())
+                .filter(c -> c != Color.None)
                 .map(Player::new)
                 .collect(Collectors.toList());
+        this.carousel = new PlayerCarousel(players);
     }
 
-    public void startGame () {
-        while (!allPlayersHavePassed())
-            playTurn();
-        endGame();
+    public boolean actionTypeLogHaveTwoLasPass() {
+        int logSize = logActionTypes.size();
+        return logSize >= 2
+                && logActionTypes.get(logSize - 1)== ActionType.Pass
+                && logActionTypes.get(logSize - 2)== ActionType.Pass;
     }
 
-    private void playTurn() {
-        for (Player p: players) {
-            p.resetPassState();
-            boolean isAllowed;
-            do {
-                Action chosenAction = gameConsole.promptAction(p);
-                isAllowed = chosenAction.isAllowed(board, p);
-                if (isAllowed)
-                    chosenAction.execute(board, p);
-                else
-                    GameConsole.printResultError(chosenAction.getError());
-            } while (!isAllowed);
+    public void startGame (Scanner scanner) {
+        while(!actionTypeLogHaveTwoLasPass() && scanner.hasNext()) {
+            carousel.nextTurn();
+            Player p = carousel.getCurrentPlayer();
+            Optional<Action> chosenActionT = gameConsole.readAction(scanner.next(), p);
+            Optional<ErrorType> error = Optional.empty();
+            while(( !chosenActionT.isPresent() || (error = getFirstInvalidityErrorOf(chosenActionT.get())).isPresent())
+                    && scanner.hasNext()
+            ) {
+                if(error.isPresent()) gameConsole.printResultError(error.get());
+                chosenActionT = gameConsole.readAction(scanner.next(), p);
+            }
+            Action action = chosenActionT.get();
+            action.execute(board, p);
+            logActionTypes.add(action.getType());
+            logger.addBoard(new Board(board));
         }
+        endGame();
     }
 
     private void endGame() {
         board.removeDeadStone();
-        GameConsole.printBoard(board.toString());
+        gameConsole.printBoard(board.toString());
     }
 
-    private boolean allPlayersHavePassed() {
-        return players.stream().allMatch(Player::hasPassed);
+    private Optional<ErrorType> getFirstInvalidityErrorOf(Action actionT) {
+        Optional<Position> pos = actionT.getPosition();
+        Player p = carousel.getCurrentPlayer();
+        if(pos.isPresent()) {
+            if(!board.isPositionValid(pos.get()))
+                return Optional.of(ErrorType.InvalidPosition);
+            if (!board.isIntersectionVacant(pos.get()))
+                return Optional.of(ErrorType.IntersectionTaken);
+            if(isActionSuicide(actionT, p))
+                return Optional.of(ErrorType.Suicide);
+            if(isActionKo(actionT, p))
+                return Optional.of(ErrorType.Ko);
+        }
+        return Optional.empty();
+    }
+
+    // faire ici les modifs pour que la fonction fonctionne
+    private boolean isActionSuicide(Action actionT, Player p) {
+        Board bC = new Board(board);
+        Player pC = new Player(p);
+        actionT.execute(bC, pC);
+        Optional<Position> pos = actionT.getPosition();
+        if(!pos.isPresent()) return false;
+        return board.isASurrondedGroup(pos.get());
+    }
+
+    private boolean isActionKo(Action actionT, Player p) {
+        Board bC = new Board(board);
+        Player pl = new Player(p);
+        actionT.execute(bC, pl);
+        Optional<Board> lastBoard = logger.getLastBoard();
+        if(!lastBoard.isPresent()) return false;
+        return lastBoard.get().equals(bC);
     }
 }
