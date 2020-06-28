@@ -1,5 +1,10 @@
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+/**
+ * Responsability : Updates the intersections of a board by putting/removing stones.
+ */
 
 public class Board {
     private final Integer size;
@@ -104,7 +109,16 @@ public class Board {
     @Override
     public String toString() {
         StringBuilder board = new StringBuilder();
+        String boardAxis = IntStream.rangeClosed('A', 'Z')
+                .filter(c -> c != 'I').limit(size)
+                .mapToObj(c -> " " + (char) c)
+                .collect(Collectors.joining());
+
+        board.append(" ").append(boardAxis).append('\n');
+
         for(int y = size - 1; y >= 0; y--) {
+            board.append(y + 1);
+            board.append(" ");
             for (int x = 0; x < size; x++) {
                 Optional<Color> occupation = getIntersection(x, y).getOccupation();
                 String symbol = occupation.isPresent() ? occupation.get().getSymbol() : "+";

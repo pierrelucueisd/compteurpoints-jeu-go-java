@@ -23,11 +23,4 @@ public class Player {
     public void pass() {
         this.hasPassed = true;
     }
-
-    @Override
-    public String toString() {
-        return "Player{" +
-                "color=" + color +
-                '}';
-    }
 }
