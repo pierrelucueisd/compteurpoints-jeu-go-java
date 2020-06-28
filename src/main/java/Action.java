@@ -1,7 +1,7 @@
 import java.util.Optional;
 
 public interface Action {
-    ActionType getType();
+    Optional<ErrorType> isAllowed(GameController gc, Player p);
     Optional<Position> getPosition();
-    void execute(Board b, Player p);
+    void execute(GameController gc, Player p);
 }

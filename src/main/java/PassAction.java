@@ -2,15 +2,14 @@ import java.util.Optional;
 
 public class PassAction implements Action {
 
-    public PassAction() {}
+    public void execute(GameController gc, Player p) { p.pass(); }
 
-    public ActionType getType() {
-        return ActionType.Pass;
-    }
-
-    public Optional<Position> getPosition() {
+    public Optional<ErrorType> isAllowed(GameController gc, Player p) {
         return Optional.empty();
     }
 
-    public void execute(Board b, Player p) {}
+    @Override
+    public Optional<Position> getPosition() {
+        return Optional.empty();
+    }
 }
