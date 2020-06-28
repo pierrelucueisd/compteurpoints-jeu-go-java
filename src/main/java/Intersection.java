@@ -1,29 +1,70 @@
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Intersection {
     private final Position position;
-    private Optional<Color> occupation;
+    private Color occupation;
 
     public Intersection(Position position) {
         this.position = position;
-        this.occupation = Optional.empty();
     }
 
-    public void setOccupation(Optional<Color> occupation) {
+    public Intersection(Intersection i) {
+        this.position = new Position(i.position);
+        this.occupation = i.occupation;
+    }
+
+    public void setOccupation(Color occupation) {
         this.occupation = occupation;
     }
 
-    public Position getPosition() {
-        return position;
-    }
-
     public Optional<Color> getOccupation() {
-        return occupation;
+        return Optional.ofNullable(occupation);
     }
 
     public boolean isVacant() {
-        return !occupation.isPresent();
+        return occupation == null;
+    }
+
+    public boolean isEnemy(Intersection i) {
+        return i.occupation != null && i.occupation != occupation;
+    }
+
+    public boolean isFriendly(Intersection i) {
+        return i.occupation == occupation;
+    }
+
+    public List<Intersection> getNeighbors(Board b) {
+        int x = position.getX();
+        int y = position.getY();
+        return Stream.of(new Position[] {
+                new Position(x - 1, y),
+                new Position(x, y + 1),
+                new Position(x + 1, y),
+                new Position(x, y - 1)})
+                .filter(p -> p.isValid(b))
+                .map(b::getIntersection)
+                .collect(Collectors.toList());
+    }
+
+    public List<Intersection> getEnemyNeighbors(Board b) {
+        return getNeighbors(b).stream()
+                .filter(this::isEnemy)
+                .collect(Collectors.toList());
+    }
+
+    public List<Intersection> getFriendlyNeighbors(Board b) {
+        return getNeighbors(b).stream()
+                .filter(this::isFriendly)
+                .collect(Collectors.toList());
+    }
+
+    public boolean hasLiberty(Board b) {
+        return getNeighbors(b).stream()
+                .anyMatch(Intersection::isVacant);
     }
 
     @Override
@@ -38,14 +79,5 @@ public class Intersection {
     @Override
     public int hashCode() {
         return Objects.hash(position, occupation);
-    }
-
-    public Intersection(Intersection other) {
-        this.position = new Position(other.position);
-        if(other.occupation.isPresent()) {
-            this.occupation = Optional.of(other.occupation.get());
-        }else {
-            this.occupation = Optional.empty();
-        }
     }
 }

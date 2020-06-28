@@ -60,7 +60,7 @@ enum Color{
 class Board {
     - size: int
     - intersections: List<Intersection>
-    - logger: BoardLogger
+    - logger: BoardController
     + isPositionValid(Position): boolean
     + isIntersectionVacant(Position): boolean
     + isSuicide(Positon, Color)
@@ -73,7 +73,7 @@ class Board {
     - removePrisoners(): void
 }
 
-class BoardLogger {
+class BoardController {
     - List<Board> boardHistory;
     + addBoard(Board);
     + getLastBoard(): Board;
@@ -109,7 +109,7 @@ ActionT --> ErrorType
 Intersection --> Position
 
 Board *--> Intersection
-Board -.> BoardLogger
+Board -.> BoardController
 
 GameController --> ActionT
 GameController --> Board
