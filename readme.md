@@ -99,7 +99,7 @@ Dans ce dossier, vous retrouvez toutes les classes contenant le code source du l
 #### projet-de-session-equipe_tres_solid/src/test
 Dans ce dossier vous retrouverez tous les tests unitaires.
 
-    -/test/java/
+    -/java/
     
         Le dossier de test contient la classe de test :
         
