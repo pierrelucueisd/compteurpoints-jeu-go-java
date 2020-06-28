@@ -1,7 +1,4 @@
-import java.util.Arrays;
-
 public enum Color {
-    None("+"),
     Black("*"),
     White("o");
 

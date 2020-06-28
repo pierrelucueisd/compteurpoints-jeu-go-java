@@ -7,7 +7,6 @@ public class PutStoneAction implements Action {
         this.position = position;
     }
 
-
     public ActionType getType() {
         return ActionType.Play;
     }

@@ -22,6 +22,11 @@ public class Position {
         return y;
     }
 
+    public boolean isValid(Board b) {
+        int size = b.getSize();
+        return x < size && y < size && x >= 0 && y >= 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
