@@ -3,6 +3,8 @@
 title Diagramme de classe du jeu de go
 
 class GameController {
+    - GameConsole gameConsole;
+    - BoardController boardController;
     + startGame()
     - playTurn()
     - allPlayerHavePassed()
@@ -37,7 +39,8 @@ class PlayerCarousel {
 }
 
 class Player {
-    - color: Color
+    - Color color
+    - boolean hasPassed
     + hasPassed(): boolean
     + pass()
     + resetPass()
@@ -49,8 +52,8 @@ enum Color{
 }
 
 class Board {
-    - size: int
-    - intersections: List<Intersection>
+    - int size;
+    - List<Intersection> intersections;
     + putStone(Position, Color)
     + getIntersection(Position): Intersection
     + getStoneGroup(Stone, List<Optional<Color>>)
@@ -70,8 +73,8 @@ class BoardController {
 }
 
 class Intersection {
-    - occupation: Color
-    - position: Position
+    - Color occupation;
+    - Position position;
     + isVacant()
     + isEnemy()
     + isFriendly()
