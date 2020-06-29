@@ -8,17 +8,15 @@ public class Main {
         int boardSize = 9;
         GameController gc = new GameController(boardSize);
 
-        Scanner scanner;
         if (args.length > 0)
             try {
-                scanner = new Scanner(new File(args[0]));
+                Scanner scanner = new Scanner(new File(args[0]));
+                gc.startGame(scanner);
             } catch (FileNotFoundException e) {
                 System.out.println("File not found.");
-                scanner = new Scanner(System.in);
             }
         else
-            scanner = new Scanner(System.in);
+            System.out.println("Provide a valid file path as parameter");
 
-        gc.startGame(scanner);
     }
 }
