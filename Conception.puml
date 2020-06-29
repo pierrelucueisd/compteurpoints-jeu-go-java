@@ -18,16 +18,10 @@ interface Deserializer {
     + deserialize(string)
 }
 
-class PositionDeserializer {
-}
-
 interface Action {
-    + execute(Player, Board)
-    + isAllowed(Player, Board)
+    + execute(BoardController, Player)
+    + isAllowed(BoardController, Player)
 }
-
-class PassAction {}
-class PlayAction {}
 
 enum ErrorType {
     Ko
@@ -44,7 +38,7 @@ class PlayerCarousel {
 
 class Player {
     - color: Color
-    + hasPassed: boolean
+    + hasPassed(): boolean
     + pass()
     + resetPass()
 }
@@ -67,9 +61,8 @@ class BoardController {
     - List<Board> boardHistory;
     - Board current;
     + addBoard(Board);
-    + putStoneOnBoard
+    + putStoneOnBoard(Position, Player)
     + getSecondLastBoard(): Board;
-    // Action validation
     + isPositionValid(Position)
     + isIntersectionVacant(Position)
     + isActionSuicide(Position, Player)
@@ -89,33 +82,34 @@ class Intersection {
 }
 
 class Position {
-    Position(x,y)
     - int x
     - int y
     + isValid(Board)
 }
 
-Action -.> Player
+GameController o-> BoardController
+GameController --> PlayerCarousel
+GameController --> GameConsole
+
+GameConsole -> Deserializer
+GameConsole -.> Action
+
+BoardController o--> Board
+BoardController .> Player
+
+Board *-> Intersection
+
+Intersection -> Position
+
+PositionDeserializer --> Deserializer
+
 Action -.> BoardController
-Action --> ErrorType
+Action .> Player
+Action -> ErrorType
 
 PassAction --> Action
 PlayAction --> Action
 
-Intersection --> Position
-
-Board *--> Intersection
-Board -.> BoardController
-
-GameController -.> Action
-GameController --> BoardController
-GameController -> PlayerCarousel
-GameController --> GameConsole
-
-GameConsole --> Deserializer
-
-PositionDeserializer -> Deserializer
-
-Player --> Color
+Player -> Color
 
 @enduml
