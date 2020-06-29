@@ -6,31 +6,27 @@ public class BoardController {
     private final List<Board> history = new ArrayList<>();
 
     public void addBoard(Board b) {
-        history.add(b);
+        history.add(new Board(b));
     }
 
-    public Optional<Board> getLastBoard() {
-        if (history.isEmpty())
-            return Optional.empty();
-        else
-            return Optional.of(history.get(history.size()-1));
+    public Optional<Board> getSecondLastBoard() {
+        return history.size() < 2 ? Optional.empty() : Optional.of(history.get(history.size() - 2));
     }
 
     public boolean isActionSuicide(Action a, Board b, Player p) {
-        Board bC = new Board(b);
+        Board copy = new Board(b);
         if (a.getPosition().isPresent()) {
-            b.putStone(p.getColor(), a.getPosition().get());
-            return bC.isSuicide(a.getPosition().get());
+            copy.putStone(p.getColor(), a.getPosition().get());
+            return copy.isSuicide(a.getPosition().get());
         }
         return false;
     }
 
     public boolean isActionKo(Action a, Board b, Player p) {
-        Board bC = new Board(b);
-        a.getPosition().ifPresent((pos -> b.putStone(p.getColor(), pos)));
+        Board copy = new Board(b);
         if (a.getPosition().isPresent()) {
-            b.putStone(p.getColor(), a.getPosition().get());
-            return getLastBoard().map(value -> value.equals(bC)).orElse(false);
+            copy.putStone(p.getColor(), a.getPosition().get());
+            return getSecondLastBoard().map(value -> value.equals(copy)).orElse(false);
         }
         return false;
     }

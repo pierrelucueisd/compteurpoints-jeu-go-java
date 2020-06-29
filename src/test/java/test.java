@@ -24,7 +24,8 @@ class MainTest {
     @Test
     void test1() {
         String actions = "G7 G6 F6 G5 H5 H6 J6 H7 H8";
-        testBoard(actions, "  A B C D E F G H J\n"+
+        testBoard(actions,
+                "  A B C D E F G H J\n"+
                 "9 +-+-+-+-+-+-+-+-+\n" +
                 "8 +-+-+-+-+-+-+-*-+\n" +
                 "7 +-+-+-+-+-+-*-o-+\n" +
@@ -39,7 +40,8 @@ class MainTest {
     @Test
     void test2() {
         String actions = "G7 H7 J7 H6 H8 PASS G6 PASS J6 PASS H5";
-        testBoard(actions, "  A B C D E F G H J\n"+
+        testBoard(actions,
+                "  A B C D E F G H J\n"+
                 "9 +-+-+-+-+-+-+-+-+\n" +
                 "8 +-+-+-+-+-+-+-*-+\n" +
                 "7 +-+-+-+-+-+-*-+-*\n" +
@@ -54,7 +56,8 @@ class MainTest {
     @Test
     void test3() {
         String actions = "G7 F3 G6 C3 D3 D2 D5 C7 F5 B5 C6 B6 D7 C8 E6 G4 F7 F9 E8 E9 D9 D8 H8 F8 H9 D4 E4 E3 H5 H4 J6 C5 J4 D6 E7 H3 E5 J3 F4 C6 G8 C9 PASS PASS";
-        testBoard(actions, "  A B C D E F G H J\n"+
+        testBoard(actions,
+                "  A B C D E F G H J\n"+
                 "9 +-+-o-+-o-o-+-*-+\n" +
                 "8 +-+-o-o-*-o-*-*-+\n" +
                 "7 +-+-o-*-*-*-*-+-+\n" +
@@ -69,13 +72,14 @@ class MainTest {
 
     void testBoardIsKO() {
         String actions = "E4 D4 D5 C5 F5 D6 E6 E5 D5 PASS PASS";
-        testBoard(actions, "  A B C D E F G H J\n"+
+        testBoard(actions,
+                "  A B C D E F G H J\n"+
                 "9 +-+-+-+-+-+-+-+-+\n" +
                 "8 +-+-+-+-+-+-+-+-+\n" +
                 "7 +-+-+-+-+-+-+-+-+\n" +
-                "6 +-+-+-*-o-+-+-+-+\n" +
-                "5 +-+-*-+-*-o-+-+-+\n" +
-                "4 +-+-+-*-o-+-+-+-+\n" +
+                "6 +-+-+-o-*-+-+-+-+\n" +
+                "5 +-+-o-+-o-*-+-+-+\n" +
+                "4 +-+-+-o-*-+-+-+-+\n" +
                 "3 +-+-+-+-+-+-+-+-+\n" +
                 "2 +-+-+-+-+-+-+-+-+\n" +
                 "1 +-+-+-+-+-+-+-+-+\n");
@@ -84,7 +88,8 @@ class MainTest {
     @Test
     void testBoardIsNotKO() {
         String actions = "D4 D5 E4 F4 E6 F6 C5 E5 D6 G5 F5 E5 PASS PASS";
-        testBoard(actions, "  A B C D E F G H J\n"+
+        testBoard(actions,
+                "  A B C D E F G H J\n"+
                 "9 +-+-+-+-+-+-+-+-+\n" +
                 "8 +-+-+-+-+-+-+-+-+\n" +
                 "7 +-+-+-+-+-+-+-+-+\n" +
@@ -104,7 +109,7 @@ class MainTest {
                 "8 +-+-+-+-+-+-+-+-+\n" +
                 "7 +-+-+-o-o-o-*-+-+\n" +
                 "6 +-+-+-+-*-*-o-+-+\n" +
-                "5 +-+-+-*-+-o-*-*-+\n" +
+                "5 +-+-+-*-+-o-*-o-+\n" +
                 "4 +-+-+-+-*-*-+-+-+\n" +
                 "3 +-+-+-+-+-+-+-+-+\n" +
                 "2 +-+-+-+-+-+-+-+-+\n" +
@@ -115,12 +120,13 @@ class MainTest {
     @Test
     void testBoardIsNotSuicide() {
         String actions = "F6 F5 F4 F7 E4 E7 D5 G6 E6 D7 G5 H5 G7 D6 F8 E5 PASS PASS";
-        testBoard(actions, "  A B C D E F G H J\n"+
+        testBoard(actions,
+                "  A B C D E F G H J\n"+
                 "9 +-+-+-+-+-+-+-+-+\n" +
                 "8 +-+-+-+-+-*-+-+-+\n" +
                 "7 +-+-+-o-o-o-*-+-+\n" +
                 "6 +-+-+-o-+-+-o-+-+\n" +
-                "5 +-+-+-*-o-o-*-*-+\n" +
+                "5 +-+-+-*-o-o-*-o-+\n" +
                 "4 +-+-+-+-*-*-+-+-+\n" +
                 "3 +-+-+-+-+-+-+-+-+\n" +
                 "2 +-+-+-+-+-+-+-+-+\n" +
