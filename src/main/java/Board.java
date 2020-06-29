@@ -48,21 +48,6 @@ public class Board {
         removePrisoners(i);
     }
 
-    public void removeDeadStone() {
-        for(int y = 0; y < size; y++)
-            for (int x = 0; x < size; x++) {
-//                Intersection i = getIntersection(x, y);
-//                i.getOccupation().ifPresent(o -> {
-//                    List<Optional<Color>> occupations = new ArrayList<>();
-//                    occupations.add(Optional.of(o));
-//                    occupations.add(Optional.empty());
-//                    List<Intersection> group = getConnectedIntersectionWithOccupationsOf(i, occupations);
-//                    if(isGroupSurroundedByOneColor(group))
-//                        setIntersectionsOccupancy(group, null);
-//                });
-            }
-    }
-
     public boolean isSuicide(Position pos) {
         Intersection i = getIntersection(pos);
         List<Intersection> group = getStoneGroup(i);

@@ -34,7 +34,7 @@ public class GameController {
             playTurn(scanner, p);
             carousel.nextTurn();
         }
-        endGame();
+        gameConsole.printBoard(board.toString());
     }
 
     private void playTurn(Scanner scanner, Player p) {
@@ -47,11 +47,6 @@ public class GameController {
         }
 
         action.ifPresent(a -> a.execute(this, p));
-    }
-
-    private void endGame() {
-        board.removeDeadStone();
-        gameConsole.printBoard(board.toString());
     }
 
     private boolean bothPlayerHavePassed(List<Player> players) {
