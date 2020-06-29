@@ -17,7 +17,7 @@ class MainTest {
     void testBoard(String input, String expected) {
         Scanner scanner = new Scanner(input);
         gc.startGame(scanner);
-        String result = gc.getBoard().toString();
+        String result = gc.getBoardToString();
         assertEquals(result, expected);
     }
 

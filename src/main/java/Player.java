@@ -23,4 +23,8 @@ public class Player {
     public void pass() {
         this.hasPassed = true;
     }
+
+    public void resetPass() {
+        this.hasPassed = false;
+    }
 }

@@ -6,21 +6,12 @@ import java.util.stream.Collectors;
 
 public class GameController {
 
-    private final Board board;
     private final GameConsole gameConsole;
-    private final BoardController boardController = new BoardController();
-
-    public Board getBoard() {
-        return board;
-    }
+    private final BoardController boardController;
 
     public GameController(int size) {
-        this.board = new Board(size);
+        this.boardController = new BoardController(size);
         this.gameConsole = new GameConsole();
-    }
-
-    public BoardController getBoardController() {
-        return boardController;
     }
 
     public void startGame (Scanner scanner) {
@@ -29,27 +20,32 @@ public class GameController {
                 .collect(Collectors.toList());
         PlayerCarousel carousel = new PlayerCarousel(players);
 
-        while(!bothPlayerHavePassed(players) && scanner.hasNext()) {
+        while(!allPlayerHavePassed(players) && scanner.hasNext()) {
             Player p = carousel.getCurrentPlayer();
             playTurn(scanner, p);
             carousel.nextTurn();
         }
-        gameConsole.printBoard(board.toString());
+        gameConsole.printBoard(getBoardToString());
+    }
+
+    public String getBoardToString() {
+        return boardController.getCurrentBoard().toString();
     }
 
     private void playTurn(Scanner scanner, Player p) {
+        p.resetPass();
         Optional<Action> action = gameConsole.readAction(scanner.next());
-        Optional<ErrorType> error = action.flatMap(a -> a.isAllowed(this, p));
+        Optional<ErrorType> error = action.flatMap(a -> a.isAllowed(boardController, p));
         while((!action.isPresent() || error.isPresent()) && scanner.hasNext()) {
             error.ifPresent(gameConsole::printResultError);
             action = gameConsole.readAction(scanner.next());
-            error = action.flatMap(a -> a.isAllowed(this, p));
+            error = action.flatMap(a -> a.isAllowed(boardController, p));
         }
 
-        action.ifPresent(a -> a.execute(this, p));
+        action.ifPresent(a -> a.execute(boardController, p));
     }
 
-    private boolean bothPlayerHavePassed(List<Player> players) {
+    private boolean allPlayerHavePassed(List<Player> players) {
         return players.stream().allMatch(Player::hasPassed);
     }
 }
