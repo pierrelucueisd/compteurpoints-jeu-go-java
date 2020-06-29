@@ -1,6 +1,6 @@
 public enum Color {
-    Black("*"),
-    White("o");
+    Black("○"),
+    White("●");
 
     private final String symbol;
 

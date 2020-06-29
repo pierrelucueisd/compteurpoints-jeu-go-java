@@ -38,51 +38,18 @@ public class Board {
         return intersections[y][x];
     }
 
-    public boolean isIntersectionVacant(Position pos) {
-        return getIntersection(pos).isVacant();
-    }
-
     public void putStone(Color color, Position p) {
         Intersection i = getIntersection(p);
         i.setOccupation(color);
         removePrisoners(i);
     }
 
-    public void removeDeadStone() {
-        for(int y = 0; y < size; y++)
-            for (int x = 0; x < size; x++) {
-//                Intersection i = getIntersection(x, y);
-//                i.getOccupation().ifPresent(o -> {
-//                    List<Optional<Color>> occupations = new ArrayList<>();
-//                    occupations.add(Optional.of(o));
-//                    occupations.add(Optional.empty());
-//                    List<Intersection> group = getConnectedIntersectionWithOccupationsOf(i, occupations);
-//                    if(isGroupSurroundedByOneColor(group))
-//                        setIntersectionsOccupancy(group, null);
-//                });
-            }
-    }
 
-    public boolean isSuicide(Position pos) {
-        Intersection i = getIntersection(pos);
-        List<Intersection> group = getStoneGroup(i);
-        return isGroupPrisoner(group);
-    }
-
-    private void removePrisoners(Intersection i) {
-        List<Intersection> enemyNeighbors = i.getEnemyNeighbors(this);
-        for (Intersection enemy: enemyNeighbors)  {
-            List<Intersection> group = getStoneGroup(enemy);
-            if (isGroupPrisoner(group))
-                group.forEach(v -> v.setOccupation(null));
-        }
-    }
-
-    private boolean isGroupPrisoner(List<Intersection> group) {
+    public boolean isGroupPrisoner(List<Intersection> group) {
         return group.stream().noneMatch(i -> i.hasLiberty(this));
     }
 
-    private List<Intersection> getStoneGroup(Intersection i) {
+    public List<Intersection> getStoneGroup(Intersection i) {
         List<Intersection> visited = new ArrayList<>();
         Stack<Intersection> notVisited = new Stack<>();
         List<Intersection> group = new ArrayList<>();
@@ -104,6 +71,15 @@ public class Board {
         }
 
         return group;
+    }
+
+    private void removePrisoners(Intersection i) {
+        List<Intersection> enemyNeighbors = i.getEnemyNeighbors(this);
+        for (Intersection enemy: enemyNeighbors)  {
+            List<Intersection> group = getStoneGroup(enemy);
+            if (isGroupPrisoner(group))
+                group.forEach(v -> v.setOccupation(null));
+        }
     }
 
     @Override

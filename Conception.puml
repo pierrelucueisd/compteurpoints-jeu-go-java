@@ -5,51 +5,48 @@ title Diagramme de classe du jeu de go
 class GameController {
     + startGame()
     - playTurn()
-    - endGame()
     - allPlayerHavePassed()
 }
 
 class GameConsole {
-    + promptAction(Player): ActionT
+    + promptAction(Player): Action
     + printBoard(string)
-    + printActionError(ErrorType)
-    + printWinner(Player)
+    + printResultError(ErrorType)
 }
 
 interface Deserializer {
     + deserialize(string)
-    - validate(Object)
 }
 
 class PositionDeserializer {
 }
 
-class ActionT {
-    - pos: Position
-    - type: ActionType
-    - error: ErrorType
+interface Action {
     + execute(Player, Board)
     + isAllowed(Player, Board)
 }
 
-enum ActionType {
-    PASS
-    PLAY
-}
+class PassAction {}
+class PlayAction {}
 
 enum ErrorType {
     Ko
-    None
     Suicide
     InvalidPosition
     IntersectionTaken
 }
 
-class Player{
+class PlayerCarousel {
+    - List<Player> players;
+    + nextTurn()
+    + getCurrentPlayer() : Player
+}
+
+class Player {
     - color: Color
     + hasPassed: boolean
     + pass()
-    + resetPassState()
+    + resetPass()
 }
 
 enum Color{
@@ -60,65 +57,64 @@ enum Color{
 class Board {
     - size: int
     - intersections: List<Intersection>
-    - logger: BoardController
-    + isPositionValid(Position): boolean
-    + isIntersectionVacant(Position): boolean
-    + isSuicide(Positon, Color)
-    + isKo(Position, Color)
     + putStone(Position, Color)
-    + removeDeadStone(): void
-    - getIntersection(Position): Intersection
-    - stoneGroupHasLiberty(List<Stone>) : boolean
-    - getStoneGroup(Stone, List<Optional<Color>>)
-    - removePrisoners(): void
+    + getIntersection(Position): Intersection
+    + getStoneGroup(Stone, List<Optional<Color>>)
+    - removePrisoners(Intersection): void
 }
 
 class BoardController {
     - List<Board> boardHistory;
+    - Board current;
     + addBoard(Board);
-    + getLastBoard(): Board;
-}
-
-class Chain? {
-- head: Position
-- stones: ArrayList<Position>
-- color: Color
-+ addStone()
+    + putStoneOnBoard
+    + getSecondLastBoard(): Board;
+    // Action validation
+    + isPositionValid(Position)
+    + isIntersectionVacant(Position)
+    + isActionSuicide(Position, Player)
+    + isActionKo(Position, Player)
 }
 
 class Intersection {
-    - vacancy: boolean
+    - occupation: Color
     - position: Position
-    - stone: Color
     + isVacant()
+    + isEnemy()
+    + isFriendly()
     + hasPosition(Position)
+    + getNeighbors(Board)
+    + getEnemyNeighbors(Board)
+    + getFriendlyNeighbors(Board)
 }
 
 class Position {
-    Position() // x = y = -1
     Position(x,y)
     - int x
     - int y
+    + isValid(Board)
 }
 
-ActionT --> ActionType
-ActionT -.> Player
-ActionT -.> Board
-ActionT --> ErrorType
+Action -.> Player
+Action -.> BoardController
+Action --> ErrorType
+
+PassAction --> Action
+PlayAction --> Action
 
 Intersection --> Position
 
 Board *--> Intersection
 Board -.> BoardController
 
-GameController --> ActionT
-GameController --> Board
-GameController --> Player
+GameController -.> Action
+GameController --> BoardController
+GameController -> PlayerCarousel
 GameController --> GameConsole
 
 GameConsole --> Deserializer
 
-ActionDeserializer -> Deserializer
+PositionDeserializer -> Deserializer
 
 Player --> Color
 

@@ -8,29 +8,19 @@ public class PlayAction implements Action {
     }
 
     @Override
-    public Optional<ErrorType> isAllowed(GameController gc, Player p) {
-        Board b = gc.getBoard();
-        BoardController bc = gc.getBoardController();
-        if(!position.isValid(b))
+    public Optional<ErrorType> isAllowed(BoardController bc, Player p) {
+        if(!bc.isPositionValid(position))
             return Optional.of(ErrorType.InvalidPosition);
-        if (!b.isIntersectionVacant(position))
+        if (!bc.isIntersectionVacant(position))
             return Optional.of(ErrorType.IntersectionTaken);
-        if(bc.isActionSuicide(this, b, p))
+        if(bc.isActionSuicide(position, p))
             return Optional.of(ErrorType.Suicide);
-        if(bc.isActionKo(this, b, p))
+        if(bc.isActionKo(position, p))
             return Optional.of(ErrorType.Ko);
         return Optional.empty();
     }
 
-    @Override
-    public Optional<Position> getPosition() {
-        return Optional.ofNullable(position);
+    public void execute(BoardController bc, Player p) {
+        bc.putStoneOnBoard(p.getColor(), position);
     }
-
-    public void execute(GameController gc, Player p) {
-        Board b = gc.getBoard();
-        b.putStone(p.getColor(), position);
-        gc.getBoardController().addBoard(b);
-    }
-
 }
