@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GameController {
 
@@ -20,12 +21,17 @@ public class GameController {
                 .collect(Collectors.toList());
         PlayerCarousel carousel = new PlayerCarousel(players);
 
-        while(!allPlayerHavePassed(players) && scanner.hasNext()) {
+        ErrorObservable obs = ErrorObservable.getSingleton();
+        List<ErrorObserver> observers = Stream.of(carousel, gameConsole).collect(Collectors.toList());
+        observers.forEach(obs::attach);
+
+        while (!allPlayerHavePassed(players) && scanner.hasNext()) {
             Player p = carousel.getCurrentPlayer();
             playTurn(scanner, p);
             carousel.nextTurn();
         }
         gameConsole.printBoard(getBoardToString());
+        observers.forEach(obs::detach);
     }
 
     public String getBoardToString() {
@@ -34,15 +40,11 @@ public class GameController {
 
     private void playTurn(Scanner scanner, Player p) {
         p.resetPass();
-        Optional<Action> action = gameConsole.readAction(scanner.next());
-        Optional<ErrorType> error = action.flatMap(a -> a.isAllowed(boardController, p));
-        while((!action.isPresent() || error.isPresent()) && scanner.hasNext()) {
-            error.ifPresent(gameConsole::printResultError);
+        Optional<Action> action;
+        do {
             action = gameConsole.readAction(scanner.next());
-            error = action.flatMap(a -> a.isAllowed(boardController, p));
-        }
-
-        action.ifPresent(a -> a.execute(boardController, p));
+            action.ifPresent(a -> a.execute(boardController, p));
+        } while(!action.isPresent() && scanner.hasNext());
     }
 
     private boolean allPlayerHavePassed(List<Player> players) {

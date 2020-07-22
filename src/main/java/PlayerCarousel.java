@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class PlayerCarousel {
+public class PlayerCarousel implements ErrorObserver {
 
     int nbIter;
     final List<Player> players;
@@ -18,4 +18,9 @@ public class PlayerCarousel {
         return players.get(nbIter % players.size());
     }
 
+    @Override
+    public void update(ErrorType err) {
+        // If an error occurs, the current player will have to play again
+        nbIter--;
+    }
 }
