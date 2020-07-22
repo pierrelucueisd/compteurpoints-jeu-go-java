@@ -1,0 +1,61 @@
+@startuml
+
+
+
+class ConnectedIntersectionsFetcher {
+    +ConnectedIntersectionsFetcher(Color)
+    +fetchFromList(List<Intersections>): ConnectedIntersections
+}
+
+class ConnectedIntersections {
+    -color : Color
+    -members: List<Intersections>
+    +addIntesection(Intersection)
+}
+
+ConnectedIntersectionsFetcher . ConnectedIntersections
+
+
+Interface EncircledAreaInterface {
+    +accept(Visitor v)
+}
+class EncirclingArea{
+  -ConnectedIntersections border
+  -ConnectedIntersections borderFullChain
+  -List<Intersections> encircledIntersections
+}
+class EyeArea {
+}
+
+EncircledAreaInterface <-- EncirclingArea
+EncircledAreaInterface --o EncirclingArea
+EncirclingArea <-- EyeArea
+ConnectedIntersections - EncirclingArea
+
+
+class EncicrlingAreaFetcher{
+    +EncicrlingAreaFetcher(\n\t Color color, \n\t List<intersections> liste, \n\t int maxContentSize  \n)
+    +fetch(): List<EncircledAreaInterface>
+}
+
+EncicrlingAreaFetcher . EncircledAreaInterface
+
+interface Visitor {
+    +visit(EncircledAreaInterface)
+}
+
+class teritoryMemberVisitor
+
+EncircledAreaInterface . Visitor
+teritoryMemberVisitor --> Visitor
+MemberFullBorderVisitor --> Visitor
+MemberBorderVisitor --> Visitor
+
+class pointCalculator
+pointCalculator .. EncicrlingAreaFetcher
+pointCalculator .. teritoryMemberVisitor
+pointCalculator .. MemberFullBorderVisitor
+pointCalculator .. MemberBorderVisitor
+
+
+@enduml
