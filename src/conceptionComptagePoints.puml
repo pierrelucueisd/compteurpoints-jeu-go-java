@@ -3,39 +3,37 @@
 
 
 class ConnectedIntersectionsFetcher {
-    +ConnectedIntersectionsFetcher(Color)
-    +fetchFromList(List<Intersections>): ConnectedIntersections
+    +ConnectedIntersectionsFetcher(List<Optional<Color>>)
+    +fetchFromList(List<Intersections>): List<Intersection>
 }
 
-class ConnectedIntersections {
-    -color : Color
-    -members: List<Intersections>
-    +addIntesection(Intersection)
-}
-
-ConnectedIntersectionsFetcher . ConnectedIntersections
 
 
 Interface EncircledAreaInterface {
     +accept(Visitor v)
 }
 class EncirclingArea{
-  -ConnectedIntersections border
-  -ConnectedIntersections borderFullChain
-  -List<Intersections> encircledIntersections
-}
-class EyeArea {
+  -color
+  -List<Intersection> borderConectedStones
+  -List<Intersection> encircledIntersections
 }
 
 EncircledAreaInterface <-- EncirclingArea
 EncircledAreaInterface --o EncirclingArea
-EncirclingArea <-- EyeArea
-ConnectedIntersections - EncirclingArea
 
 
 class EncicrlingAreaFetcher{
-    +EncicrlingAreaFetcher(\n\t Color color, \n\t List<intersections> liste, \n\t int maxContentSize  \n)
-    +fetch(): List<EncircledAreaInterface>
+    +EncicrlingAreaFetcher(\n\t Color color, \n\t List<intersections> liste, \n\t)
+    +fetch(): EncircledAreaInterface
+
+}
+EncicrlingAreaFetcher .. ConnectedIntersectionsFetcher
+EncicrlingAreaFetcher .. BorderFetcher
+
+class BorderFetcher {
+    +BordeFetcher(\n\tColor c, \n\tList<Intersection> contexte, \n\tList<Intersection>
+     )
+     +fetch() : List<Intersection>
 }
 
 EncicrlingAreaFetcher . EncircledAreaInterface
@@ -43,19 +41,18 @@ EncicrlingAreaFetcher . EncircledAreaInterface
 interface Visitor {
     +visit(EncircledAreaInterface)
 }
-
-class teritoryMemberVisitor
-
+class MemberpointCalculatorVisitor
+interface MemberpointCalculatorVisitorInterface
+MemberpointCalculatorVisitorInterface <|-- MemberpointCalculatorVisitor
+Visitor <|- MemberpointCalculatorVisitorInterface
 EncircledAreaInterface . Visitor
-teritoryMemberVisitor --> Visitor
-MemberFullBorderVisitor --> Visitor
-MemberBorderVisitor --> Visitor
 
-class pointCalculator
-pointCalculator .. EncicrlingAreaFetcher
-pointCalculator .. teritoryMemberVisitor
-pointCalculator .. MemberFullBorderVisitor
-pointCalculator .. MemberBorderVisitor
+class PointCalculator {
+    +PointCalculator(\n\t int maxTeritorySize, \n\t EncircledAreaInterface encircledRoot \n)
+    +CalculatePlayerPoint(Player p) : int
+}
+PointCalculator .. MemberpointCalculatorVisitorInterface
+PointCalculator .. EncicrlingAreaFetcher
 
 
 @enduml
