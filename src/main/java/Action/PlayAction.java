@@ -1,6 +1,6 @@
 package Action;
 
-import Board.BoardController;
+import Board.IBoardController;
 import Board.Position;
 import Player.Player;
 
@@ -13,7 +13,7 @@ public class PlayAction implements Action {
     }
 
     @Override
-    public void execute(BoardController bc, Player p) {
+    public void execute(IBoardController bc, Player p) {
         bc.putStoneOnBoard(p.getColor(), position);
     }
 }

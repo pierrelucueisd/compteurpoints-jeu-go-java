@@ -77,7 +77,7 @@ public class Board {
         return group;
     }
 
-    private void removePrisoners(Intersection i) {
+    void removePrisoners(Intersection i) {
         List<Intersection> enemyNeighbors = i.getEnemyNeighbors(this);
         for (Intersection enemy: enemyNeighbors)  {
             List<Intersection> group = getStoneGroup(enemy);

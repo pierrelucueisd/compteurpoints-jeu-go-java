@@ -1,6 +1,6 @@
 package Action;
 
-import Board.BoardController;
+import Board.IBoardController;
 import Board.Position;
 import Game.ErrorType;
 import Player.Player;
@@ -17,7 +17,7 @@ public class PlayOnBoardAction extends ValidableAction {
     }
 
     @Override
-    public Optional<ErrorType> validate(BoardController bc, Player p) {
+    public Optional<ErrorType> validate(IBoardController bc, Player p) {
         if(!bc.isPositionValid(position))
             return Optional.of(ErrorType.InvalidPosition);
         if (!bc.isIntersectionVacant(position))

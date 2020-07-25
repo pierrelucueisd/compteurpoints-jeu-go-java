@@ -34,7 +34,7 @@ public class Intersection {
     }
 
     public boolean isEnemy(Intersection i) {
-        return i.occupation != null && i.occupation != occupation;
+        return !i.isVacant() && i.occupation != occupation;
     }
 
     public boolean isFriendly(Intersection i) {
