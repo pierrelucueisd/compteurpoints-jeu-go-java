@@ -1,3 +1,5 @@
+package Player;
+
 public class Player {
     private final Color color;
     private boolean hasPassed;

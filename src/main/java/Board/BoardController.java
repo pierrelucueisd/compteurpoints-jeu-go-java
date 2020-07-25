@@ -1,3 +1,8 @@
+package Board;
+
+import Player.Color;
+import Player.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

@@ -1,3 +1,10 @@
+package Action;
+
+import Board.BoardController;
+import Game.ErrorObservable;
+import Game.ErrorType;
+import Player.Player;
+
 import java.util.Optional;
 
 public abstract class ValidableAction implements Action {

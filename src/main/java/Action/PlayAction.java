@@ -1,3 +1,9 @@
+package Action;
+
+import Board.BoardController;
+import Board.Position;
+import Player.Player;
+
 public class PlayAction implements Action {
 
     Position position;

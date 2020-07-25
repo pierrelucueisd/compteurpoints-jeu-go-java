@@ -1,3 +1,5 @@
+package Board;
+
 import java.util.Optional;
 
 public class PositionDeserializer implements Deserializer<Position> {
