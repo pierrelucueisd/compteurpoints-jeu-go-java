@@ -1,29 +1,52 @@
 @startuml
 
 
+class PlayerPointsCalculator {
+    +PlayerPointsCalculator(\n\t int maxTeritorySize, \n\t EncircledAreaInterface encircledRoot \n)
+    +CalculatePlayerPoint(Player p) : int
+}
+PlayerPointsCalculator .. CalculatePlayerPointsVisitorInterface
+PlayerPointsCalculator .. EncircledAreaInterface
+
+interface CalculatePlayerPointsVisitorInterface {
+    +getReachedIntersections(): List<Intersections>
+    +getPoints(): int
+}
+CalculatePlayerPointsVisitorInterface <|-- CalculatePlayerPointVisitor
+
+interface Visitor {
+    +visit(EncircledAreaInterface)
+}
+Visitor <|- CalculatePlayerPointsVisitorInterface
 
 class ConnectedIntersectionsFetcher {
-    +ConnectedIntersectionsFetcher(List<Optional<Color>>)
-    +fetchFromList(List<Intersections>): List<Intersection>
+    +ConnectedIntersectionsFetcher(List<Optional<Color>>, \n\tList<Intersections> contexte)
+    +fetchAll(): Optional
+    -fetchFromIntersection():Optional<List<Intersection>>
 }
 
 
 
 Interface EncircledAreaInterface {
     +accept(Visitor v)
+    +getColor(): Optional<color>
+    +getEncircledIntersections() : List<intersections>
+    +getBorderConectedStones() : Optional<List<Intersections>>
+    +getSubEncircledArea() : List<EncircledAreaInterface>
+
 }
-class EncirclingArea{
-  -color
+class EncircledArea{
   -List<Intersection> borderConectedStones
   -List<Intersection> encircledIntersections
+  -List<EncircledAreaInterface>
 }
 
-EncircledAreaInterface <-- EncirclingArea
-EncircledAreaInterface --o EncirclingArea
+EncircledAreaInterface <-- EncircledArea
+EncircledAreaInterface --o EncircledArea
 
 
 class EncicrlingAreaFetcher{
-    +EncicrlingAreaFetcher(\n\t Color color, \n\t List<intersections> liste, \n\t)
+    +EncicrlingAreaFetcher(\n\t Optional<Color> color, \n\t List<intersections> liste, \n\t)
     +fetch(): EncircledAreaInterface
 
 }
@@ -38,21 +61,10 @@ class BorderFetcher {
 
 EncicrlingAreaFetcher . EncircledAreaInterface
 
-interface Visitor {
-    +visit(EncircledAreaInterface)
-}
-class MemberpointCalculatorVisitor
-interface MemberpointCalculatorVisitorInterface
-MemberpointCalculatorVisitorInterface <|-- MemberpointCalculatorVisitor
-Visitor <|- MemberpointCalculatorVisitorInterface
+
 EncircledAreaInterface . Visitor
 
-class PointCalculator {
-    +PointCalculator(\n\t int maxTeritorySize, \n\t EncircledAreaInterface encircledRoot \n)
-    +CalculatePlayerPoint(Player p) : int
-}
-PointCalculator .. MemberpointCalculatorVisitorInterface
-PointCalculator .. EncicrlingAreaFetcher
+
 
 
 @enduml
