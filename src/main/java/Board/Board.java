@@ -1,3 +1,7 @@
+package Board;
+
+import Player.Color;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;

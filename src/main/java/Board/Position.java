@@ -1,3 +1,5 @@
+package Board;
+
 import java.util.Objects;
 
 public class Position {
@@ -43,7 +45,7 @@ public class Position {
 
     @Override
     public String toString() {
-        return "Position{" +
+        return "Board.Position{" +
                 "x=" + x +
                 ", y=" + y +
                 '}';

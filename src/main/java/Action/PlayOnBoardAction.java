@@ -1,3 +1,10 @@
+package Action;
+
+import Board.BoardController;
+import Board.Position;
+import Game.ErrorType;
+import Player.Player;
+
 import java.util.Optional;
 
 public class PlayOnBoardAction extends ValidableAction {

@@ -1,3 +1,9 @@
+package Game;
+
+import Action.Action;
+import Board.BoardController;
+import Player.*;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;

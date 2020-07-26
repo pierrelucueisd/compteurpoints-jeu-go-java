@@ -1,3 +1,13 @@
+package Game;
+
+import Action.Action;
+import Action.PlayAction;
+import Action.PlayOnBoardAction;
+import Action.PassAction;
+import Board.Deserializer;
+import Board.Position;
+import Board.PositionDeserializer;
+
 import java.util.Optional;
 
 public class GameConsole implements ErrorObserver {

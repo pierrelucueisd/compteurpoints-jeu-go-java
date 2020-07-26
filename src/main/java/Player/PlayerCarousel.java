@@ -1,3 +1,8 @@
+package Player;
+
+import Game.ErrorObserver;
+import Game.ErrorType;
+
 import java.util.List;
 
 public class PlayerCarousel implements ErrorObserver {
