@@ -1,7 +1,12 @@
+import Board.Board;
+import Board.Builder.BoardBuilder;
+import Board.Builder.BoardBuilderFromBoardRepresentation;
+import Board.Builder.BoardBuilderFromColorStrings;
 import Game.GameController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,6 +25,38 @@ class MainTest {
         gc.startGame(scanner);
         String result = gc.getBoardToString();
         assertEquals(result, expected);
+    }
+
+    void initBoard(String input) {
+        Scanner scanner = new Scanner(input);
+        gc.startGame(scanner);
+    }
+
+    @Test
+    void testEssai() {
+        BoardBuilder builder = new BoardBuilderFromColorStrings("00 11 22 33 44 55 66 77 88", "");
+        Optional<Board> optB = builder.build();
+        if(optB.isPresent()) System.out.println(optB.get().toString());
+
+    }
+
+    @Test
+    void test0() {
+        String input =
+                "●-+-+-+-+-+-+-+-●\n" +
+                "+-+-+-+-+-+-+-○-+\n" +
+                "+-+-+-+-+-+-○-●-+\n" +
+                "+-+-+-+-+-○-●-●-○\n" +
+                "+-+-+-+-+-+-●-○-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "●-+-+-+-+-+-+-+-●\n";
+
+        BoardBuilder builder = new BoardBuilderFromBoardRepresentation(input);
+        Optional<Board> optB = builder.build();
+        if(optB.isPresent()) System.out.println(optB.get().toString());
+
     }
 
     @Test
