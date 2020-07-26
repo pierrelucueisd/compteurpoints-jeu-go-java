@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
  * Responsability : Updates the intersections of a board by putting/removing stones.
  */
 
-public class Board {
+public class Board implements BoardInterface{
     private final Integer size;
     private final Intersection[][] intersections;
 
@@ -22,12 +22,13 @@ public class Board {
                 intersections[y][x] = new Intersection(new Position(x,y));
     }
 
-    public Board(Board b) {
-        this.size = b.size;
-        this.intersections = new Intersection[b.size][b.size];
+    public Board(BoardInterface b) {
+        this.size = b.getSize();
+        this.intersections = new Intersection[b.getSize()][b.getSize()];
         for(int y = 0; y < size; y++)
             for (int x = 0; x < size; x++)
-                this.intersections[y][x] = new Intersection(b.intersections[y][x]);
+                this.intersections[y][x] = new Intersection(b.getIntersection(x, y)); /*@todo c'est prob x,y
+                à cause des tests unitaires*/
     }
 
     public Integer getSize() {

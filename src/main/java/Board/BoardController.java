@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class BoardController {
-    private final List<Board> history = new ArrayList<>();
-    private final Board current;
+    private final List<BoardInterface> history = new ArrayList<>();
+    private final BoardInterface current;
 
     public BoardController(int size) {
         this.current = new Board(size);
@@ -17,7 +17,7 @@ public class BoardController {
     }
 
 
-    public Board getCurrentBoard() {
+    public BoardInterface getCurrentBoard() {
         return current;
     }
 
@@ -53,7 +53,7 @@ public class BoardController {
         history.add(new Board(current));
     }
 
-    private Optional<Board> getSecondLastBoard() {
+    private Optional<BoardInterface> getSecondLastBoard() {
         return history.size() < 2 ? Optional.empty() : Optional.of(history.get(history.size() - 2));
     }
 
