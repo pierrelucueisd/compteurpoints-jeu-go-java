@@ -27,8 +27,7 @@ public class Board implements BoardInterface{
         this.intersections = new Intersection[b.getSize()][b.getSize()];
         for(int y = 0; y < size; y++)
             for (int x = 0; x < size; x++)
-                this.intersections[y][x] = new Intersection(b.getIntersection(x, y)); /*@todo c'est prob x,y
-                à cause des tests unitaires*/
+                this.intersections[y][x] = new Intersection(b.getIntersection(x, y));
     }
 
     public Integer getSize() {
@@ -39,8 +38,17 @@ public class Board implements BoardInterface{
         return getIntersection(pos.getX(), pos.getY());
     }
 
+    //x horizontal à partir de 0:gauche y vertical à partir de 0:bas
     public Intersection getIntersection(int x, int y) {
         return intersections[y][x];
+    }
+
+    @Override
+    public List<Intersection> getAllIntersections() {
+        List<Intersection> intersections = new ArrayList<Intersection>();
+        for(int i = 0; i<size; i++)
+            for (int j = 0; j<size; j++) intersections.add(getIntersection(i,j));
+        return intersections;
     }
 
     public void putStone(Color color, Position p) {
