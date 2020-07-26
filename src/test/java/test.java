@@ -33,33 +33,6 @@ class MainTest {
     }
 
     @Test
-    void testEssai() {
-        BoardBuilder builder = new BoardBuilderFromColorStrings("00 11 22 33 44 55 66 77 88", "");
-        Optional<Board> optB = builder.build();
-        if(optB.isPresent()) System.out.println(optB.get().toString());
-
-    }
-
-    @Test
-    void test0() {
-        String input =
-                "●-+-+-+-+-+-+-+-●\n" +
-                "+-+-+-+-+-+-+-○-+\n" +
-                "+-+-+-+-+-+-○-●-+\n" +
-                "+-+-+-+-+-○-●-●-○\n" +
-                "+-+-+-+-+-+-●-○-+\n" +
-                "+-+-+-+-+-+-+-+-+\n" +
-                "+-+-+-+-+-+-+-+-+\n" +
-                "+-+-+-+-+-+-+-+-+\n" +
-                "●-+-+-+-+-+-+-+-●\n";
-
-        BoardBuilder builder = new BoardBuilderFromBoardRepresentation(input);
-        Optional<Board> optB = builder.build();
-        if(optB.isPresent()) System.out.println(optB.get().toString());
-
-    }
-
-    @Test
     void test1() {
         String actions = "G7 G6 F6 G5 H5 H6 J6 H7 H8";
         testBoard(actions,
