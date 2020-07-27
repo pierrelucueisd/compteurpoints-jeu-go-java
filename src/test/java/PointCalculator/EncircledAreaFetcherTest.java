@@ -126,5 +126,47 @@ class EncircledAreaFetcherTest {
         assertEquals(11, anneauContenuNoir.size());
     }
 
+    @Test
+    void getAdjacencesTransitivesCasContenuMoinsNoir2() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-●-●-●-●-●-●-●-+\n" +
+                "+-●-+-+-+-+-+-●-+\n" +
+                "+-●-+-●-●-●-+-●-+\n" +
+                "+-●-+-●-+-●-+-●-+\n" +
+                "+-●-+-●-●-●-○-●-+\n" +
+                "+-●-+-○-○-○-○-●-+\n" +
+                "+-●-●-●-●-●-●-●-+\n" +
+                "●-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation);
+        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+        Intersection i = b.getIntersection(2, 2);
+        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i,
+                inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != Color.White
+        );
+        assertEquals(16, anneauContenuNoir.size());
+    }
+
+    @Test
+    void getAdjacencesTransitivesCasContenuMoinsNoir3() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-●-●-●-●-●-●-●-+\n" +
+                "+-●-+-+-+-+-+-●-+\n" +
+                "+-●-+-●-●-●-+-●-+\n" +
+                "+-●-+-●-+-●-+-●-+\n" +
+                "+-●-+-●-●-●-○-●-+\n" +
+                "+-●-○-○-○-○-○-●-+\n" +
+                "+-●-●-●-●-●-●-●-+\n" +
+                "●-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation);
+        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+        Intersection i = b.getIntersection(2, 2);
+        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i,
+                inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != Color.White
+        );
+        assertEquals(16, anneauContenuNoir.size());
+    }
+
 
 }
