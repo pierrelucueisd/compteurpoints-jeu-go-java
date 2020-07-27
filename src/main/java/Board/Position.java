@@ -24,7 +24,7 @@ public class Position {
         return y;
     }
 
-    public boolean isValid(Board b) {
+    public boolean isValid(BoardInterface b) {
         int size = b.getSize();
         return x < size && y < size && x >= 0 && y >= 0;
     }

@@ -41,7 +41,7 @@ public class Intersection {
         return i.occupation == occupation;
     }
 
-    public List<Intersection> getNeighbors(Board b) {
+    public List<Intersection> getNeighbors(BoardInterface b) {
         int x = position.getX();
         int y = position.getY();
         return Stream.of(new Position[] {
@@ -54,19 +54,19 @@ public class Intersection {
                 .collect(Collectors.toList());
     }
 
-    public List<Intersection> getEnemyNeighbors(Board b) {
+    public List<Intersection> getEnemyNeighbors(BoardInterface b) {
         return getNeighbors(b).stream()
                 .filter(this::isEnemy)
                 .collect(Collectors.toList());
     }
 
-    public List<Intersection> getFriendlyNeighbors(Board b) {
+    public List<Intersection> getFriendlyNeighbors(BoardInterface b) {
         return getNeighbors(b).stream()
                 .filter(this::isFriendly)
                 .collect(Collectors.toList());
     }
 
-    public boolean hasLiberty(Board b) {
+    public boolean hasLiberty(BoardInterface b) {
         return getNeighbors(b).stream()
                 .anyMatch(Intersection::isVacant);
     }

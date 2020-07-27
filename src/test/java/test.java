@@ -1,7 +1,12 @@
+import Board.Board;
+import Board.Builder.BoardBuilder;
+import Board.Builder.BoardBuilderFromBoardRepresentation;
+import Board.Builder.BoardBuilderFromColorStrings;
 import Game.GameController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,6 +25,11 @@ class MainTest {
         gc.startGame(scanner);
         String result = gc.getBoardToString();
         assertEquals(result, expected);
+    }
+
+    void initBoard(String input) {
+        Scanner scanner = new Scanner(input);
+        gc.startGame(scanner);
     }
 
     @Test
