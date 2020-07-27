@@ -21,7 +21,10 @@ class EncircledAreaFetcherTest {
         return optB.get();
     }
 
-
+    /* LÉGENDE
+     *  1. Blanc:   ●
+     *  2. Noir:    ○
+     */
 
     @Test
     void fetch() {
@@ -164,6 +167,27 @@ class EncircledAreaFetcherTest {
         Intersection i = b.getIntersection(2, 2);
         List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i,
                 inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != Color.White
+        );
+        assertEquals(16, anneauContenuNoir.size());
+    }
+
+    @Test
+    void getAdjacencesTransitivesCasBordureNoire() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-○-○-○-○-○-○-○-+\n" +
+                "+-○-+-+-+-+-+-○-+\n" +
+                "+-○-+-○-○-○-+-○-+\n" +
+                "+-○-+-○-+-○-+-○-+\n" +
+                "+-○-+-○-○-○-+-○-+\n" +
+                "+-○-+-+-●-●-●-○-+\n" +
+                "+-○-○-○-○-○-○-○-+\n" +
+                "●-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation);
+        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+        Intersection i = b.getIntersection(2, 2);
+        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i,
+                inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != Color.Black
         );
         assertEquals(16, anneauContenuNoir.size());
     }
