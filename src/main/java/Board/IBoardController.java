@@ -4,7 +4,7 @@ import Player.Color;
 import Player.Player;
 
 public interface IBoardController {
-    Board getCurrentBoard();
+    IBoard getCurrentBoard();
 
     void putStoneOnBoard(Color color, Position position);
 

@@ -1,12 +1,7 @@
-import Board.Board;
-import Board.Builder.BoardBuilder;
-import Board.Builder.BoardBuilderFromBoardRepresentation;
-import Board.Builder.BoardBuilderFromColorStrings;
 import Game.GameController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
