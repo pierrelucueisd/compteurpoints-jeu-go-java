@@ -26,20 +26,26 @@ public class EncircledAreaFetcher {
         ).collect(Collectors.toList());
 
         Intersection i = b.getIntersection(3, 4);
-        List<Intersection> anneauContenuNoir = getAdjacencesTransitives(i, b,
-                inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != Color.White
-        );
+        List<Intersection> anneauContenu = getAnneauInterieur(i, Color.White);
         int jj = 0;
         jj = 8;
+    }
 
-        /*while(!intersectionsVidesATraiter.isEmpty()) {
-            Intersection intersection = intersectionsVidesATraiter.get(0);
-            List<Intersection> voisins = intersection.getNeighbors(b);
-            voisins.add(intersection);
-            groupesAdjacencesVides.add(voisins);
-            //intersectionsVidesATraiter.remove(intersection);
-            intersectionsVidesATraiter.removeAll(voisins);
-        }*/
+    protected EncircledArea fetchColorAreaFromIntersection(Intersection i, Color borderColor) {
+        List<Intersection> contenuAnneau = getAnneauInterieur(i, borderColor);
+        BorderFetcher fetcher = new BorderFetcher(b, contenuAnneau);
+        List<Intersection> fullBorder = fetcher.fetchFullBorder();
+        List<Intersection> fullContent = getAdjacencesTransitives(i, b, intersection -> {
+            return !fullBorder.contains(intersection);
+        });
+        EncircledArea area = new EncircledArea(fullBorder, contenuAnneau, fullContent, borderColor);
+        return area;
+    }
+
+    protected List<Intersection> getAnneauInterieur(Intersection i, Color borderColor) {
+        return getAdjacencesTransitives(i, b,
+                inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != borderColor
+        );
     }
 
     // obtient les adjacences transitives satifaisant toutes le prédicat

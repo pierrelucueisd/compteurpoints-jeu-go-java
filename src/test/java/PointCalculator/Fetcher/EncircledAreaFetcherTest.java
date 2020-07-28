@@ -47,7 +47,7 @@ class EncircledAreaFetcherTest {
     }
 
     @Test
-    void getAdjacencesTransitivesCasDeBase() {
+    void getAnneauInterieurCasDeBase() {
         String representation =
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n" +
@@ -60,15 +60,14 @@ class EncircledAreaFetcherTest {
                 "●-+-+-+-+-+-+-+-+\n";
         Board b = buildBoard(representation);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+
         Intersection i = b.getIntersection(3, 4);
-        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i, b,
-                inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != Color.White
-        );
+        List<Intersection> anneauContenuNoir  = encircledAreaFetcher.getAnneauInterieur(i, Color.White);
         assertEquals(5, anneauContenuNoir.size());
     }
 
     @Test
-    void getAdjacencesTransitivesCasContenuSimple() {
+    void getAnneauInterieur_CasContenuSimple() {
         String representation =
                 "+-+-+-+-+-+-+-+-+\n" +
                         "+-+-+-+-+-+-+-+-+\n" +
@@ -82,14 +81,12 @@ class EncircledAreaFetcherTest {
         Board b = buildBoard(representation);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Intersection i = b.getIntersection(3, 2);
-        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i, b,
-                inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != Color.White
-        );
+        List<Intersection> anneauContenuNoir  = encircledAreaFetcher.getAnneauInterieur(i, Color.White);
         assertEquals(12, anneauContenuNoir.size());
     }
 
     @Test
-    void getAdjacencesTransitivesCasContenu() {
+    void getAnneauInterieur_CasContenu() {
         String representation =
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n" +
@@ -103,14 +100,12 @@ class EncircledAreaFetcherTest {
         Board b = buildBoard(representation);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Intersection i = b.getIntersection(3, 2);
-        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i, b,
-                inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != Color.White
-        );
+        List<Intersection> anneauContenuNoir  = encircledAreaFetcher.getAnneauInterieur(i, Color.White);
         assertEquals(12, anneauContenuNoir.size());
     }
 
     @Test
-    void getAdjacencesTransitivesCasContenuMoinsNoir() {
+    void getAnneauInterieur_CasContenuMoinsNoir() {
         String representation =
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n" +
@@ -124,14 +119,12 @@ class EncircledAreaFetcherTest {
         Board b = buildBoard(representation);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Intersection i = b.getIntersection(3, 2);
-        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i, b,
-                inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != Color.White
-        );
+        List<Intersection> anneauContenuNoir  = encircledAreaFetcher.getAnneauInterieur(i, Color.White);
         assertEquals(11, anneauContenuNoir.size());
     }
 
     @Test
-    void getAdjacencesTransitivesCasContenuMoinsNoir2() {
+    void getAnneauInterieur_CasContenuMoinsNoir2() {
         String representation =
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-●-●-●-●-●-●-●-+\n" +
@@ -145,14 +138,12 @@ class EncircledAreaFetcherTest {
         Board b = buildBoard(representation);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Intersection i = b.getIntersection(2, 2);
-        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i, b,
-                inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != Color.White
-        );
+        List<Intersection> anneauContenuNoir  = encircledAreaFetcher.getAnneauInterieur(i, Color.White);
         assertEquals(16, anneauContenuNoir.size());
     }
 
     @Test
-    void getAdjacencesTransitivesCasContenuMoinsNoir3() {
+    void getAnneauInterieur_CasContenuMoinsNoir3() {
         String representation =
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-●-●-●-●-●-●-●-+\n" +
@@ -166,14 +157,12 @@ class EncircledAreaFetcherTest {
         Board b = buildBoard(representation);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Intersection i = b.getIntersection(2, 2);
-        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i, b,
-                inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != Color.White
-        );
+        List<Intersection> anneauContenuNoir  = encircledAreaFetcher.getAnneauInterieur(i, Color.White);
         assertEquals(16, anneauContenuNoir.size());
     }
 
     @Test
-    void getAdjacencesTransitivesCasBordureNoire() {
+    void getAnneauInterieur_CasBordureNoire() {
         String representation =
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-○-○-○-○-○-○-○-+\n" +
@@ -187,10 +176,30 @@ class EncircledAreaFetcherTest {
         Board b = buildBoard(representation);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Intersection i = b.getIntersection(2, 2);
-        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i, b,
-                inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != Color.Black
-        );
+        List<Intersection> anneauContenuNoir  = encircledAreaFetcher.getAnneauInterieur(i, Color.Black);
         assertEquals(16, anneauContenuNoir.size());
+    }
+
+    @Test
+    void fetchColorAreaFromIntersection_CasDeBase() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+\n" +
+                "+-+-●-+-+-●-+-+-+\n" +
+                "+-+-●-+-+-+-●-+-+\n" +
+                "+-+-+-●-●-●-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "●-+-+-+-+-+-+-+-+\n" +
+                "●-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation);
+        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+
+        Intersection i = b.getIntersection(3, 4);
+        EncircledArea area = encircledAreaFetcher.fetchColorAreaFromIntersection(i, Color.White);
+        assertEquals(11, area.getFullBorder().size(), "Bordure non conforme");
+        assertEquals(5, area.getFullContent().size(), "Contenu complet non conforme");
+        assertEquals(5, area.getRingContent().size(), "Contenu aneau non conforme");
     }
 
 
