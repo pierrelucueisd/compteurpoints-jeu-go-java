@@ -3,10 +3,9 @@ package PointCalculator.Fetcher;
 import Board.Board;
 import Board.Intersection;
 import Board.Position;
+import Player.Color;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class BorderFetcher {
 
@@ -20,8 +19,40 @@ public class BorderFetcher {
         board = b;
     }
 
-    public List<Intersection> fetchExternalBorder() {
-        return null;
+    protected List<Intersection> fetchFullBorder() {
+        List<Intersection> bordureComplete = new ArrayList<Intersection>();
+        List<Intersection> bordureMinimale = fetchExternalMinimalBorder();
+        if(bordureMinimale.isEmpty()) return bordureComplete;
+        if(!bordureMinimale.get(0).getOccupation().isPresent()) return bordureComplete;
+        Color borderColor = bordureMinimale.get(0).getOccupation().get();
+        Stack<Intersection> aTraiter = new Stack<Intersection>();
+        aTraiter.addAll(bordureMinimale);
+        while(!aTraiter.isEmpty()){
+            Intersection intersectiontraiter = aTraiter.pop();
+            List<Intersection> tempBorderElemFullAdjacency = EncircledAreaFetcher.getAdjacencesTransitives(
+                    intersectiontraiter, board, intersection -> {
+                        if(!intersection.getOccupation().isPresent()) return false;
+                        Color colorIntersection = intersection.getOccupation().get();
+                        return colorIntersection == borderColor
+                                && !bordureComplete.contains(intersection);
+                    }
+            );
+            bordureComplete.addAll(tempBorderElemFullAdjacency);
+        }
+        return bordureComplete;
+    }
+
+    protected List<Intersection> fetchExternalMinimalBorder() {
+        List<Intersection> bordure = new ArrayList<Intersection>();
+        if(contenuAnneau.isEmpty()) return bordure;
+        bordure = EncircledAreaFetcher.getAdjacencesTransitives(contenuAnneau.get(0), board, intersection -> {
+            if(contenuAnneau.contains(intersection)) return true;
+            Position p = new Position(intersection.getX(), intersection.getY());
+            if(isInExternalBorder(p)) return true;
+            return false;
+        });
+        bordure.removeAll(contenuAnneau);
+        return bordure;
     }
 
     protected boolean isLeftAdjacentOfGroup(Position p) {

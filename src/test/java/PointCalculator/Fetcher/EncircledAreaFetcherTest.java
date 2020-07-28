@@ -61,7 +61,7 @@ class EncircledAreaFetcherTest {
         Board b = buildBoard(representation);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Intersection i = b.getIntersection(3, 4);
-        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i,
+        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i, b,
                 inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != Color.White
         );
         assertEquals(5, anneauContenuNoir.size());
@@ -82,7 +82,7 @@ class EncircledAreaFetcherTest {
         Board b = buildBoard(representation);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Intersection i = b.getIntersection(3, 2);
-        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i,
+        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i, b,
                 inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != Color.White
         );
         assertEquals(12, anneauContenuNoir.size());
@@ -103,7 +103,7 @@ class EncircledAreaFetcherTest {
         Board b = buildBoard(representation);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Intersection i = b.getIntersection(3, 2);
-        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i,
+        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i, b,
                 inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != Color.White
         );
         assertEquals(12, anneauContenuNoir.size());
@@ -124,7 +124,7 @@ class EncircledAreaFetcherTest {
         Board b = buildBoard(representation);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Intersection i = b.getIntersection(3, 2);
-        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i,
+        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i, b,
                 inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != Color.White
         );
         assertEquals(11, anneauContenuNoir.size());
@@ -145,7 +145,7 @@ class EncircledAreaFetcherTest {
         Board b = buildBoard(representation);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Intersection i = b.getIntersection(2, 2);
-        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i,
+        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i, b,
                 inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != Color.White
         );
         assertEquals(16, anneauContenuNoir.size());
@@ -166,7 +166,7 @@ class EncircledAreaFetcherTest {
         Board b = buildBoard(representation);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Intersection i = b.getIntersection(2, 2);
-        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i,
+        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i, b,
                 inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != Color.White
         );
         assertEquals(16, anneauContenuNoir.size());
@@ -187,7 +187,7 @@ class EncircledAreaFetcherTest {
         Board b = buildBoard(representation);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Intersection i = b.getIntersection(2, 2);
-        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i,
+        List<Intersection> anneauContenuNoir = encircledAreaFetcher.getAdjacencesTransitives(i, b,
                 inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != Color.Black
         );
         assertEquals(16, anneauContenuNoir.size());

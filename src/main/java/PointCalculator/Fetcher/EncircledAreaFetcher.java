@@ -26,7 +26,7 @@ public class EncircledAreaFetcher {
         ).collect(Collectors.toList());
 
         Intersection i = b.getIntersection(3, 4);
-        List<Intersection> anneauContenuNoir = getAdjacencesTransitives(i,
+        List<Intersection> anneauContenuNoir = getAdjacencesTransitives(i, b,
                 inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != Color.White
         );
         int jj = 0;
@@ -43,7 +43,7 @@ public class EncircledAreaFetcher {
     }
 
     // obtient les adjacences transitives satifaisant toutes le prédicat
-    protected List<Intersection> getAdjacencesTransitives(Intersection i, Predicate<Intersection> predicate) {
+    protected static List<Intersection> getAdjacencesTransitives(Intersection i, Board b, Predicate<Intersection> predicate) {
         Stack<Intersection> aTraiter = new Stack<Intersection>();
         List<Intersection> traite = new ArrayList<Intersection>();
         List<Intersection> resultat = new ArrayList<Intersection>();

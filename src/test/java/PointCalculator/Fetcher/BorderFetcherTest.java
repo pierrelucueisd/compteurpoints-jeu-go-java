@@ -26,7 +26,7 @@ class BorderFetcherTest {
     List<Intersection> getAnneauContenu(int x, int y, Color colorBorder, Board b) {
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Intersection i = b.getIntersection(x-1, y-1);
-        List<Intersection> anneauContenu = encircledAreaFetcher.getAdjacencesTransitives(i,
+        List<Intersection> anneauContenu = encircledAreaFetcher.getAdjacencesTransitives(i, b,
                 inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != colorBorder
         );
         return anneauContenu;
@@ -795,5 +795,131 @@ class BorderFetcherTest {
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isInExternalBorder(new Position(3, 7));
         assertFalse(result);
+    }
+
+
+    /** ============================================
+     * Partie anneau contenu
+     *==============================================
+     */
+
+    @Test
+    void fetchExternalMinimalBorder() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+\n" +
+                "+-+-●-+-+-●-+-+-+\n" +
+                "+-+-●-+-+-+-●-+-+\n" +
+                "+-+-+-●-●-●-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "●-+-+-+-+-+-+-+-+\n" +
+                "●-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation);
+        List<Intersection> anneauContenu = getAnneauContenu(4,5, Color.White, b);
+        BorderFetcher fetcher = new BorderFetcher(b, anneauContenu);
+        List<Intersection> bordure = fetcher.fetchExternalMinimalBorder();
+        int i = 0;
+        assertEquals(9, bordure.size());
+    }
+
+    @Test
+    void fetchExternalMinimalBorder2() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+\n" +
+                "+-+-●-+-+-●-+-+-+\n" +
+                "+-+-●-+-+-+-●-+-+\n" +
+                "+-+-+-●-+-●-+-+-+\n" +
+                "+-+-+-●-+-●-+-+-+\n" +
+                "●-+-+-+-●-+-+-+-+\n" +
+                "●-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation);
+        List<Intersection> anneauContenu = getAnneauContenu(4,5, Color.White, b);
+        BorderFetcher fetcher = new BorderFetcher(b, anneauContenu);
+        List<Intersection> bordure = fetcher.fetchExternalMinimalBorder();
+        int i = 0;
+        assertEquals(11, bordure.size());
+    }
+
+    @Test
+    void fetchExternalMinimalBorder3() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "●-●-●-●-●-●-+-+-+\n" +
+                "+-+-+-+-+-●-+-+-+\n" +
+                "+-+-●-+-+-+-●-+-+\n" +
+                "●-●-●-●-+-●-+-+-+\n" +
+                "+-+-+-●-+-●-+-+-+\n" +
+                "●-+-+-+-●-+-+-+-+\n" +
+                "●-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation);
+        List<Intersection> anneauContenu = getAnneauContenu(4,5, Color.White, b);
+        BorderFetcher fetcher = new BorderFetcher(b, anneauContenu);
+        List<Intersection> bordure = fetcher.fetchExternalMinimalBorder();
+        int i = 0;
+        assertEquals(15, bordure.size());
+    }
+
+    @Test
+    void fetchFullBorder() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "●-●-●-●-●-●-+-+-+\n" +
+                "+-+-+-+-+-●-+-+-+\n" +
+                "+-+-●-+-+-+-●-+-+\n" +
+                "●-●-●-●-+-●-+-+-+\n" +
+                "+-+-+-●-+-●-+-+-+\n" +
+                "●-+-+-+-●-+-+-+-+\n" +
+                "●-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation);
+        List<Intersection> anneauContenu = getAnneauContenu(4,5, Color.White, b);
+        BorderFetcher fetcher = new BorderFetcher(b, anneauContenu);
+        List<Intersection> bordure = fetcher.fetchFullBorder();
+        int i = 0;
+        assertEquals(17, bordure.size());
+    }
+
+    @Test
+    void fetchFullBorder2() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "●-●-●-●-●-●-+-+-+\n" +
+                "+-+-●-+-+-●-+-+-+\n" +
+                "+-+-●-+-+-+-●-+-+\n" +
+                "●-●-●-●-+-●-+-+-+\n" +
+                "+-+-+-●-+-●-+-+-+\n" +
+                "●-+-+-+-●-+-+-+-+\n" +
+                "●-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation);
+        List<Intersection> anneauContenu = getAnneauContenu(4,5, Color.White, b);
+        BorderFetcher fetcher = new BorderFetcher(b, anneauContenu);
+        List<Intersection> bordure = fetcher.fetchFullBorder();
+        int i = 0;
+        assertEquals(18, bordure.size());
+    }
+
+    @Test
+    void fetchFullBorder3() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "●-●-●-●-●-●-+-+-+\n" +
+                "+-+-●-+-+-●-+-+-+\n" +
+                "+-+-●-+-+-+-●-+-+\n" +
+                "●-+-●-●-+-●-+-+-+\n" +
+                "+-+-+-●-+-●-+-+-+\n" +
+                "●-+-+-+-●-+-+-+-+\n" +
+                "●-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation);
+        List<Intersection> anneauContenu = getAnneauContenu(4,5, Color.White, b);
+        BorderFetcher fetcher = new BorderFetcher(b, anneauContenu);
+        List<Intersection> bordure = fetcher.fetchFullBorder();
+        int i = 0;
+        assertEquals(16, bordure.size());
     }
 }
