@@ -3,32 +3,24 @@ package PointCalculator.Fetcher;
 import Board.Board;
 import Board.Intersection;
 import Player.Color;
+import PointCalculator.EncirledAreaInterfaceComparator.EncirleAreaComparator;
+import PointCalculator.EncircledArea;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Stack;
+import java.util.*;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class EncircledAreaFetcher {
-    List<Intersection> contexte;
-    Board b;
+    private Board b;
+
     public EncircledAreaFetcher(Board b) {
-        this.contexte = b.getAllIntersections();
         this.b = b;
     }
 
-    public void fetch() {
-        List<List<Intersection>> groupesAdjacencesVides = new ArrayList<>();
-        List<Intersection> intersectionsVidesATraiter =  contexte.stream().filter(
-                intersection -> !intersection.getOccupation().isPresent()
-        ).collect(Collectors.toList());
-
-        Intersection i = b.getIntersection(3, 4);
-        List<Intersection> anneauContenu = getAnneauInterieur(i, Color.White);
-        int jj = 0;
-        jj = 8;
+    protected EncircledArea fetchAreaFromIntersection(Intersection i) {
+        EncircledArea areaWhite = fetchColorAreaFromIntersection(i, Color.White);
+        EncircledArea areaBlack = fetchColorAreaFromIntersection(i, Color.Black);
+        if(EncirleAreaComparator.isMinleftOfAreaAisafterBMinLeft(areaWhite, areaBlack)) return areaWhite;
+        else return areaBlack;
     }
 
     protected EncircledArea fetchColorAreaFromIntersection(Intersection i, Color borderColor) {

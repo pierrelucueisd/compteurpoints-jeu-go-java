@@ -1,11 +1,12 @@
-package PointCalculator.Fetcher;
+package PointCalculator;
 
 import Board.Intersection;
 import Player.Color;
+import PointCalculator.EncircledAreaInterface;
 
 import java.util.List;
 
-public class EncircledArea implements EncircledAreaInterface{
+public class EncircledArea implements EncircledAreaInterface {
 
     private List<Intersection> fullBorder;
     private List<Intersection> ringContent;

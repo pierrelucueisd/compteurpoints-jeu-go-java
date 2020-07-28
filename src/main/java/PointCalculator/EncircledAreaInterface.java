@@ -1,4 +1,4 @@
-package PointCalculator.Fetcher;
+package PointCalculator;
 
 import Board.Intersection;
 import Player.Color;
