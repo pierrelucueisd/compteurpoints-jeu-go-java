@@ -21,6 +21,14 @@ public class Intersection {
         this.occupation = i.occupation;
     }
 
+    public int getX() {
+        return this.position.getX();
+    }
+
+    public int getY() {
+        return this.position.getY();
+    }
+
     public void setOccupation(Color occupation) {
         this.occupation = occupation;
     }

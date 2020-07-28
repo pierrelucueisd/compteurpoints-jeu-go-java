@@ -1,4 +1,4 @@
-package PointCalculator;
+package PointCalculator.Fetcher;
 
 import Board.Board;
 import Board.Intersection;
