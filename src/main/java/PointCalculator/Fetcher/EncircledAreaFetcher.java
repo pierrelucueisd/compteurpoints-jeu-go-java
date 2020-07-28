@@ -34,7 +34,39 @@ public class EncircledAreaFetcher {
         );
     }
 
+    protected EncircledArea fetchTopStickyEncirler(EncircledArea area) {
+        EncircledArea topArea = area;
+        Optional<EncircledArea> fetchedArea = fetchFirstAscendantStickyEncercling(area);
+        while(fetchedArea.isPresent()) {
+            topArea = fetchedArea.get();
+            fetchedArea = fetchFirstAscendantStickyEncercling(topArea);
+        }
+        return topArea;
+    }
 
+    protected Optional<EncircledArea> fetchFirstAscendantStickyEncercling(EncircledArea area) {
+        ArrayList<Intersection> fullContentHypothetique = new ArrayList<Intersection>();
+        fullContentHypothetique.addAll(area.getFullBorder());
+        fullContentHypothetique.addAll(area.getFullContent());
+        BorderFetcher fetcher = new BorderFetcher(b, fullContentHypothetique);
+        fetcher.fetchExternalMinimalBorder();
+        List<Intersection> bordureHypothetique = fetcher.fetchExternalMinimalBorder();
+        if(bordureHypothetique.isEmpty()) return Optional.empty();
+        Optional<Color> firstOccupation = bordureHypothetique.get(0).getOccupation();
+        if(!firstOccupation.isPresent()) return Optional.empty();
+        Color firstBorderColor = firstOccupation.get();
+        bordureHypothetique.stream().allMatch(intersection -> {
+            return intersection.getOccupation().isPresent() && intersection.getOccupation().get() == firstBorderColor;
+        });
+        EncircledArea topArea = new EncircledArea(
+                fetcher.fetchFullBorder(),
+                new ArrayList<Intersection>(),
+                fullContentHypothetique,
+                firstBorderColor
+        );
+        topArea.addChildren(area);
+        return Optional.of(topArea);
+    }
 
     protected EncircledArea fetchColorAreaFromIntersection(Intersection i, Color borderColor) {
         List<Intersection> contenuAnneau = getAnneauInterieur(i, borderColor);

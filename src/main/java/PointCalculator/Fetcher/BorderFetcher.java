@@ -19,7 +19,7 @@ public class BorderFetcher {
         board = b;
     }
 
-    protected List<Intersection> fetchFullBorder() {
+    public List<Intersection> fetchFullBorder() {
         List<Intersection> bordureComplete = new ArrayList<Intersection>();
         List<Intersection> bordureMinimale = fetchExternalMinimalBorder();
         if(bordureMinimale.isEmpty()) return bordureComplete;
@@ -42,7 +42,7 @@ public class BorderFetcher {
         return bordureComplete;
     }
 
-    protected List<Intersection> fetchExternalMinimalBorder() {
+    public List<Intersection> fetchExternalMinimalBorder() {
         List<Intersection> bordure = new ArrayList<Intersection>();
         if(contenuAnneau.isEmpty()) return bordure;
         bordure = EncircledAreaFetcher.getAdjacencesTransitives(contenuAnneau.get(0), board, intersection -> {
