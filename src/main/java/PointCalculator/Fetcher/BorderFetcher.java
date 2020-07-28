@@ -46,4 +46,31 @@ public class BorderFetcher {
         return false;
     }
 
+    protected boolean isBottomAdjacentOfGroup(Position p) {
+        Intersection i = board.getIntersection(p);
+        Optional<Intersection> optDroite = contenuAnneau.stream().filter(
+                intersection -> intersection.getX() == i.getX()
+        ).min(comparatorY);
+        if(!optDroite.isPresent()) return false;
+        Intersection interDroite = optDroite.get();
+        if(i.getY()+1 == interDroite.getY()) return true;
+        return false;
+    }
+
+    protected boolean isTopAdjacentOfGroup(Position p) {
+        Intersection i = board.getIntersection(p);
+        Optional<Intersection> optDroite = contenuAnneau.stream().filter(
+                intersection -> intersection.getX() == i.getX()
+        ).max(comparatorY);
+        if(!optDroite.isPresent()) return false;
+        Intersection interDroite = optDroite.get();
+        if(i.getY()-1 == interDroite.getY()) return true;
+        return false;
+    }
+
+    protected boolean isInExternalBorder(Position p) {
+        return isLeftAdjacentOfGroup(p) || isRightAdjacentOfGroup(p)
+                || isTopAdjacentOfGroup(p) || isBottomAdjacentOfGroup(p);
+    }
+
 }
