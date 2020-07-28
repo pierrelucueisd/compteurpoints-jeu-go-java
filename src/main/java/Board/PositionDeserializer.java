@@ -11,9 +11,9 @@ public class PositionDeserializer implements Deserializer<Position> {
             int ASCII_LOWERCASE_A_VALUE = 97;
             char c = pos.charAt(0);
             c = c == 'j' ? 'i' : c; // Letter I is replace by letter J to avoid confusion
-            Integer posX = c - ASCII_LOWERCASE_A_VALUE;
-            Integer posY = Character.getNumericValue(pos.charAt(1)) - 1; // Index start at 0
-            return Optional.of(new Position(posX, posY));
+            int posX = c - ASCII_LOWERCASE_A_VALUE;
+            int posY = Character.getNumericValue(pos.charAt(1)) - 1; // Index start at 0
+            return posY < 0 ? Optional.empty() : Optional.of(new Position(posX, posY));
         }
         return Optional.empty();
     }

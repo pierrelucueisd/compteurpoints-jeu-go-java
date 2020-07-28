@@ -1,6 +1,6 @@
 package Action;
 
-import Board.BoardController;
+import Board.IBoardController;
 import Game.ErrorObservable;
 import Game.ErrorType;
 import Player.Player;
@@ -14,10 +14,10 @@ public abstract class ValidableAction implements Action {
         this.action = action;
     }
 
-    public abstract Optional<ErrorType> validate(BoardController bc, Player p);
+    public abstract Optional<ErrorType> validate(IBoardController bc, Player p);
 
     @Override
-    public void execute(BoardController bc, Player p) {
+    public void execute(IBoardController bc, Player p) {
         Optional<ErrorType> err = validate(bc, p);
         if(err.isPresent())
             ErrorObservable.getSingleton().notifyObservers(err.get());

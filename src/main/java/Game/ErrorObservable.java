@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class ErrorObservable {
 
-    private final Set<ErrorObserver> observers;
+    protected final Set<ErrorObserver> observers;
     private static ErrorObservable singleton = null;
 
     public ErrorObservable() {

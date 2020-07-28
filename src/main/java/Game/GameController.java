@@ -2,6 +2,7 @@ package Game;
 
 import Action.Action;
 import Board.BoardController;
+import Board.IBoardController;
 import Player.*;
 
 import java.util.Arrays;
@@ -14,7 +15,7 @@ import java.util.stream.Stream;
 public class GameController {
 
     private final GameConsole gameConsole;
-    private final BoardController boardController;
+    private final IBoardController boardController;
 
     public GameController(int size) {
         this.boardController = new BoardController(size);

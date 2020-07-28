@@ -1,10 +1,10 @@
 package Action;
 
-import Board.BoardController;
+import Board.IBoardController;
 import Player.Player;
 
 public class PassAction implements Action {
-    public void execute(BoardController bc, Player p) {
+    public void execute(IBoardController bc, Player p) {
         p.pass();
     }
 }

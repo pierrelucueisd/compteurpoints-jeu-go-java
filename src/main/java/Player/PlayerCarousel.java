@@ -7,8 +7,8 @@ import java.util.List;
 
 public class PlayerCarousel implements ErrorObserver {
 
-    int nbIter;
-    final List<Player> players;
+    protected int nbIter;
+    protected final List<Player> players;
 
     public PlayerCarousel(List<Player> pl) {
         this.players = pl;

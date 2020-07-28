@@ -1,8 +1,8 @@
 package Action;
 
-import Board.BoardController;
+import Board.IBoardController;
 import Player.Player;
 
 public interface Action {
-    void execute(BoardController bc, Player p);
+    void execute(IBoardController bc, Player p);
 }

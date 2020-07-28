@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class BoardBuilderFromBoardRepresentationTest {
 
     @Test
@@ -23,7 +21,7 @@ class BoardBuilderFromBoardRepresentationTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-●\n");
         Optional<Board> optB = builder.build();
-        String result = optB.get().toString();
+        String result = optB.isPresent() ? optB.get().toString() : "";
         String expected = "  A B C D E F G H J\n" +
                 "9 ●-+-+-+-+-+-+-+-●\n" +
                 "8 +-+-+-+-+-+-+-○-+\n" +
