@@ -4,7 +4,9 @@ import Board.Board;
 import Board.Intersection;
 import PointCalculator.EncircledArea;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class EncircledAreaFlatListFetcher {
@@ -15,12 +17,25 @@ public class EncircledAreaFlatListFetcher {
     }
 
     public List<EncircledArea> fetchFlatListFromBoard() {
-        List<Intersection> intersectionsVidesATraiter =  b.getAllIntersections().stream().filter(
-                intersection -> !intersection.getOccupation().isPresent()
-        ).collect(Collectors.toList());
+        List<EncircledArea> areas = new ArrayList<>();
+        EncircledAreaFetcher areaFecther = new EncircledAreaFetcher(b);
+        Stack<Intersection> aTraiter = getEmptyBoardIntersectionsATraiter();
+        while(!aTraiter.isEmpty()) {
+            Intersection inter = aTraiter.pop();
+            EncircledArea area = areaFecther.fetchAreaFromIntersection(inter);
+            areas.add(area);
+            aTraiter.removeAll(area.getRingContent());
+        }
+        return areas;
+    }
 
-        int jj = 0;
-        jj = 8;
-        return null;
+    private Stack<Intersection> getEmptyBoardIntersectionsATraiter() {
+        Stack<Intersection> aTraiter = new Stack<Intersection>();
+        aTraiter.addAll(
+                b.getAllIntersections().stream().filter(
+                        intersection -> !intersection.getOccupation().isPresent()
+                ).collect(Collectors.toList())
+        );
+        return aTraiter;
     }
 }

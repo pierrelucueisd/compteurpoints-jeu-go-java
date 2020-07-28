@@ -8,6 +8,7 @@ import PointCalculator.EncircledArea;
 
 import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class EncircledAreaFetcher {
     private Board b;
@@ -19,9 +20,21 @@ public class EncircledAreaFetcher {
     protected EncircledArea fetchAreaFromIntersection(Intersection i) {
         EncircledArea areaWhite = fetchColorAreaFromIntersection(i, Color.White);
         EncircledArea areaBlack = fetchColorAreaFromIntersection(i, Color.Black);
-        if(EncirleAreaComparator.isMinleftOfAreaAisafterBMinLeft(areaWhite, areaBlack)) return areaWhite;
-        else return areaBlack;
+        EncircledArea retainedArea;
+        if(EncirleAreaComparator.isMinleftOfAreaAisafterBMinLeft(areaWhite, areaBlack)) retainedArea = areaWhite;
+        else retainedArea = areaBlack;
+        List<Intersection> retainedRing = areaWhite.getRingContent().stream().filter(intersection -> {
+            return areaBlack.getRingContent().contains(intersection);
+        }).collect(Collectors.toList());
+        return new EncircledArea(
+                retainedArea.getFullBorder(),
+                retainedRing,
+                retainedArea.getFullContent(),
+                retainedArea.getBorderColor()
+        );
     }
+
+
 
     protected EncircledArea fetchColorAreaFromIntersection(Intersection i, Color borderColor) {
         List<Intersection> contenuAnneau = getAnneauInterieur(i, borderColor);
