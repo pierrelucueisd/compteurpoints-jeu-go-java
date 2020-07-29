@@ -267,10 +267,11 @@ class EncircledAreaFetcherTest {
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(3, 4);
-        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        assertEquals(18, area.getFullBorder().size(), "Bordure non conforme");
-        assertEquals(12, area.getFullContent().size(), "Contenu complet non conforme");
-        assertEquals(3, area.getRingContent().size(), "Contenu aneau non conforme");
+        Optional<EncircledArea> area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(area.isPresent(), "ereure Areab non présente.");
+        assertEquals(18, area.get().getFullBorder().size(), "Bordure non conforme");
+        assertEquals(12, area.get().getFullContent().size(), "Contenu complet non conforme");
+        assertEquals(3, area.get().getRingContent().size(), "Contenu aneau non conforme");
     }
 
     @Test
@@ -289,10 +290,11 @@ class EncircledAreaFetcherTest {
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(3, 4);
-        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        assertEquals(18, area.getFullBorder().size(), "Bordure non conforme");
-        assertEquals(12, area.getFullContent().size(), "Contenu complet non conforme");
-        assertEquals(3, area.getRingContent().size(), "Contenu aneau non conforme");
+        Optional<EncircledArea> area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(area.isPresent(), "ereure Areab non présente.");
+        assertEquals(18, area.get().getFullBorder().size(), "Bordure non conforme");
+        assertEquals(12, area.get().getFullContent().size(), "Contenu complet non conforme");
+        assertEquals(3, area.get().getRingContent().size(), "Contenu aneau non conforme");
     }
 
     @Test
@@ -311,10 +313,11 @@ class EncircledAreaFetcherTest {
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(2, 2);
-        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        assertEquals(26, area.getFullBorder().size(), "Bordure non conforme");
-        assertEquals(30, area.getFullContent().size(), "Contenu complet non conforme");
-        assertEquals(14, area.getRingContent().size(), "Contenu aneau non conforme");
+        Optional<EncircledArea> area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(area.isPresent(), "ereure Areab non présente.");
+        assertEquals(26, area.get().getFullBorder().size(), "Bordure non conforme");
+        assertEquals(30, area.get().getFullContent().size(), "Contenu complet non conforme");
+        assertEquals(14, area.get().getRingContent().size(), "Contenu aneau non conforme");
     }
 
     @Test
@@ -333,10 +336,11 @@ class EncircledAreaFetcherTest {
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(3, 4);
-        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        assertEquals(10, area.getFullBorder().size(), "Bordure non conforme");
-        assertEquals(2, area.getFullContent().size(), "Contenu complet non conforme");
-        assertEquals(1, area.getRingContent().size(), "Contenu aneau non conforme");
+        Optional<EncircledArea> area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(area.isPresent(), "ereure Areab non présente.");
+        assertEquals(10, area.get().getFullBorder().size(), "Bordure non conforme");
+        assertEquals(2, area.get().getFullContent().size(), "Contenu complet non conforme");
+        assertEquals(1, area.get().getRingContent().size(), "Contenu aneau non conforme");
     }
 
     @Test
@@ -356,8 +360,9 @@ class EncircledAreaFetcherTest {
 
         Intersection i = b.getIntersection(3, 5);
 
-        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        Optional<EncircledArea> optTopArea = encircledAreaFetcher.fetchFirstAscendantStickyEncercling(area, true);
+        Optional<EncircledArea> area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(area.isPresent(), "ereure Areab non présente.");
+        Optional<EncircledArea> optTopArea = encircledAreaFetcher.fetchFirstAscendantStickyEncercling(area.get(), true);
         assertTrue(optTopArea.isPresent(), "Absence de détection de zone parente");
         EncircledArea topArea = optTopArea.get();
         assertEquals(14, topArea.getFullBorder().size(), "Bordure non conforme");
@@ -382,8 +387,9 @@ class EncircledAreaFetcherTest {
 
         Intersection i = b.getIntersection(3, 5);
 
-        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        Optional<EncircledArea> optTopArea = encircledAreaFetcher.fetchFirstAscendantStickyEncercling(area, true);
+        Optional<EncircledArea> area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(area.isPresent(), "ereure Areab non présente.");
+        Optional<EncircledArea> optTopArea = encircledAreaFetcher.fetchFirstAscendantStickyEncercling(area.get(), true);
         assertTrue(optTopArea.isPresent(), "Absence de détection de zone parente");
         EncircledArea topArea = optTopArea.get();
         assertEquals(16, topArea.getFullBorder().size(), "Bordure non conforme");
@@ -408,8 +414,9 @@ class EncircledAreaFetcherTest {
 
         Intersection i = b.getIntersection(3, 5);
 
-        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        Optional<EncircledArea> optTopArea = encircledAreaFetcher.fetchFirstAscendantStickyEncercling(area, true);
+        Optional<EncircledArea> area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(area.isPresent(), "ereure Areab non présente.");
+        Optional<EncircledArea> optTopArea = encircledAreaFetcher.fetchFirstAscendantStickyEncercling(area.get(), true);
         assertTrue(optTopArea.isPresent(), "Absence de détection de zone parente");
         EncircledArea topArea = optTopArea.get();
         assertEquals(15, topArea.getFullBorder().size(), "Bordure non conforme");
@@ -437,8 +444,9 @@ class EncircledAreaFetcherTest {
 
         Intersection i = b.getIntersection(3, 5);
 
-        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        EncircledArea topArea = encircledAreaFetcher.fetchTopStickyEncirler(area);
+        Optional<EncircledArea> area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(area.isPresent(), "ereure Areab non présente.");
+        EncircledArea topArea = encircledAreaFetcher.fetchTopStickyEncirler(area.get());
         assertEquals(14, topArea.getFullBorder().size(), "Bordure non conforme");
         assertEquals(12, topArea.getFullContent().size(), "Contenu complet non conforme");
         assertEquals(0, topArea.getRingContent().size(), "Contenu aneau non conforme");
@@ -461,8 +469,9 @@ class EncircledAreaFetcherTest {
 
         Intersection i = b.getIntersection(3, 5);
 
-        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        EncircledArea topArea = encircledAreaFetcher.fetchTopStickyEncirler(area);
+        Optional<EncircledArea> area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(area.isPresent(), "ereure Areab non présente.");
+        EncircledArea topArea = encircledAreaFetcher.fetchTopStickyEncirler(area.get());
         assertEquals(15, topArea.getFullBorder().size(), "Bordure non conforme");
         assertEquals(12, topArea.getFullContent().size(), "Contenu complet non conforme");
         assertEquals(0, topArea.getRingContent().size(), "Contenu aneau non conforme");
@@ -485,8 +494,9 @@ class EncircledAreaFetcherTest {
 
         Intersection i = b.getIntersection(3, 5);
 
-        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        EncircledArea topArea = encircledAreaFetcher.fetchTopStickyEncirler(area);
+        Optional<EncircledArea> area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(area.isPresent(), "ereure Areab non présente.");
+        EncircledArea topArea = encircledAreaFetcher.fetchTopStickyEncirler(area.get());
         assertEquals(18, topArea.getFullBorder().size(), "Bordure non conforme");
         assertEquals(27, topArea.getFullContent().size(), "Contenu complet non conforme");
         assertEquals(0, topArea.getRingContent().size(), "Contenu aneau non conforme");
@@ -511,8 +521,9 @@ class EncircledAreaFetcherTest {
 
         Intersection i = b.getIntersection(3, 8);
 
-        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        EncircledArea topArea = encircledAreaFetcher.fetchTopStickyEncirler(area);
+        Optional<EncircledArea> area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(area.isPresent(), "ereure Areab non présente.");
+        EncircledArea topArea = encircledAreaFetcher.fetchTopStickyEncirler(area.get());
         assertEquals(6, topArea.getFullBorder().size(), "Bordure non conforme");
         assertEquals(2, topArea.getFullContent().size(), "Contenu complet non conforme");
         assertEquals(2, topArea.getRingContent().size(), "Contenu aneau non conforme");
@@ -536,8 +547,9 @@ class EncircledAreaFetcherTest {
 
         Intersection i = b.getIntersection(4, 0);
 
-        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        assertEquals(6, area.getFullBorder().size(), "Bordure non conforme");
+        Optional<EncircledArea> area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(area.isPresent(), "ereure Areab non présente.");
+        assertEquals(6, area.get().getFullBorder().size(), "Bordure non conforme");
         //assertEquals(2, area.getFullContent().size(), "Contenu complet non conforme");
         //assertEquals(2, area.getRingContent().size(), "Contenu aneau non conforme");
     }

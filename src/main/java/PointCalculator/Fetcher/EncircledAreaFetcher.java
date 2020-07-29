@@ -17,7 +17,7 @@ public class EncircledAreaFetcher {
         this.b = b;
     }
 
-    public EncircledArea fetchAreaFromIntersection(Intersection i) {
+    public Optional<EncircledArea> fetchAreaFromIntersection(Intersection i) {
         EncircledArea areaWhite = fetchColorAreaFromIntersection(i, Color.White);
         EncircledArea areaBlack = fetchColorAreaFromIntersection(i, Color.Black);
         EncircledArea retainedArea;
@@ -26,11 +26,13 @@ public class EncircledAreaFetcher {
         List<Intersection> retainedRing = areaWhite.getRingContent().stream().filter(intersection -> {
             return areaBlack.getRingContent().contains(intersection) && !intersection.getOccupation().isPresent();
         }).collect(Collectors.toList());
-        return new EncircledArea(
+        return Optional.of(
+            new EncircledArea(
                 retainedArea.getFullBorder(),
                 retainedRing,
                 retainedArea.getFullContent(),
                 retainedArea.getBorderColor()
+            )
         );
     }
 

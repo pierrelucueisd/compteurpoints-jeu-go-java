@@ -6,6 +6,7 @@ import PointCalculator.EncircledArea;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
@@ -22,10 +23,12 @@ public class EncircledAreaFlatListFetcher {
         Stack<Intersection> aTraiter = getEmptyBoardIntersectionsATraiter();
         while(!aTraiter.isEmpty()) {
             Intersection inter = aTraiter.pop();
-            EncircledArea area = areaFecther.fetchAreaFromIntersection(inter);
+            Optional<EncircledArea> optArea = areaFecther.fetchAreaFromIntersection(inter);
+            if(optArea.isPresent()) {
+                areas.add(optArea.get());
+                aTraiter.removeAll(optArea.get().getRingContent());
+            }else aTraiter.add(inter);
             //List<EncircledArea> stickyAreas = areaFecther.fetchTopStickyEncirledFlatList(area);
-            areas.add(area);
-            aTraiter.removeAll(area.getRingContent());
         }
         return areas;
     }

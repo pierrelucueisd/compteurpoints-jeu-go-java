@@ -4,7 +4,6 @@ import Board.Board;
 import Board.Intersection;
 import Board.Builder.BoardBuilder;
 import Board.Builder.BoardBuilderFromBoardRepresentation;
-import Player.Color;
 import PointCalculator.EncircledArea;
 import PointCalculator.Fetcher.EncircledAreaFetcher;
 import org.junit.jupiter.api.Test;
@@ -53,13 +52,14 @@ class EncirleAreaComparatorTest {
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(2, 4);
-        EncircledArea areaB = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        Optional<EncircledArea> areaB = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(areaB.isPresent(), "ereure Areab non présente.");
 
         i = b.getIntersection(4, 5);
-        EncircledArea areaA = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        Optional<EncircledArea> areaA = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(areaA.isPresent(), "ereure Areab non présente.");
 
-
-        assertTrue(EncirleAreaComparator.isMinleftOfAreaAisafterBMinLeft(areaA, areaB));
+        assertTrue(EncirleAreaComparator.isMinleftOfAreaAisafterBMinLeft(areaA.get(), areaB.get()));
     }
 
     @Test
@@ -78,8 +78,9 @@ class EncirleAreaComparatorTest {
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(4, 4);
-        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        assertEquals(6, EncirleAreaComparator.getMaxX(area.getFullContent(), b));
+        Optional<EncircledArea> area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(area.isPresent(), "ereure Areab non présente.");
+        assertEquals(6, EncirleAreaComparator.getMaxX(area.get().getFullContent(), b));
     }
 
     @Test
@@ -98,8 +99,9 @@ class EncirleAreaComparatorTest {
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(4, 4);
-        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        assertEquals(2, EncirleAreaComparator.getMinX(area.getFullContent(), b));
+        Optional<EncircledArea> area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(area.isPresent(), "ereure Areab non présente.");
+        assertEquals(2, EncirleAreaComparator.getMinX(area.get().getFullContent(), b));
     }
 
     @Test
@@ -118,8 +120,9 @@ class EncirleAreaComparatorTest {
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(4, 4);
-        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        assertEquals(2, EncirleAreaComparator.getMinY(area.getFullContent(), b));
+        Optional<EncircledArea> area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(area.isPresent(), "ereure Areab non présente.");
+        assertEquals(2, EncirleAreaComparator.getMinY(area.get().getFullContent(), b));
     }
 
     @Test
@@ -138,7 +141,8 @@ class EncirleAreaComparatorTest {
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(4, 4);
-        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        assertEquals(6, EncirleAreaComparator.getMaxY(area.getFullContent(), b));
+        Optional<EncircledArea> area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(area.isPresent(), "ereure Areab non présente.");
+        assertEquals(6, EncirleAreaComparator.getMaxY(area.get().getFullContent(), b));
     }
 }
