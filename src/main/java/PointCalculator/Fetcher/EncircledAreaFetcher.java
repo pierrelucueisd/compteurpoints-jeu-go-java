@@ -17,7 +17,7 @@ public class EncircledAreaFetcher {
         this.b = b;
     }
 
-    protected EncircledArea fetchAreaFromIntersection(Intersection i) {
+    public EncircledArea fetchAreaFromIntersection(Intersection i) {
         EncircledArea areaWhite = fetchColorAreaFromIntersection(i, Color.White);
         EncircledArea areaBlack = fetchColorAreaFromIntersection(i, Color.Black);
         EncircledArea retainedArea;
