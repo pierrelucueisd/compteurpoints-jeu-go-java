@@ -33,6 +33,6 @@ public class EncirleAreaComparator {
     }
 
     public static int getMinLeft(List<Intersection> intersections, Board b) {
-        return true;
+        return 0;
     }
 }
