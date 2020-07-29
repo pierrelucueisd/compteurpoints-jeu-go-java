@@ -60,8 +60,85 @@ class EncirleAreaComparatorTest {
 
 
         assertTrue(EncirleAreaComparator.isMinleftOfAreaAisafterBMinLeft(areaA, areaB));
-        /*assertEquals(18, area.getFullBorder().size(), "Bordure non conforme");
-        assertEquals(12, area.getFullContent().size(), "Contenu complet non conforme");
-        assertEquals(11, area.getRingContent().size(), "Contenu aneau non conforme");*/
+    }
+
+    @Test
+    void getMaxX_CasBasique() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-●-+-+-+-+\n" +
+                "+-+-+-●-+-●-+-+-+\n" +
+                "+-+-●-●-+-●-●-+-+\n" +
+                "+-●-+-+-+-+-+-●-+\n" +
+                "+-+-●-●-+-●-●-+-+\n" +
+                "+-+-+-●-+-●-+-+-+\n" +
+                "+-+-+-+-●-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, taille);
+        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+
+        Intersection i = b.getIntersection(4, 4);
+        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertEquals(6, EncirleAreaComparator.getMaxX(area.getFullContent(), b));
+    }
+
+    @Test
+    void getMinX_CasBasique() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-●-+-+-+-+\n" +
+                "+-+-+-●-+-●-+-+-+\n" +
+                "+-+-●-●-+-●-●-+-+\n" +
+                "+-●-+-+-+-+-+-●-+\n" +
+                "+-+-●-●-+-●-●-+-+\n" +
+                "+-+-+-●-+-●-+-+-+\n" +
+                "+-+-+-+-●-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, taille);
+        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+
+        Intersection i = b.getIntersection(4, 4);
+        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertEquals(2, EncirleAreaComparator.getMinX(area.getFullContent(), b));
+    }
+
+    @Test
+    void getMinY_CasBasique() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-●-+-+-+-+\n" +
+                "+-+-+-●-+-●-+-+-+\n" +
+                "+-+-●-●-+-●-●-+-+\n" +
+                "+-●-+-+-+-+-+-●-+\n" +
+                "+-+-●-●-+-●-●-+-+\n" +
+                "+-+-+-●-+-●-+-+-+\n" +
+                "+-+-+-+-●-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, taille);
+        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+
+        Intersection i = b.getIntersection(4, 4);
+        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertEquals(2, EncirleAreaComparator.getMinY(area.getFullContent(), b));
+    }
+
+    @Test
+    void getMaxY_CasBasique() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-●-+-+-+-+\n" +
+                "+-+-+-●-+-●-+-+-+\n" +
+                "+-+-●-●-+-●-●-+-+\n" +
+                "+-●-+-+-+-+-+-●-+\n" +
+                "+-+-●-●-+-●-●-+-+\n" +
+                "+-+-+-●-+-●-+-+-+\n" +
+                "+-+-+-+-●-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, taille);
+        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+
+        Intersection i = b.getIntersection(4, 4);
+        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertEquals(6, EncirleAreaComparator.getMaxY(area.getFullContent(), b));
     }
 }

@@ -47,12 +47,12 @@ public class EncirleAreaComparator {
     protected static Integer getMaxY(List<Intersection> intersections, Board b) {
         Optional<Intersection> OptLeft = intersections.stream().max(comparatorY);
         if(!OptLeft.isPresent()) return -1;
-        return OptLeft.get().getX();
+        return OptLeft.get().getY();
     }
 
     protected static Integer getMinY(List<Intersection> intersections, Board b) {
         Optional<Intersection> OptLeft = intersections.stream().min(comparatorY);
         if(!OptLeft.isPresent()) return -1;
-        return OptLeft.get().getX();
+        return OptLeft.get().getY();
     }
 }
