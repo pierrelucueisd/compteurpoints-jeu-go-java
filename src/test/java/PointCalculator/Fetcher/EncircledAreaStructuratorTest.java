@@ -1,0 +1,90 @@
+package PointCalculator.Fetcher;
+
+import Board.Board;
+import Board.Intersection;
+import Board.Builder.BoardBuilder;
+import Board.Builder.BoardBuilderFromBoardRepresentation;
+import PointCalculator.EncircledArea;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class EncircledAreaStructuratorTest {
+
+    final static int taille = 9;
+
+    Board buildBoard(String representation, int size) {
+        BoardBuilder builder = new BoardBuilderFromBoardRepresentation(representation, size);
+        Optional<Board> optB = builder.build();
+        assertTrue(optB.isPresent(), "attention erreure d'initialisetion du board");
+        return optB.get();
+    }
+
+    private List<EncircledArea> fetchFlatListFromBoard(Board b) {
+        EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
+        return fetcher.fetchFlatListNoStickyFromBoard();
+    }
+
+    /* LÉGENDE
+     *  1. Blanc:   ●
+     *  2. Noir:    ○
+     */
+
+    @Test
+    void isAdjacentOfAllBoardSides_CasBasique() {
+        String representation =
+                "+-+-○-+-+-○-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-○-○-○-○-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-●-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-●-●-●-●-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+-+-●-+-+-+-+\n" +
+                "+-+-●-○-○-○-●-●-●-+-●-+-+-+-+\n" +
+                "+-+-●-○-+-○-●-+-●-+-●-+-+-+-+\n" +
+                "+-+-●-○-○-○-●-●-●-+-●-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-●-+-+-+-+\n" +
+                "+-+-●-●-●-●-●-●-●-●-●-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, 15);
+        Intersection i = b.getIntersection(0, 0);
+        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+        Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(optArea.isPresent(), "Attention précondition zone existant fausse");
+        EncircledAreaStructurator structurator = new EncircledAreaStructurator(b);
+        assertTrue(
+                structurator.isAdjacentOfAllBoardSides(optArea.get())
+        );
+    }
+
+
+    @Test
+    void structurateElementsOfList_CasBasique() {
+        String representation =
+                "+-+-○-+-+-○-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-○-○-○-○-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-●-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-●-●-●-●-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+-+-●-+-+-+-+\n" +
+                "+-+-●-○-○-○-●-●-●-+-●-+-+-+-+\n" +
+                "+-+-●-○-+-○-●-+-●-+-●-+-+-+-+\n" +
+                "+-+-●-○-○-○-●-●-●-+-●-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-●-+-+-+-+\n" +
+                "+-+-●-●-●-●-●-●-●-●-●-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, 15);
+        List<EncircledArea> areas = fetchFlatListFromBoard(b);
+        EncircledAreaStructurator structurator = new EncircledAreaStructurator(b);
+        List<EncircledArea> rootElements = structurator.structurateElementsOfList(areas);
+        assertEquals(3, rootElements.size());
+    }
+}

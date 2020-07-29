@@ -35,6 +35,8 @@ public class EncircledArea implements EncircledAreaInterface {
         childrens.add(child);
     }
 
+
+
     public List<Intersection> getFullBorder() {
         return fullBorder;
     }

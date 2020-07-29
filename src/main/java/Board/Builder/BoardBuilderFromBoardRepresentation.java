@@ -18,7 +18,7 @@ public class BoardBuilderFromBoardRepresentation implements BoardBuilder {
 
     @Override
     public Optional<Board> build() {
-        Board b = new Board(9);
+        Board b = new Board(size);
         String[] lignes = str.split("\n");
         if(lignes.length != b.getSize()) return Optional.empty();
         int noLigneMat = 0;

@@ -100,6 +100,118 @@ class EncircledAreaFlatListFetcherTest {
     }
 
     @Test
+    void fetchFlatListNoStickyFromBoard_CasBasique3ZoneCount() {
+        String representation =
+                "+-+-○-+-+-○-+-+-+\n" +
+                "+-+-○-○-○-○-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+\n" +
+                "+-+-●-+-+-●-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+\n" +
+                "+-+-+-+-+-+-+-●-●\n" +
+                "+-+-+-○-○-○-●-+-+\n" +
+                "●-+-+-○-+-○-●-+-+\n" +
+                "●-+-+-○-○-○-●-+-+\n";
+        Board b = buildBoard(representation, taille);
+        EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
+        List<EncircledArea> areas = fetcher.fetchFlatListNoStickyFromBoard();
+        assertEquals(5, areas.size());
+    }
+
+    @Test
+    void fetchFlatListNoStickyFromBoard_CasBasique4ZoneCount() {
+        String representation =
+                "+-+-○-+-+-○-+-+-+-+-+-+-+\n" +
+                "+-+-○-○-○-○-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-●-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-○-○-○-●-●-●-+-+-+-+\n" +
+                "+-+-+-○-+-○-●-+-●-+-+-+-+\n" +
+                "+-+-+-○-○-○-●-●-●-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-●-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-●-●-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-●-+-●-+-+-+-+-+\n";
+        Board b = buildBoard(representation, 13);
+        EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
+        List<EncircledArea> areas = fetcher.fetchFlatListNoStickyFromBoard();
+        assertEquals(6, areas.size());
+    }
+
+    @Test
+    void fetchFlatListNoStickyFromBoard_CasBasique5ZoneCount() {
+        String representation =
+                "+-+-○-+-+-○-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-○-○-○-○-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-●-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-○-○-○-●-●-●-+-+-+-+-+-+\n" +
+                "+-+-●-○-+-○-●-+-●-+-+-+-+-+-+\n" +
+                "+-+-●-○-○-○-●-●-●-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-●-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-●-●-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-●-+-●-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-●-+-●-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-●-+-●-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, 15);
+        EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
+        List<EncircledArea> areas = fetcher.fetchFlatListNoStickyFromBoard();
+        assertEquals(6, areas.size());
+    }
+
+    @Test
+    void fetchFlatListNoStickyFromBoard_CasBasique6ZoneCount() {
+        String representation =
+                "+-+-○-+-+-○-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-○-○-○-○-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-●-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-●-●-●-●-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+-+-●-+-+-+-+\n" +
+                "+-+-●-○-○-○-●-●-●-+-●-+-+-+-+\n" +
+                "+-+-●-○-+-○-●-+-●-+-●-+-+-+-+\n" +
+                "+-+-●-○-○-○-●-●-●-+-●-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-●-+-+-+-+\n" +
+                "+-+-●-●-●-●-●-●-●-●-●-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, 15);
+        EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
+        List<EncircledArea> areas = fetcher.fetchFlatListNoStickyFromBoard();
+        assertEquals(6, areas.size());
+    }
+
+    @Test
+    void fetchFlatListNoStickyFromBoard_CasBasique7ZoneCount() {
+        String representation =
+                "+-+-○-+-+-○-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-○-○-○-○-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-●-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-●-●-●-●-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-●-+-+-+-●-+-+-+-+\n" +
+                "+-+-●-○-○-○-●-●-●-+-●-+-+-+-+\n" +
+                "+-+-●-○-+-○-●-+-●-+-●-+-+-+-+\n" +
+                "+-+-●-○-○-○-●-●-●-+-●-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-●-+-+-+-+\n" +
+                "+-+-●-●-●-●-●-●-●-●-●-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, 15);
+        EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
+        List<EncircledArea> areas = fetcher.fetchFlatListNoStickyFromBoard();
+        assertEquals(6, areas.size());
+    }
+
+    @Test
     void fetchFlatListNoStickyFromBoard_CasConcentrique() {
         String representation =
                 "+-+-●-●-●-●-+-+-+\n" +

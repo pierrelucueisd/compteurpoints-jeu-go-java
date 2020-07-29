@@ -69,25 +69,25 @@ public class EncirleAreaComparator {
         return minXB <= minXA;
     }
 
-    protected static Integer getMinX(List<Intersection> intersections, Board b) {
+    public static Integer getMinX(List<Intersection> intersections, Board b) {
         Optional<Intersection> OptLeft = intersections.stream().min(comparatorX);
         if(!OptLeft.isPresent()) return -1;
         return OptLeft.get().getX();
     }
 
-    protected static Integer getMaxX(List<Intersection> intersections, Board b) {
+    public static Integer getMaxX(List<Intersection> intersections, Board b) {
         Optional<Intersection> OptLeft = intersections.stream().max(comparatorX);
         if(!OptLeft.isPresent()) return -1;
         return OptLeft.get().getX();
     }
 
-    protected static Integer getMinY(List<Intersection> intersections, Board b) {
+    public static Integer getMinY(List<Intersection> intersections, Board b) {
         Optional<Intersection> OptLeft = intersections.stream().min(comparatorY);
         if(!OptLeft.isPresent()) return -1;
         return OptLeft.get().getY();
     }
 
-    protected static Integer getMaxY(List<Intersection> intersections, Board b) {
+    public static Integer getMaxY(List<Intersection> intersections, Board b) {
         Optional<Intersection> OptLeft = intersections.stream().max(comparatorY);
         if(!OptLeft.isPresent()) return -1;
         return OptLeft.get().getY();
