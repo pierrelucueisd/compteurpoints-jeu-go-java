@@ -171,7 +171,60 @@ class EncircledAreaFlatListFetcherTest {
         EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
         List<EncircledArea> areas = fetcher.fetchFlatListNoStickyFromBoard();
         assertEquals(2, areas.size());
+    }
 
+    @Test
+    void fetchFlatListNoStickyFromBoard_CasNoMansLand2() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "○-○-○-○-○-○-○-○-○\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "●-●-●-●-●-●-●-●-●\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, taille);
+        EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
+        List<EncircledArea> areas = fetcher.fetchFlatListNoStickyFromBoard();
+        assertEquals(2, areas.size());
+    }
+
+    @Test
+    void fetchFlatListNoStickyFromBoard_CasNoMansLand2extend() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "○-○-○-○-○-○-○-○-○\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "●-●-●-●-●-●-●-●-●\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, taille);
+        EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
+        List<EncircledArea> areas = fetcher.fetchFlatListNoStickyFromBoard();
+        assertEquals(2, areas.size());
+    }
+
+    @Test
+    void fetchFlatListNoStickyFromBoard_CasBandeNotMidle() {
+        String representation =
+                "+-+-+-+-○-+-●-+-+\n" +
+                "+-+-+-+-○-+-●-+-+\n" +
+                "+-+-+-+-○-+-●-+-+\n" +
+                "+-+-+-+-○-+-●-+-+\n" +
+                "+-+-+-+-○-+-●-+-+\n" +
+                "+-+-+-+-○-+-●-+-+\n" +
+                "+-+-+-+-○-+-●-+-+\n" +
+                "+-+-+-+-○-+-●-+-+\n" +
+                "+-+-+-+-○-+-●-+-+\n";
+        Board b = buildBoard(representation, taille);
+        EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
+        List<EncircledArea> areas = fetcher.fetchFlatListNoStickyFromBoard();
+        assertEquals(3, areas.size());
     }
 
 }

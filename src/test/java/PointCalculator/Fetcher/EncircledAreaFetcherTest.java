@@ -548,10 +548,7 @@ class EncircledAreaFetcherTest {
         Intersection i = b.getIntersection(4, 0);
 
         Optional<EncircledArea> area = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        assertTrue(area.isPresent(), "ereure Areab non présente.");
-        assertEquals(6, area.get().getFullBorder().size(), "Bordure non conforme");
-        //assertEquals(2, area.getFullContent().size(), "Contenu complet non conforme");
-        //assertEquals(2, area.getRingContent().size(), "Contenu aneau non conforme");
+        assertTrue(!area.isPresent(), "ereure no mans land ignoré");
     }
 
 

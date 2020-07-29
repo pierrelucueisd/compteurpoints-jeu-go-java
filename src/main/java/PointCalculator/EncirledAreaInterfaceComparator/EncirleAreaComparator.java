@@ -4,6 +4,7 @@ import Board.Board;
 import Board.Intersection;
 import PointCalculator.EncircledArea;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -15,10 +16,44 @@ public class EncirleAreaComparator {
 
     private static final Comparator<Intersection> comparatorY = Comparator.comparing( Intersection::getY);
 
-    public static boolean isAreaAisInAreaB(EncircledArea areaA, EncircledArea AreaB) {
+    public static boolean isAreaAisInAreaB(EncircledArea areaA, EncircledArea AreaB, Board b) {
         // a est dans b faire diff B-a.  si un negatif faux. Si un plus grans que 0 vrau sinon faux.
-        return false;
+        ArrayList<Integer> offsets = new ArrayList<>();
+        Integer BottomOffset = getMinY(areaA.getFullBorder(), b) - getMinY(AreaB.getFullBorder(), b);
+        Integer leftOffset   = getMinX(areaA.getFullBorder(), b) - getMinX(AreaB.getFullBorder(), b);
+        Integer TopOffset    = getMaxY(AreaB.getFullBorder(), b) - getMaxY(areaA.getFullBorder(), b);
+        Integer RighttOffset = getMaxX(AreaB.getFullBorder(), b) - getMaxX(areaA.getFullBorder(), b);
+        offsets.add(BottomOffset);
+        offsets.add(leftOffset);
+        offsets.add(TopOffset);
+        offsets.add(RighttOffset);
+        if(!offsets.stream().allMatch(offset -> offset >= 0)) return false;
+        if(offsets.stream().allMatch(offset -> offset == 0))  return false;
+        return true;
+    }
 
+    public static boolean isCloudIntersectionAisInCloudIntersectionB(
+            List<Intersection> cloudA, List<Intersection> cloudB, Board b
+    ) {
+        // a est dans b faire diff B-a.  si un negatif faux. Si un plus grans que 0 vrau sinon faux.
+        ArrayList<Integer> offsets = new ArrayList<>();
+        Integer BottomOffset = getMinY(cloudA, b) - getMinY(cloudB, b);
+        Integer leftOffset   = getMinX(cloudA, b) - getMinX(cloudB, b);
+        Integer TopOffset    = getMaxY(cloudB, b) - getMaxY(cloudA, b);
+        Integer RighttOffset = getMaxX(cloudB, b) - getMaxX(cloudA, b);
+        offsets.add(BottomOffset);
+        offsets.add(leftOffset);
+        offsets.add(TopOffset);
+        offsets.add(RighttOffset);
+        if(!offsets.stream().allMatch(offset -> offset >= 0)) return false;
+        if(offsets.stream().allMatch(offset -> offset == 0))  return false;
+        return true;
+    }
+
+    public static boolean isCommonContentIsNoMansLand(EncircledArea areaA, EncircledArea areaB) {
+        return areaA.getFullContent().containsAll(areaB.getFullBorder())
+                && areaB.getFullContent().containsAll(areaA.getFullBorder())
+                && areaB.getFullContent().size() == areaA.getFullContent().size();
     }
 
     public static boolean isMinleftOfAreaAisafterBMinLeft(EncircledArea areaA, EncircledArea areaB) {
@@ -26,6 +61,7 @@ public class EncirleAreaComparator {
         Optional<Intersection> optMinLeftB = areaB.getFullContent().stream().min(comparatorX);
         if(!optMinLeftA.isPresent()) return true;
         else if(!optMinLeftB.isPresent()) return false;
+
 
         int minXA = optMinLeftA.get().getX();
         int minXB = optMinLeftB.get().getX();

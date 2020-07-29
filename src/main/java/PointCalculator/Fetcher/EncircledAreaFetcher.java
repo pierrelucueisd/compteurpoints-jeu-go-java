@@ -1,6 +1,7 @@
 package PointCalculator.Fetcher;
 
 import Board.Board;
+import Board.Position;
 import Board.Intersection;
 import Player.Color;
 import PointCalculator.EncirledAreaInterfaceComparator.EncirleAreaComparator;
@@ -20,9 +21,8 @@ public class EncircledAreaFetcher {
     public Optional<EncircledArea> fetchAreaFromIntersection(Intersection i) {
         EncircledArea areaWhite = fetchColorAreaFromIntersection(i, Color.White);
         EncircledArea areaBlack = fetchColorAreaFromIntersection(i, Color.Black);
-        EncircledArea retainedArea;
-        if(EncirleAreaComparator.isMinleftOfAreaAisafterBMinLeft(areaWhite, areaBlack)) retainedArea = areaWhite;
-        else retainedArea = areaBlack;
+        if( EncirleAreaComparator.isCommonContentIsNoMansLand(areaBlack, areaWhite)) return Optional.empty();
+        EncircledArea retainedArea = retainCorrectArea(areaWhite, areaBlack, i);
         List<Intersection> retainedRing = areaWhite.getRingContent().stream().filter(intersection -> {
             return areaBlack.getRingContent().contains(intersection) && !intersection.getOccupation().isPresent();
         }).collect(Collectors.toList());
@@ -35,6 +35,23 @@ public class EncircledAreaFetcher {
             )
         );
     }
+
+    private EncircledArea retainCorrectArea(EncircledArea areaA, EncircledArea AreaB, Intersection i){
+        if(!isIntersectionBetwenAreaBorder(i, areaA)) return AreaB;
+        if(!isIntersectionBetwenAreaBorder(i, AreaB)) return areaA;
+        if(areaA.getFullContent().size() < AreaB.getFullContent().size()) return areaA;
+        else return AreaB;
+    }
+
+    private boolean isIntersectionBetwenAreaBorder(Intersection i, EncircledArea area) {
+        List<Intersection> intersection = new ArrayList<Intersection>();
+        intersection.add(i);
+        return EncirleAreaComparator.isCloudIntersectionAisInCloudIntersectionB(
+                intersection, area.getFullBorder(), b
+        );
+    }
+
+
 
     protected EncircledArea fetchTopStickyEncirler(EncircledArea area) {
         EncircledArea topArea = area;
