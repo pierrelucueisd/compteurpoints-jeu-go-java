@@ -15,8 +15,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class EncircledAreaFetcherTest {
 
-    Board buildBoard(String representation) {
-        BoardBuilder builder = new BoardBuilderFromBoardRepresentation(representation);
+    final static int taille = 9;
+
+    Board buildBoard(String representation, int size) {
+        BoardBuilder builder = new BoardBuilderFromBoardRepresentation(representation, size);
         Optional<Board> optB = builder.build();
         assertTrue(optB.isPresent(), "attention erreure d'initialisetion du board");
         return optB.get();
@@ -39,7 +41,7 @@ class EncircledAreaFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(3, 4);
@@ -59,7 +61,7 @@ class EncircledAreaFetcherTest {
                         "+-+-●-+-○-+-+-●-+\n" +
                         "●-+-●-●-●-●-●-●-+\n" +
                         "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Intersection i = b.getIntersection(3, 2);
         List<Intersection> anneauContenuNoir  = encircledAreaFetcher.getAnneauInterieur(i, Color.White);
@@ -78,7 +80,7 @@ class EncircledAreaFetcherTest {
                 "+-+-●-+-○-○-○-●-+\n" +
                 "●-+-●-●-●-●-●-●-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Intersection i = b.getIntersection(3, 2);
         List<Intersection> anneauContenuNoir  = encircledAreaFetcher.getAnneauInterieur(i, Color.White);
@@ -97,7 +99,7 @@ class EncircledAreaFetcherTest {
                 "+-+-●-+-○-○-○-●-+\n" +
                 "●-+-●-●-●-●-●-●-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Intersection i = b.getIntersection(3, 2);
         List<Intersection> anneauContenuNoir  = encircledAreaFetcher.getAnneauInterieur(i, Color.White);
@@ -116,7 +118,7 @@ class EncircledAreaFetcherTest {
                 "+-●-+-○-○-○-○-●-+\n" +
                 "+-●-●-●-●-●-●-●-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Intersection i = b.getIntersection(2, 2);
         List<Intersection> anneauContenuNoir  = encircledAreaFetcher.getAnneauInterieur(i, Color.White);
@@ -135,7 +137,7 @@ class EncircledAreaFetcherTest {
                 "+-●-○-○-○-○-○-●-+\n" +
                 "+-●-●-●-●-●-●-●-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Intersection i = b.getIntersection(2, 2);
         List<Intersection> anneauContenuNoir  = encircledAreaFetcher.getAnneauInterieur(i, Color.White);
@@ -154,7 +156,7 @@ class EncircledAreaFetcherTest {
                 "+-○-+-+-●-●-●-○-+\n" +
                 "+-○-○-○-○-○-○-○-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Intersection i = b.getIntersection(2, 2);
         List<Intersection> anneauContenuNoir  = encircledAreaFetcher.getAnneauInterieur(i, Color.Black);
@@ -173,7 +175,7 @@ class EncircledAreaFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(3, 4);
@@ -195,7 +197,7 @@ class EncircledAreaFetcherTest {
                 "+-+-●-+-○-○-○-●-+\n" +
                 "●-+-●-●-●-●-●-●-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(3, 4);
@@ -217,7 +219,7 @@ class EncircledAreaFetcherTest {
                 "●-+-+-+-○-○-○-●-+\n" +
                 "●-●-●-●-●-●-●-●-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(2, 2);
@@ -239,7 +241,7 @@ class EncircledAreaFetcherTest {
                 "●-+-+-+-○-○-○-●-+\n" +
                 "●-●-●-●-●-●-●-●-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(3, 4);
@@ -261,14 +263,36 @@ class EncircledAreaFetcherTest {
                 "+-+-●-+-○-○-○-●-+\n" +
                 "●-+-●-●-●-●-●-●-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(3, 4);
         EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
         assertEquals(18, area.getFullBorder().size(), "Bordure non conforme");
         assertEquals(12, area.getFullContent().size(), "Contenu complet non conforme");
-        assertEquals(11, area.getRingContent().size(), "Contenu aneau non conforme");
+        assertEquals(3, area.getRingContent().size(), "Contenu aneau non conforme");
+    }
+
+    @Test
+    void  fetchAreaFromIntersection_CasContenuMoinsNoir2() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+\n" +
+                        "+-+-+-+-+-+-+-+-+\n" +
+                        "+-+-+-+-+-+-+-+-+\n" +
+                        "+-+-●-●-●-●-●-●-+\n" +
+                        "+-+-●-+-○-○-○-●-+\n" +
+                        "+-+-●-+-○-+-○-●-+\n" +
+                        "+-+-●-+-○-○-○-●-+\n" +
+                        "●-+-●-●-●-●-●-●-+\n" +
+                        "●-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, taille);
+        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+
+        Intersection i = b.getIntersection(3, 4);
+        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertEquals(18, area.getFullBorder().size(), "Bordure non conforme");
+        assertEquals(12, area.getFullContent().size(), "Contenu complet non conforme");
+        assertEquals(3, area.getRingContent().size(), "Contenu aneau non conforme");
     }
 
     @Test
@@ -283,14 +307,14 @@ class EncircledAreaFetcherTest {
                 "●-+-+-+-○-○-○-●-+\n" +
                 "●-●-●-●-●-●-●-●-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(2, 2);
         EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
         assertEquals(26, area.getFullBorder().size(), "Bordure non conforme");
         assertEquals(30, area.getFullContent().size(), "Contenu complet non conforme");
-        assertEquals(18, area.getRingContent().size(), "Contenu aneau non conforme");
+        assertEquals(14, area.getRingContent().size(), "Contenu aneau non conforme");
     }
 
     @Test
@@ -305,14 +329,14 @@ class EncircledAreaFetcherTest {
                 "●-+-+-+-○-○-○-●-+\n" +
                 "●-●-●-●-●-●-●-●-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(3, 4);
         EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
         assertEquals(10, area.getFullBorder().size(), "Bordure non conforme");
         assertEquals(2, area.getFullContent().size(), "Contenu complet non conforme");
-        assertEquals(2, area.getRingContent().size(), "Contenu aneau non conforme");
+        assertEquals(1, area.getRingContent().size(), "Contenu aneau non conforme");
     }
 
     @Test
@@ -327,13 +351,13 @@ class EncircledAreaFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(3, 5);
 
         EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        Optional<EncircledArea> optTopArea = encircledAreaFetcher.fetchFirstAscendantStickyEncercling(area);
+        Optional<EncircledArea> optTopArea = encircledAreaFetcher.fetchFirstAscendantStickyEncercling(area, true);
         assertTrue(optTopArea.isPresent(), "Absence de détection de zone parente");
         EncircledArea topArea = optTopArea.get();
         assertEquals(14, topArea.getFullBorder().size(), "Bordure non conforme");
@@ -353,13 +377,13 @@ class EncircledAreaFetcherTest {
                         "+-+-+-+-○-+-+-+-+\n" +
                         "+-+-+-+-+-+-+-+-+\n" +
                         "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(3, 5);
 
         EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        Optional<EncircledArea> optTopArea = encircledAreaFetcher.fetchFirstAscendantStickyEncercling(area);
+        Optional<EncircledArea> optTopArea = encircledAreaFetcher.fetchFirstAscendantStickyEncercling(area, true);
         assertTrue(optTopArea.isPresent(), "Absence de détection de zone parente");
         EncircledArea topArea = optTopArea.get();
         assertEquals(16, topArea.getFullBorder().size(), "Bordure non conforme");
@@ -379,13 +403,13 @@ class EncircledAreaFetcherTest {
                 "+-+-+-+-○-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(3, 5);
 
         EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        Optional<EncircledArea> optTopArea = encircledAreaFetcher.fetchFirstAscendantStickyEncercling(area);
+        Optional<EncircledArea> optTopArea = encircledAreaFetcher.fetchFirstAscendantStickyEncercling(area, true);
         assertTrue(optTopArea.isPresent(), "Absence de détection de zone parente");
         EncircledArea topArea = optTopArea.get();
         assertEquals(15, topArea.getFullBorder().size(), "Bordure non conforme");
@@ -408,7 +432,7 @@ class EncircledAreaFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(3, 5);
@@ -419,6 +443,83 @@ class EncircledAreaFetcherTest {
         assertEquals(12, topArea.getFullContent().size(), "Contenu complet non conforme");
         assertEquals(0, topArea.getRingContent().size(), "Contenu aneau non conforme");
     }
+
+    @Test
+    void  fetchTopStickyEncirler_CasBasique2() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-○-○-○-○-+-+-+\n" +
+                "+-○-●-●-●-●-○-+-+\n" +
+                "+-○-●-+-+-●-○-○-+\n" +
+                "+-○-●-●-●-●-○-+-+\n" +
+                "+-+-○-○-○-○-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, taille);
+        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+
+        Intersection i = b.getIntersection(3, 5);
+
+        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        EncircledArea topArea = encircledAreaFetcher.fetchTopStickyEncirler(area);
+        assertEquals(15, topArea.getFullBorder().size(), "Bordure non conforme");
+        assertEquals(12, topArea.getFullContent().size(), "Contenu complet non conforme");
+        assertEquals(0, topArea.getRingContent().size(), "Contenu aneau non conforme");
+    }
+
+    @Test
+    void  fetchTopStickyEncirler_CasBasique3() {
+        String representation =
+                "+-+-●-●-●-●-+-+-+\n" +
+                "+-●-○-○-○-○-●-+-+\n" +
+                "●-○-●-●-●-●-○-●-+\n" +
+                "●-○-●-+-+-●-○-○-●\n" +
+                "●-○-●-●-●-●-○-●-+\n" +
+                "+-●-○-○-○-○-●-+-+\n" +
+                "+-+-●-●-●-●-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, taille);
+        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+
+        Intersection i = b.getIntersection(3, 5);
+
+        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        EncircledArea topArea = encircledAreaFetcher.fetchTopStickyEncirler(area);
+        assertEquals(18, topArea.getFullBorder().size(), "Bordure non conforme");
+        assertEquals(27, topArea.getFullContent().size(), "Contenu complet non conforme");
+        assertEquals(0, topArea.getRingContent().size(), "Contenu aneau non conforme");
+    }
+
+
+
+    @Test
+    void  fetchTopStickyEncirler_CasNonEncerclé() {
+        String representation =
+                "+-+-○-+-+-○-+-+-+\n" +
+                "+-+-○-○-○-○-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+\n" +
+                "+-+-●-+-+-●-+-+-+\n" +
+                "+-+-●-+-+-+-●-+-+\n" +
+                "+-+-+-●-●-●-+-●-●\n" +
+                "+-+-+-○-○-○-●-+-+\n" +
+                "●-+-+-○-+-○-●-+-+\n" +
+                "●-+-+-○-○-○-●-+-+\n";
+        Board b = buildBoard(representation, taille);
+        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+
+        Intersection i = b.getIntersection(3, 8);
+
+        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        EncircledArea topArea = encircledAreaFetcher.fetchTopStickyEncirler(area);
+        assertEquals(6, topArea.getFullBorder().size(), "Bordure non conforme");
+        assertEquals(2, topArea.getFullContent().size(), "Contenu complet non conforme");
+        assertEquals(2, topArea.getRingContent().size(), "Contenu aneau non conforme");
+    }
+
+
+
 
 
 }

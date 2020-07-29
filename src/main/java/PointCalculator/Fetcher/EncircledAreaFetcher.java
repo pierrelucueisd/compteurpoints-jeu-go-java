@@ -24,7 +24,7 @@ public class EncircledAreaFetcher {
         if(EncirleAreaComparator.isMinleftOfAreaAisafterBMinLeft(areaWhite, areaBlack)) retainedArea = areaWhite;
         else retainedArea = areaBlack;
         List<Intersection> retainedRing = areaWhite.getRingContent().stream().filter(intersection -> {
-            return areaBlack.getRingContent().contains(intersection);
+            return areaBlack.getRingContent().contains(intersection) && !intersection.getOccupation().isPresent();
         }).collect(Collectors.toList());
         return new EncircledArea(
                 retainedArea.getFullBorder(),
@@ -36,15 +36,28 @@ public class EncircledAreaFetcher {
 
     protected EncircledArea fetchTopStickyEncirler(EncircledArea area) {
         EncircledArea topArea = area;
-        Optional<EncircledArea> fetchedArea = fetchFirstAscendantStickyEncercling(area);
+        Optional<EncircledArea> fetchedArea = fetchFirstAscendantStickyEncercling(area, true    );
         while(fetchedArea.isPresent()) {
             topArea = fetchedArea.get();
-            fetchedArea = fetchFirstAscendantStickyEncercling(topArea);
+            fetchedArea = fetchFirstAscendantStickyEncercling(topArea, true);
         }
         return topArea;
     }
 
-    protected Optional<EncircledArea> fetchFirstAscendantStickyEncercling(EncircledArea area) {
+    protected List<EncircledArea> fetchTopStickyEncirledFlatList(EncircledArea area) {
+        List<EncircledArea> result = new ArrayList<>();
+        EncircledArea topArea = area;
+        result.add(area);
+        Optional<EncircledArea> fetchedArea = fetchFirstAscendantStickyEncercling(area, false);
+        while(fetchedArea.isPresent()) {
+            topArea = fetchedArea.get();
+            result.add(topArea);
+            fetchedArea = fetchFirstAscendantStickyEncercling(topArea, false);
+        }
+        return result;
+    }
+
+    protected Optional<EncircledArea> fetchFirstAscendantStickyEncercling(EncircledArea area, boolean addChild) {
         ArrayList<Intersection> fullContentHypothetique = new ArrayList<Intersection>();
         fullContentHypothetique.addAll(area.getFullBorder());
         fullContentHypothetique.addAll(area.getFullContent());
@@ -55,16 +68,17 @@ public class EncircledAreaFetcher {
         Optional<Color> firstOccupation = bordureHypothetique.get(0).getOccupation();
         if(!firstOccupation.isPresent()) return Optional.empty();
         Color firstBorderColor = firstOccupation.get();
-        bordureHypothetique.stream().allMatch(intersection -> {
+        boolean isBorder = bordureHypothetique.stream().allMatch(intersection -> {
             return intersection.getOccupation().isPresent() && intersection.getOccupation().get() == firstBorderColor;
         });
+        if(!isBorder) return Optional.empty();
         EncircledArea topArea = new EncircledArea(
                 fetcher.fetchFullBorder(),
                 new ArrayList<Intersection>(),
                 fullContentHypothetique,
                 firstBorderColor
         );
-        topArea.addChildren(area);
+        if(addChild) topArea.addChildren(area);
         return Optional.of(topArea);
     }
 

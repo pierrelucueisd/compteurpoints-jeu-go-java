@@ -23,6 +23,7 @@ public class EncircledAreaFlatListFetcher {
         while(!aTraiter.isEmpty()) {
             Intersection inter = aTraiter.pop();
             EncircledArea area = areaFecther.fetchAreaFromIntersection(inter);
+            //List<EncircledArea> stickyAreas = areaFecther.fetchTopStickyEncirledFlatList(area);
             areas.add(area);
             aTraiter.removeAll(area.getRingContent());
         }

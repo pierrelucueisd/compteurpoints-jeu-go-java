@@ -13,8 +13,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class EncircledAreaFlatListFetcherTest {
 
-    Board buildBoard(String representation) {
-        BoardBuilder builder = new BoardBuilderFromBoardRepresentation(representation);
+    final static int taille = 9;
+
+    Board buildBoard(String representation, int size) {
+        BoardBuilder builder = new BoardBuilderFromBoardRepresentation(representation, size);
         Optional<Board> optB = builder.build();
         assertTrue(optB.isPresent(), "attention erreure d'initialisetion du board");
         return optB.get();
@@ -37,7 +39,7 @@ class EncircledAreaFlatListFetcherTest {
                 "+-+-+-○-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
         List<EncircledArea> areas = fetcher.fetchFlatListFromBoard();
         assertEquals(2, areas.size());
@@ -55,7 +57,7 @@ class EncircledAreaFlatListFetcherTest {
                 "+-+-+-○-○-○-+-+-+\n" +
                 "●-+-+-○-+-○-+-+-+\n" +
                 "●-+-+-○-○-○-+-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
         List<EncircledArea> areas = fetcher.fetchFlatListFromBoard();
         assertEquals(3, areas.size());
@@ -73,7 +75,7 @@ class EncircledAreaFlatListFetcherTest {
                 "+-+-+-○-○-○-+-+-+\n" +
                 "●-+-+-○-+-○-+-+-+\n" +
                 "●-+-+-○-○-○-+-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
         List<EncircledArea> areas = fetcher.fetchFlatListFromBoard();
         assertEquals(4, areas.size());
@@ -91,9 +93,47 @@ class EncircledAreaFlatListFetcherTest {
                 "+-+-+-○-○-○-●-+-+\n" +
                 "●-+-+-○-+-○-●-+-+\n" +
                 "●-+-+-○-○-○-●-+-+\n";
-        Board b = buildBoard(representation);
+        Board b = buildBoard(representation, taille);
         EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
         List<EncircledArea> areas = fetcher.fetchFlatListFromBoard();
         assertEquals(6, areas.size());
     }
+
+    @Test
+    void fetchFlatListFromBoard_CasConcentrique() {
+        String representation =
+                "+-+-●-●-●-●-+-+-+\n" +
+                "+-●-○-○-○-○-●-+-+\n" +
+                "●-○-●-●-●-●-○-●-+\n" +
+                "●-○-●-+-+-●-○-○-●\n" +
+                "●-○-●-●-●-●-○-●-+\n" +
+                "+-●-○-○-○-○-●-+-+\n" +
+                "+-+-●-●-●-●-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, taille);
+        EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
+        List<EncircledArea> areas = fetcher.fetchFlatListFromBoard();
+        assertEquals(6, areas.size());
+    }
+
+    @Test
+    void fetchFlatListFromBoard_CasConcentriqueFreres() {
+        String representation =
+                "+-○-○-○-○-○-+-+-+\n" +
+                "+-○-●-●-●-○-+-+-+\n" +
+                "+-○-●-+-●-○-+-+-+\n" +
+                "+-○-●-●-●-○-+-+-+\n" +
+                "+-○-○-○-○-○-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-●-●-●-●-●-+-+-+\n" +
+                "+-●-○-○-○-●-+-+-+\n" +
+                "+-●-○-+-○-●-+-+-+\n";
+        Board b = buildBoard(representation, taille);
+        EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
+        List<EncircledArea> areas = fetcher.fetchFlatListFromBoard();
+        assertEquals(3, areas.size());
+
+    }
+
 }

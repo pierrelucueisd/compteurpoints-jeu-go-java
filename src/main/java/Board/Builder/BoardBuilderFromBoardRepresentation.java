@@ -9,9 +9,11 @@ import java.util.Optional;
 
 //construit un board sans enlever les zones capturées
 public class BoardBuilderFromBoardRepresentation implements BoardBuilder {
-    String str;
-    public BoardBuilderFromBoardRepresentation(String _str) {
+    private String str;
+    private int size;
+    public BoardBuilderFromBoardRepresentation(String _str, int size) {
         this.str = _str;
+        this.size = size;
     }
 
     @Override

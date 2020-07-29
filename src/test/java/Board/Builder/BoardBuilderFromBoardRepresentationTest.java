@@ -19,7 +19,8 @@ class BoardBuilderFromBoardRepresentationTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n" +
-                "●-+-+-+-+-+-+-+-●\n");
+                "●-+-+-+-+-+-+-+-●\n", 9);
+
         Optional<Board> optB = builder.build();
         String result = optB.isPresent() ? optB.get().toString() : "";
         String expected = "  A B C D E F G H J\n" +
