@@ -519,6 +519,36 @@ class EncircledAreaFetcherTest {
     }
 
 
+    @Test
+    void  fetchTopStickyEncirler_CasNoMansLand() {
+        String representation =
+                "+-+-+-○-+-●-+-+-+\n" +
+                "+-+-+-○-+-●-+-+-+\n" +
+                "+-+-+-○-+-●-+-+-+\n" +
+                "+-+-+-○-+-●-+-+-+\n" +
+                "+-+-+-○-+-●-+-+-+\n" +
+                "+-+-+-○-+-●-+-+-+\n" +
+                "+-+-+-○-+-●-+-+-+\n" +
+                "+-+-+-○-+-●-+-+-+\n" +
+                "+-+-+-○-+-●-+-+-+\n";
+        Board b = buildBoard(representation, taille);
+        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+
+        Intersection i = b.getIntersection(4, 0);
+
+        EncircledArea area = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertEquals(6, area.getFullBorder().size(), "Bordure non conforme");
+        //assertEquals(2, area.getFullContent().size(), "Contenu complet non conforme");
+        //assertEquals(2, area.getRingContent().size(), "Contenu aneau non conforme");
+    }
+
+
+
+
+
+
+
+
 
 
 

@@ -16,6 +16,7 @@ public class EncirleAreaComparator {
     private static final Comparator<Intersection> comparatorY = Comparator.comparing( Intersection::getY);
 
     public static boolean isAreaAisInAreaB(EncircledArea areaA, EncircledArea AreaB) {
+        // a est dans b faire diff B-a.  si un negatif faux. Si un plus grans que 0 vrau sinon faux.
         return false;
 
     }
@@ -44,14 +45,14 @@ public class EncirleAreaComparator {
         return OptLeft.get().getX();
     }
 
-    protected static Integer getMaxY(List<Intersection> intersections, Board b) {
-        Optional<Intersection> OptLeft = intersections.stream().max(comparatorY);
+    protected static Integer getMinY(List<Intersection> intersections, Board b) {
+        Optional<Intersection> OptLeft = intersections.stream().min(comparatorY);
         if(!OptLeft.isPresent()) return -1;
         return OptLeft.get().getY();
     }
 
-    protected static Integer getMinY(List<Intersection> intersections, Board b) {
-        Optional<Intersection> OptLeft = intersections.stream().min(comparatorY);
+    protected static Integer getMaxY(List<Intersection> intersections, Board b) {
+        Optional<Intersection> OptLeft = intersections.stream().max(comparatorY);
         if(!OptLeft.isPresent()) return -1;
         return OptLeft.get().getY();
     }

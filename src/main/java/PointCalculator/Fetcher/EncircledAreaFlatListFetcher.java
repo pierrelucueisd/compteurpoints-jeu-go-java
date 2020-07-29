@@ -16,7 +16,7 @@ public class EncircledAreaFlatListFetcher {
         this.b = b;
     }
 
-    public List<EncircledArea> fetchFlatListFromBoard() {
+    public List<EncircledArea> fetchFlatListNoStickyFromBoard() {
         List<EncircledArea> areas = new ArrayList<>();
         EncircledAreaFetcher areaFecther = new EncircledAreaFetcher(b);
         Stack<Intersection> aTraiter = getEmptyBoardIntersectionsATraiter();

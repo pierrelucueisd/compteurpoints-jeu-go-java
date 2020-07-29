@@ -28,7 +28,7 @@ class EncircledAreaFlatListFetcherTest {
      */
 
     @Test
-    void fetchFlatListFromBoard_CasBasiqueZoneCount() {
+    void fetchFlatListNoStickyFromBoard_CasBasiqueZoneCount() {
         String representation =
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n" +
@@ -41,12 +41,12 @@ class EncircledAreaFlatListFetcherTest {
                 "●-+-+-+-+-+-+-+-+\n";
         Board b = buildBoard(representation, taille);
         EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
-        List<EncircledArea> areas = fetcher.fetchFlatListFromBoard();
+        List<EncircledArea> areas = fetcher.fetchFlatListNoStickyFromBoard();
         assertEquals(2, areas.size());
     }
 
     @Test
-    void fetchFlatListFromBoard_CasBasique2ZoneCount() {
+    void fetchFlatListNoStickyFromBoard_CasBasique2ZoneCount() {
         String representation =
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n" +
@@ -59,12 +59,12 @@ class EncircledAreaFlatListFetcherTest {
                 "●-+-+-○-○-○-+-+-+\n";
         Board b = buildBoard(representation, taille);
         EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
-        List<EncircledArea> areas = fetcher.fetchFlatListFromBoard();
+        List<EncircledArea> areas = fetcher.fetchFlatListNoStickyFromBoard();
         assertEquals(3, areas.size());
     }
 
     @Test
-    void fetchFlatListFromBoard_CasBasique2ZoneCount4() {
+    void fetchFlatListNoStickyFromBoard_CasBasique2ZoneCount4() {
         String representation =
                 "+-+-○-+-+-○-+-+-+\n" +
                 "+-+-○-○-○-○-+-+-+\n" +
@@ -77,12 +77,12 @@ class EncircledAreaFlatListFetcherTest {
                 "●-+-+-○-○-○-+-+-+\n";
         Board b = buildBoard(representation, taille);
         EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
-        List<EncircledArea> areas = fetcher.fetchFlatListFromBoard();
+        List<EncircledArea> areas = fetcher.fetchFlatListNoStickyFromBoard();
         assertEquals(4, areas.size());
     }
 
     @Test
-    void fetchFlatListFromBoard_CasBasique2ZoneCount5() {
+    void fetchFlatListNoStickyFromBoard_CasBasique2ZoneCount5() {
         String representation =
                 "+-+-○-+-+-○-+-+-+\n" +
                 "+-+-○-○-○-○-+-+-+\n" +
@@ -95,12 +95,12 @@ class EncircledAreaFlatListFetcherTest {
                 "●-+-+-○-○-○-●-+-+\n";
         Board b = buildBoard(representation, taille);
         EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
-        List<EncircledArea> areas = fetcher.fetchFlatListFromBoard();
+        List<EncircledArea> areas = fetcher.fetchFlatListNoStickyFromBoard();
         assertEquals(6, areas.size());
     }
 
     @Test
-    void fetchFlatListFromBoard_CasConcentrique() {
+    void fetchFlatListNoStickyFromBoard_CasConcentrique() {
         String representation =
                 "+-+-●-●-●-●-+-+-+\n" +
                 "+-●-○-○-○-○-●-+-+\n" +
@@ -113,12 +113,12 @@ class EncircledAreaFlatListFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n";
         Board b = buildBoard(representation, taille);
         EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
-        List<EncircledArea> areas = fetcher.fetchFlatListFromBoard();
-        assertEquals(6, areas.size());
+        List<EncircledArea> areas = fetcher.fetchFlatListNoStickyFromBoard();
+        assertEquals(4, areas.size());
     }
 
     @Test
-    void fetchFlatListFromBoard_CasConcentriqueFreres() {
+    void fetchFlatListNoStickyFromBoard_CasConcentriqueFreres() {
         String representation =
                 "+-○-○-○-○-○-+-+-+\n" +
                 "+-○-●-●-●-○-+-+-+\n" +
@@ -131,8 +131,46 @@ class EncircledAreaFlatListFetcherTest {
                 "+-●-○-+-○-●-+-+-+\n";
         Board b = buildBoard(representation, taille);
         EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
-        List<EncircledArea> areas = fetcher.fetchFlatListFromBoard();
+        List<EncircledArea> areas = fetcher.fetchFlatListNoStickyFromBoard();
         assertEquals(3, areas.size());
+
+    }
+
+    @Test
+    void fetchFlatListNoStickyFromBoard_Cas2LinesBrother() {
+        String representation =
+                "+-+-+-+-○-●-+-+-+\n" +
+                "+-+-+-+-○-●-+-+-+\n" +
+                "+-+-+-+-○-●-+-+-+\n" +
+                "+-+-+-+-○-●-+-+-+\n" +
+                "+-+-+-+-○-●-+-+-+\n" +
+                "+-+-+-+-○-●-+-+-+\n" +
+                "+-+-+-+-○-●-+-+-+\n" +
+                "+-+-+-+-○-●-+-+-+\n" +
+                "+-+-+-+-○-●-+-+-+\n";
+        Board b = buildBoard(representation, taille);
+        EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
+        List<EncircledArea> areas = fetcher.fetchFlatListNoStickyFromBoard();
+        assertEquals(2, areas.size());
+
+    }
+
+    @Test
+    void fetchFlatListNoStickyFromBoard_CasNoMansLand() {
+        String representation =
+                "+-+-+-○-+-●-+-+-+\n" +
+                "+-+-+-○-+-●-+-+-+\n" +
+                "+-+-+-○-+-●-+-+-+\n" +
+                "+-+-+-○-+-●-+-+-+\n" +
+                "+-+-+-○-+-●-+-+-+\n" +
+                "+-+-+-○-+-●-+-+-+\n" +
+                "+-+-+-○-+-●-+-+-+\n" +
+                "+-+-+-○-+-●-+-+-+\n" +
+                "+-+-+-○-+-●-+-+-+\n";
+        Board b = buildBoard(representation, taille);
+        EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
+        List<EncircledArea> areas = fetcher.fetchFlatListNoStickyFromBoard();
+        assertEquals(2, areas.size());
 
     }
 
