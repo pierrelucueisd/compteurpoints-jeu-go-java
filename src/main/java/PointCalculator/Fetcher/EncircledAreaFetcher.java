@@ -29,6 +29,7 @@ public class EncircledAreaFetcher {
         return Optional.of(
             new EncircledArea(
                 retainedArea.getFullBorder(),
+                retainedArea.getMinimalBorder(),
                 retainedRing,
                 retainedArea.getFullContent(),
                 retainedArea.getBorderColor()
@@ -37,8 +38,10 @@ public class EncircledAreaFetcher {
     }
 
     private EncircledArea retainCorrectArea(EncircledArea areaA, EncircledArea AreaB, Intersection i){
-        if(!isIntersectionBetwenAreaBorder(i, areaA)) return AreaB;
-        if(!isIntersectionBetwenAreaBorder(i, AreaB)) return areaA;
+        boolean isIInClaudA = isIntersectionBetwenAreaBorder(i, areaA);
+        boolean isIInClaudB = isIntersectionBetwenAreaBorder(i, AreaB);
+        if(isIInClaudA && ! isIInClaudB) return areaA;
+        else if(isIInClaudB && ! isIInClaudA) return AreaB;
         if(areaA.getFullContent().size() < AreaB.getFullContent().size()) return areaA;
         else return AreaB;
     }
@@ -93,6 +96,7 @@ public class EncircledAreaFetcher {
         if(!isBorder) return Optional.empty();
         EncircledArea topArea = new EncircledArea(
                 fetcher.fetchFullBorder(),
+                fetcher.fetchExternalMinimalBorder(),
                 new ArrayList<Intersection>(),
                 fullContentHypothetique,
                 firstBorderColor
@@ -105,10 +109,11 @@ public class EncircledAreaFetcher {
         List<Intersection> contenuAnneau = getAnneauInterieur(i, borderColor);
         BorderFetcher fetcher = new BorderFetcher(b, contenuAnneau);
         List<Intersection> fullBorder = fetcher.fetchFullBorder();
+        List<Intersection> minimalBorder = fetcher.fetchExternalMinimalBorder();
         List<Intersection> fullContent = getAdjacencesTransitives(i, b, intersection -> {
             return !fullBorder.contains(intersection);
         });
-        EncircledArea area = new EncircledArea(fullBorder, contenuAnneau, fullContent, borderColor);
+        EncircledArea area = new EncircledArea(fullBorder, minimalBorder, contenuAnneau, fullContent, borderColor);
         return area;
     }
 

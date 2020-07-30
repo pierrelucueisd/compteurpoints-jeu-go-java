@@ -5,6 +5,8 @@ import Board.Intersection;
 import Board.Builder.BoardBuilder;
 import Board.Builder.BoardBuilderFromBoardRepresentation;
 import PointCalculator.EncircledArea;
+import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidator;
+import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidatorInterface;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -28,40 +30,15 @@ class EncircledAreaStructuratorTest {
         return fetcher.fetchFlatListNoStickyFromBoard();
     }
 
+    private EncircledAreaStructurator generateStructurator(Board b) {
+        EncircledAreaValidatorInterface areaNotToBigValidator = new EncircledAreaValidator(b);
+        return new EncircledAreaStructurator(b, areaNotToBigValidator);
+    }
+
     /* LÉGENDE
      *  1. Blanc:   ●
      *  2. Noir:    ○
      */
-
-    @Test
-    void isAdjacentOfAllBoardSides_CasBasique() {
-        String representation =
-                "+-+-○-+-+-○-+-+-+-+-+-+-+-+-+\n" +
-                "+-+-○-○-○-○-+-+-+-+-+-+-+-+-+\n" +
-                "+-+-●-●-●-●-+-+-+-+-+-+-+-+-+\n" +
-                "+-+-●-+-+-●-+-+-+-+-+-+-+-+-+\n" +
-                "+-+-●-●-●-+-+-+-+-+-+-+-+-+-+\n" +
-                "+-+-+-+-+-+-●-●-●-●-+-+-+-+-+\n" +
-                "+-+-●-●-●-●-+-+-+-+-●-+-+-+-+\n" +
-                "+-+-●-○-○-○-●-●-●-+-●-+-+-+-+\n" +
-                "+-+-●-○-+-○-●-+-●-+-●-+-+-+-+\n" +
-                "+-+-●-○-○-○-●-●-●-+-●-+-+-+-+\n" +
-                "+-+-●-+-+-+-+-+-+-+-●-+-+-+-+\n" +
-                "+-+-●-●-●-●-●-●-●-●-●-+-+-+-+\n" +
-                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
-                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
-                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, 15);
-        Intersection i = b.getIntersection(0, 0);
-        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
-        Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        assertTrue(optArea.isPresent(), "Attention précondition zone existant fausse");
-        EncircledAreaStructurator structurator = new EncircledAreaStructurator(b);
-        assertTrue(
-                structurator.isAdjacentOfAllBoardSides(optArea.get())
-        );
-    }
-
 
     @Test
     void structurateElementsOfList_CasBasique() {
@@ -83,8 +60,83 @@ class EncircledAreaStructuratorTest {
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n";
         Board b = buildBoard(representation, 15);
         List<EncircledArea> areas = fetchFlatListFromBoard(b);
-        EncircledAreaStructurator structurator = new EncircledAreaStructurator(b);
+        EncircledAreaStructurator structurator = generateStructurator(b);
         List<EncircledArea> rootElements = structurator.structurateElementsOfList(areas);
         assertEquals(3, rootElements.size());
+    }
+
+    @Test
+    void structurateElementsOfList_CasBasique2() {
+        String representation =
+                "+-+-○-+-+-○-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-○-○-○-○-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-●-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-●-●-●-●-●-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+-+-●-+-+-+-+\n" +
+                "+-+-●-○-○-○-●-●-●-+-●-+-+-+-+\n" +
+                "+-+-●-○-+-○-●-+-●-+-●-+-+-+-+\n" +
+                "+-+-●-○-○-○-●-●-●-+-●-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-●-+-+-+-+\n" +
+                "+-+-●-●-●-●-●-●-●-●-●-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, 15);
+        List<EncircledArea> areas = fetchFlatListFromBoard(b);
+        EncircledAreaStructurator structurator = generateStructurator(b);
+        List<EncircledArea> rootElements = structurator.structurateElementsOfList(areas);
+        assertEquals(3, rootElements.size());
+    }
+
+    @Test
+    void structurateElementsOfList_CasBasique3() {
+        String representation =
+                "+-+-○-+-+-○-●-+-+-+-+-+-+-+-+\n" +
+                "+-+-○-○-○-○-●-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-●-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-●-●-●-●-●-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+-+-●-+-+-+-+\n" +
+                "+-+-●-○-○-○-●-●-●-+-●-+-+-+-+\n" +
+                "+-+-●-○-+-○-●-+-●-+-●-+-+-+-+\n" +
+                "+-+-●-○-○-○-●-●-●-+-●-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-●-+-+-+-+\n" +
+                "+-+-●-●-●-●-●-●-●-●-●-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, 15);
+        List<EncircledArea> areas = fetchFlatListFromBoard(b);
+        EncircledAreaStructurator structurator = generateStructurator(b);
+        List<EncircledArea> rootElements = structurator.structurateElementsOfList(areas);
+        assertEquals(2, rootElements.size());
+    }
+
+    @Test
+    void structurateElementsOfList_CasBasique4() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-○-○-○-○-○-+-+-+-+-+\n" +
+                "+-+-+-+-+-○-●-●-●-○-+-+-+-+-+\n" +
+                "+-+-+-+-+-○-●-+-●-○-+-+-+-+-+\n" +
+                "+-+-+-+-+-○-●-●-●-○-+-+-+-+-+\n" +
+                "+-+-+-+-+-○-○-○-○-○-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, 15);
+        List<EncircledArea> areas = fetchFlatListFromBoard(b);
+        EncircledAreaStructurator structurator = generateStructurator(b);
+        List<EncircledArea> rootElements = structurator.structurateElementsOfList(areas);
+        assertEquals(1, rootElements.size());
     }
 }

@@ -4,6 +4,8 @@ import Board.Board;
 import Board.Intersection;
 import PointCalculator.EncircledArea;
 import PointCalculator.EncirledAreaInterfaceComparator.EncirleAreaComparator;
+import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidator;
+import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidatorInterface;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -14,15 +16,17 @@ import java.util.stream.Collectors;
 public class EncircledAreaStructurator {
 
     private Board b;
+    private EncircledAreaValidatorInterface areaNotToBigValidator = new EncircledAreaValidator(b);
     private static final Comparator<Intersection> comparatorY = Comparator.comparing( Intersection::getY);
     private static final Comparator<Intersection> comparatorX = Comparator.comparing( Intersection::getX);
 
-    public EncircledAreaStructurator(Board b) {
+    public EncircledAreaStructurator(Board b, EncircledAreaValidatorInterface areaNotToBigValidator) {
         this.b = b;
+        this.areaNotToBigValidator = areaNotToBigValidator;
     }
 
     public List<EncircledArea> structurateElementsOfList(List<EncircledArea> flatList) {
-        List<EncircledArea> workingList = removeBoardFromList(flatList);
+        List<EncircledArea> workingList = removeInvalidAreaFromList(flatList);
         List<EncircledArea> rootElements = new ArrayList<>();
         structurateWorkingList(workingList);
         for(EncircledArea area: workingList) {
@@ -57,9 +61,9 @@ public class EncircledAreaStructurator {
         }
     }
 
-    private List<EncircledArea> removeBoardFromList(List<EncircledArea> flatList) {
+    private List<EncircledArea> removeInvalidAreaFromList(List<EncircledArea> flatList) {
         return flatList.stream().filter(encircledArea -> {
-            return !isAdjacentOfAllBoardSides(encircledArea);
+            return areaNotToBigValidator.isRootValidated(encircledArea);
         }).collect(Collectors.toList());
     }
 

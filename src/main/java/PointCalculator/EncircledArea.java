@@ -12,6 +12,7 @@ public class EncircledArea implements EncircledAreaInterface {
     private List<Intersection> fullBorder;
     private List<Intersection> ringContent;
     private List<Intersection> fullContent;
+    private List<Intersection> minimalBorder;
     private Color borderColor;
     private List<EncircledAreaInterface> childrens = new ArrayList<>();
 
@@ -21,6 +22,7 @@ public class EncircledArea implements EncircledAreaInterface {
 
     public EncircledArea(
             List<Intersection> fullBorder,
+            List<Intersection> minimalBorder,
             List<Intersection> ringContent,
             List<Intersection> fullContent,
             Color borderColor
@@ -29,13 +31,16 @@ public class EncircledArea implements EncircledAreaInterface {
         this.ringContent = ringContent;
         this.fullContent = fullContent;
         this.borderColor = borderColor;
+        this.minimalBorder = minimalBorder;
     }
 
     public void addChildren(EncircledAreaInterface child) {
         childrens.add(child);
     }
 
-
+    public List<Intersection> getMinimalBorder() {
+        return minimalBorder;
+    }
 
     public List<Intersection> getFullBorder() {
         return fullBorder;
