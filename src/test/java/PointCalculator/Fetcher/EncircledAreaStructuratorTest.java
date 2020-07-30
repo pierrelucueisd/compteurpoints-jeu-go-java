@@ -1,7 +1,6 @@
 package PointCalculator.Fetcher;
 
 import Board.Board;
-import Board.Intersection;
 import Board.Builder.BoardBuilder;
 import Board.Builder.BoardBuilderFromBoardRepresentation;
 import PointCalculator.EncircledArea;
@@ -27,7 +26,7 @@ class EncircledAreaStructuratorTest {
 
     private List<EncircledArea> fetchFlatListFromBoard(Board b) {
         EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
-        return fetcher.fetchFlatListNoStickyFromBoard();
+        return fetcher.fetchFlatListFromBoard();
     }
 
     private EncircledAreaStructurator generateStructurator(Board b) {

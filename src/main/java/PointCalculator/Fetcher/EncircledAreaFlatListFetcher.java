@@ -3,6 +3,8 @@ package PointCalculator.Fetcher;
 import Board.Board;
 import Board.Intersection;
 import PointCalculator.EncircledArea;
+import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidator;
+import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidatorInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +14,14 @@ import java.util.stream.Collectors;
 
 public class EncircledAreaFlatListFetcher {
     private Board b;
+    private EncircledAreaValidatorInterface validator;
 
     public EncircledAreaFlatListFetcher(Board b) {
         this.b = b;
+        this.validator = new EncircledAreaValidator(b);
     }
 
-    public List<EncircledArea> fetchFlatListNoStickyFromBoard() {
+    public List<EncircledArea> fetchFlatListFromBoard() {
         List<EncircledArea> areas = new ArrayList<>();
         EncircledAreaFetcher areaFecther = new EncircledAreaFetcher(b);
         Stack<Intersection> aTraiter = getEmptyBoardIntersectionsATraiter();
@@ -25,11 +29,12 @@ public class EncircledAreaFlatListFetcher {
             Intersection inter = aTraiter.pop();
             Optional<EncircledArea> optArea = areaFecther.fetchAreaFromIntersection(inter);
             if(optArea.isPresent()) {
-                areas.add(optArea.get());
+                if(validator.isRootValidated(optArea.get())) areas.add(optArea.get());
                 aTraiter.removeAll(optArea.get().getRingContent());
             }else aTraiter.remove(inter);
             //List<EncircledArea> stickyAreas = areaFecther.fetchTopStickyEncirledFlatList(area);
         }
+        generateStickyEncerclingInList(areas);
         return areas;
     }
 
@@ -45,10 +50,10 @@ public class EncircledAreaFlatListFetcher {
 
     private void generateStickyEncerclingInList(List<EncircledArea> flatlist) {
         EncircledAreaFetcher fetcher = new EncircledAreaFetcher(b);
-        ArrayList<EncircledArea> generated = new ArrayList<>();
+        ArrayList<EncircledArea> topAeraGenerated = new ArrayList<>();
         for(EncircledArea area : flatlist) {
-            generated.addAll(fetcher.fetchTopStickyEncirledFlatList(area));
+            topAeraGenerated.addAll(fetcher.fetchTopStickyEncirledFlatList(area));
         }
-        flatlist.addAll(generated);
+        flatlist.addAll(topAeraGenerated);
     }
 }

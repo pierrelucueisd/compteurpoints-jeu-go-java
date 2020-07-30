@@ -26,7 +26,9 @@ public class EncircledAreaStructurator {
     }
 
     public List<EncircledArea> structurateElementsOfList(List<EncircledArea> flatList) {
-        List<EncircledArea> workingList = removeInvalidAreaFromList(flatList);
+        //<EncircledArea> workingList = removeInvalidAreaFromList(flatList);
+        List<EncircledArea> workingList = new ArrayList<>();
+        workingList.addAll(flatList);
         List<EncircledArea> rootElements = new ArrayList<>();
         structurateWorkingList(workingList);
         for(EncircledArea area: workingList) {
