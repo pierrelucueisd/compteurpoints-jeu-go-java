@@ -22,12 +22,12 @@ public class EncircledAreaValidator implements EncircledAreaValidatorInterface {
 
     protected boolean isToBigAndContentTouchingBoardBorder(EncircledArea area) {
         List<Intersection> minimalMembers = new ArrayList<Intersection>();
-        minimalMembers.addAll(area.getFullBorder());
         minimalMembers.addAll(area.getMinimalBorder());
-        int minX = EncirleAreaComparator.getMinX(minimalMembers, b);
-        int minY = EncirleAreaComparator.getMinY(minimalMembers, b);
-        int maxX = EncirleAreaComparator.getMaxX(minimalMembers, b);
-        int maxY = EncirleAreaComparator.getMaxY(minimalMembers, b);
+        minimalMembers.addAll(area.getFullContent());
+        int minX = EncirleAreaComparator.getMinX(area.getFullContent(), b);
+        int minY = EncirleAreaComparator.getMinY(area.getFullContent(), b);
+        int maxX = EncirleAreaComparator.getMaxX(area.getFullContent(), b);
+        int maxY = EncirleAreaComparator.getMaxY(area.getFullContent(), b);
         boolean isTouching = (minX == 0 || minY == 0 || maxX == b.getSize()-1 || maxY == b.getSize()-1);
         boolean isTooBig = minimalMembers.size() >  (b.getSize()*b.getSize()/2);
         return isTouching && isTooBig;

@@ -104,4 +104,76 @@ class EncircledAreaValidatorTest {
                 validator.isToBigAndContentTouchingBoardBorder(optArea.get())
         );
     }
+
+    @Test
+    void isContentToBigAndTouchBoardBorder_cas3() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-●-●-●-●-●-●-●-+\n" +
+                "+-●-+-+-+-+-+-●-+\n" +
+                "+-●-+-+-+-+-+-●-+\n" +
+                "+-●-+-+-+-+-+-●-+\n" +
+                "+-●-+-+-+-+-+-●-+\n" +
+                "+-●-+-+-+-+-+-●-+\n" +
+                "+-●-●-●-●-●-●-●-+\n" +
+                "+-+-+-+-+-+-+-+-+\n";
+
+        Board b = buildBoard(representation, 9);
+        Intersection i = b.getIntersection(5, 5);
+        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+        Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(optArea.isPresent(), "Attention précondition zone existant fausse");
+        EncircledAreaValidator validator = new EncircledAreaValidator(b);
+        assertFalse(
+                validator.isToBigAndContentTouchingBoardBorder(optArea.get())
+        );
+    }
+
+    @Test
+    void isContentToBigAndTouchBoardBorder_cas4() {
+        String representation =
+                "+-●-●-●-●-●-●-●-+\n" +
+                "+-●-+-+-+-+-+-●-+\n" +
+                "+-●-+-+-+-+-+-●-+\n" +
+                "+-●-+-+-+-+-+-●-+\n" +
+                "+-●-+-+-+-+-+-●-+\n" +
+                "+-●-+-+-+-+-+-●-+\n" +
+                "+-●-●-●-●-●-●-●-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n";
+
+        Board b = buildBoard(representation, 9);
+        Intersection i = b.getIntersection(5, 5);
+        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+        Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(optArea.isPresent(), "Attention précondition zone existant fausse");
+        EncircledAreaValidator validator = new EncircledAreaValidator(b);
+        assertFalse(
+                validator.isToBigAndContentTouchingBoardBorder(optArea.get())
+        );
+    }
+
+    @Test
+    void isContentToBigAndTouchBoardBorder_cas5() {
+        String representation =
+                "+-●-●-●-+-●-●-●-+\n" +
+                "+-●-+-+-+-+-+-●-+\n" +
+                "+-●-+-+-+-+-+-●-+\n" +
+                "+-●-+-+-+-+-+-●-+\n" +
+                "+-●-+-+-+-+-+-●-+\n" +
+                "+-●-+-+-+-+-+-●-+\n" +
+                "+-●-●-●-●-●-●-●-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n";
+
+        Board b = buildBoard(representation, 9);
+        Intersection i = b.getIntersection(5, 5);
+        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+        Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(optArea.isPresent(), "Attention précondition zone existant fausse");
+        EncircledAreaValidator validator = new EncircledAreaValidator(b);
+        assertTrue(
+                validator.isToBigAndContentTouchingBoardBorder(optArea.get())
+        );
+    }
 }
