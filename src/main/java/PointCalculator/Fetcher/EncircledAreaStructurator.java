@@ -1,14 +1,11 @@
 package PointCalculator.Fetcher;
 
 import Board.Board;
-import Board.Intersection;
 import PointCalculator.EncircledArea;
 import PointCalculator.EncirledAreaInterfaceComparator.EncirleAreaComparator;
-import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidator;
 import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidatorInterface;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

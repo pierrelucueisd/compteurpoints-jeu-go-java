@@ -138,4 +138,29 @@ class EncircledAreaStructuratorTest {
         List<EncircledArea> rootElements = structurator.structurateElementsOfList(areas);
         assertEquals(1, rootElements.size());
     }
+
+
+    @Test
+    void structurateElementsOfList_CasBasique5() {
+        String representation =
+                "+-○-○-○-○-○-+-+-+\n" +
+                "+-○-●-●-●-○-+-+-+\n" +
+                "+-○-●-+-●-○-+-+-+\n" +
+                "+-○-●-●-●-○-+-+-+\n" +
+                "+-○-○-○-○-○-+-+-+\n" +
+                "+-+-+-+-+-+-+-●-+\n" +
+                "+-●-●-●-●-●-+-+-+\n" +
+                "+-●-○-○-○-●-+-+-+\n" +
+                "+-●-○-+-○-●-+-+-+\n";
+        Board b = buildBoard(representation, 9);
+        List<EncircledArea> areas = fetchFlatListFromBoard(b);
+        EncircledAreaStructurator structurator = generateStructurator(b);
+        List<EncircledArea> rootElements = structurator.structurateElementsOfList(areas);
+        assertEquals(2, rootElements.size());
+    }
+
+
+
+
+
 }

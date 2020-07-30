@@ -122,7 +122,9 @@ public class EncircledAreaFetcher {
     }
 
     // obtient les adjacences transitives satifaisant toutes le prédicat
-    protected static List<Intersection> getAdjacencesTransitives(Intersection i, Board b, Predicate<Intersection> predicate) {
+    protected static List<Intersection> getAdjacencesTransitives(
+            Intersection i, Board b, Predicate<Intersection> predicate
+    ) {
         Stack<Intersection> aTraiter = new Stack<Intersection>();
         List<Intersection> traite = new ArrayList<Intersection>();
         List<Intersection> resultat = new ArrayList<Intersection>();
