@@ -17,7 +17,8 @@ public class EncircledAreaValidator implements EncircledAreaValidatorInterface {
     }
 
     public boolean isRootValidated (EncircledArea area) {
-        return !isAdjacentOfAllBoardSides(area);
+        return !isAdjacentOfAllBoardSides(area) &&
+                !isToBigAndContentTouchingBoardBorder(area);
     }
 
     protected boolean isToBigAndContentTouchingBoardBorder(EncircledArea area) {

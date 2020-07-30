@@ -42,4 +42,13 @@ public class EncircledAreaFlatListFetcher {
         );
         return aTraiter;
     }
+
+    private void generateStickyEncerclingInList(List<EncircledArea> flatlist) {
+        EncircledAreaFetcher fetcher = new EncircledAreaFetcher(b);
+        ArrayList<EncircledArea> generated = new ArrayList<>();
+        for(EncircledArea area : flatlist) {
+            generated.addAll(fetcher.fetchTopStickyEncirledFlatList(area));
+        }
+        flatlist.addAll(generated);
+    }
 }

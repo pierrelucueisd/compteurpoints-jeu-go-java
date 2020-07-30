@@ -552,13 +552,99 @@ class EncircledAreaFetcherTest {
     }
 
 
+    @Test
+    void fetchTopStickyEncirledFlatList() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-●-+-+\n" +
+                "+-+-●-○-○-○-●-+-+\n" +
+                "+-+-●-○-+-○-●-+-+\n" +
+                "+-+-●-○-○-○-●-+-+\n" +
+                "+-+-●-●-●-●-●-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, taille);
+        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
+        Intersection i = b.getIntersection(4, 4);
+        Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(optArea.isPresent(), "ereure no mans land ignoré");
+        EncircledArea area = optArea.get();
+        List<EncircledArea> topStickyAreas = encircledAreaFetcher.fetchTopStickyEncirledFlatList(area);
+        assertEquals(1, topStickyAreas.size());
+    }
 
+    @Test
+    void fetchTopStickyEncirledFlatList2() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+\n" +
+                "+-○-○-○-○-○-○-○-+\n" +
+                "+-○-●-●-●-●-●-○-+\n" +
+                "+-○-●-○-○-○-●-○-+\n" +
+                "+-○-●-○-+-○-●-○-+\n" +
+                "+-○-●-○-○-○-●-○-+\n" +
+                "+-○-●-●-●-●-●-○-+\n" +
+                "+-○-○-○-○-○-○-○-+\n" +
+                "+-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, taille);
+        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
+        Intersection i = b.getIntersection(4, 4);
+        Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(optArea.isPresent(), "ereure no mans land ignoré");
+        EncircledArea area = optArea.get();
+        List<EncircledArea> topStickyAreas = encircledAreaFetcher.fetchTopStickyEncirledFlatList(area);
+        assertEquals(2, topStickyAreas.size());
+    }
 
+    @Test
+    void fetchTopStickyEncirledFlatList3() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-○-○-○-○-○-○-○-+-+-+\n" +
+                "+-○-●-●-●-●-●-○-+-+-+\n" +
+                "+-○-●-○-○-○-●-○-+-+-+\n" +
+                "+-○-●-○-+-○-●-○-+-+-+\n" +
+                "+-○-●-○-○-○-●-○-+-+-+\n" +
+                "+-○-●-●-●-●-●-○-+-+-+\n" +
+                "+-○-○-●-○-●-○-○-+-+-+\n" +
+                "+-○-○-○-●-○-○-○-+-+-+\n" +
+                "+-○-○-○-○-○-○-○-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, 11);
+        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
+        Intersection i = b.getIntersection(4, 6);
+        Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(optArea.isPresent(), "ereure no mans land ignoré");
+        EncircledArea area = optArea.get();
+        List<EncircledArea> topStickyAreas = encircledAreaFetcher.fetchTopStickyEncirledFlatList(area);
+        assertEquals(2, topStickyAreas.size());
+    }
 
+    @Test
+    void fetchTopStickyEncirledFlatList_casGestionDesBorduresDiagonales() {
+        String representation =
+                "+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-○-○-○-○-+-+-+-+\n" +
+                "+-+-○-●-●-●-○-○-+-+-+\n" +
+                "+-○-●-○-○-○-●-○-+-+-+\n" +
+                "+-○-●-○-+-○-●-○-+-+-+\n" +
+                "+-○-●-○-○-○-●-○-+-+-+\n" +
+                "+-+-○-●-●-●-○-+-+-+-+\n" +
+                "+-+-○-●-○-●-○-+-+-+-+\n" +
+                "+-+-+-○-●-○-+-+-+-+-+\n" +
+                "+-+-+-+-○-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-+-+-+-+-+\n";
+        Board b = buildBoard(representation, 11);
+        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
-
-
+        Intersection i = b.getIntersection(4, 6);
+        Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
+        assertTrue(optArea.isPresent(), "ereure no mans land ignoré");
+        EncircledArea area = optArea.get();
+        List<EncircledArea> topStickyAreas = encircledAreaFetcher.fetchTopStickyEncirledFlatList(area);
+        assertEquals(2, topStickyAreas.size());
+    }
 }

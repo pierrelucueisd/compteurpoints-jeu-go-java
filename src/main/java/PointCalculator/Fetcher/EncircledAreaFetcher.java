@@ -68,13 +68,11 @@ public class EncircledAreaFetcher {
 
     protected List<EncircledArea> fetchTopStickyEncirledFlatList(EncircledArea area) {
         List<EncircledArea> result = new ArrayList<>();
-        EncircledArea topArea = area;
-        result.add(area);
-        Optional<EncircledArea> fetchedArea = fetchFirstAscendantStickyEncercling(area, false);
-        while(fetchedArea.isPresent()) {
-            topArea = fetchedArea.get();
-            result.add(topArea);
-            fetchedArea = fetchFirstAscendantStickyEncercling(topArea, false);
+        Optional<EncircledArea> optFetchedArea = fetchFirstAscendantStickyEncercling(area, false);
+        while(optFetchedArea.isPresent()) {
+            EncircledArea fetchedArea = optFetchedArea.get();
+            result.add(fetchedArea);
+            optFetchedArea = fetchFirstAscendantStickyEncercling(fetchedArea, false);
         }
         return result;
     }
