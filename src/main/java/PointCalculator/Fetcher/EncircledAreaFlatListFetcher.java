@@ -32,7 +32,6 @@ public class EncircledAreaFlatListFetcher {
                 if(validator.isRootValidated(optArea.get())) areas.add(optArea.get());
                 aTraiter.removeAll(optArea.get().getRingContent());
             }else aTraiter.remove(inter);
-            //List<EncircledArea> stickyAreas = areaFecther.fetchTopStickyEncirledFlatList(area);
         }
         generateStickyEncerclingInList(areas);
         return areas;

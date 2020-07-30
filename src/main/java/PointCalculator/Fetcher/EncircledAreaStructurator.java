@@ -16,28 +16,27 @@ import java.util.stream.Collectors;
 public class EncircledAreaStructurator {
 
     private Board b;
-    private EncircledAreaValidatorInterface areaNotToBigValidator = new EncircledAreaValidator(b);
-    private static final Comparator<Intersection> comparatorY = Comparator.comparing( Intersection::getY);
-    private static final Comparator<Intersection> comparatorX = Comparator.comparing( Intersection::getX);
 
     public EncircledAreaStructurator(Board b, EncircledAreaValidatorInterface areaNotToBigValidator) {
         this.b = b;
-        this.areaNotToBigValidator = areaNotToBigValidator;
     }
 
     public List<EncircledArea> structurateElementsOfList(List<EncircledArea> flatList) {
-        //<EncircledArea> workingList = removeInvalidAreaFromList(flatList);
         List<EncircledArea> workingList = new ArrayList<>();
         workingList.addAll(flatList);
-        List<EncircledArea> rootElements = new ArrayList<>();
         structurateWorkingList(workingList);
+        return getRootsOfEncircledArea(workingList);
+    }
+
+    private List<EncircledArea> getRootsOfEncircledArea(List<EncircledArea> workingList) {
+        List<EncircledArea> rootElements = new ArrayList<>();
         for(EncircledArea area: workingList) {
-           boolean isNotChildren = workingList.stream().allMatch(
-                   wokingElem -> {
-                       return area == wokingElem || !wokingElem.getChildrens().contains(area);
-                   }
-           );
-           if(isNotChildren) rootElements.add(area);
+            boolean isNotChildren = workingList.stream().allMatch(
+                    wokingElem -> {
+                        return area == wokingElem || !wokingElem.getChildrens().contains(area);
+                    }
+            );
+            if(isNotChildren) rootElements.add(area);
         }
         return rootElements;
     }
@@ -61,26 +60,5 @@ public class EncircledAreaStructurator {
             }
             int i = 0;
         }
-    }
-
-    private List<EncircledArea> removeInvalidAreaFromList(List<EncircledArea> flatList) {
-        return flatList.stream().filter(encircledArea -> {
-            return areaNotToBigValidator.isRootValidated(encircledArea);
-        }).collect(Collectors.toList());
-    }
-
-    protected boolean isAdjacentOfAllBoardSides(EncircledArea area) {
-        List<Intersection> content = area.getFullContent();
-        int tailleBoard = b.getSize();
-        if(content.size() == 0) return false;
-        int maxX = EncirleAreaComparator.getMaxX(content, b);
-        int minX = EncirleAreaComparator.getMinX(content, b);
-        int minY = EncirleAreaComparator.getMinY(content, b);
-        int maxY = EncirleAreaComparator.getMaxY(content, b);
-
-        return maxX == tailleBoard-1
-                && minX == 0
-                && minY == 0
-                && maxY == tailleBoard-1;
     }
 }
