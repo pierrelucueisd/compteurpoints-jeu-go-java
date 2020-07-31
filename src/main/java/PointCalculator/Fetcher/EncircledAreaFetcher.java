@@ -12,6 +12,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class EncircledAreaFetcher {
+
     private Board b;
 
     public EncircledAreaFetcher(Board b) {

@@ -13,11 +13,9 @@ import java.util.Optional;
 public class EncirleAreaComparator {
 
     private static final Comparator<Intersection> comparatorX = Comparator.comparing( Intersection::getX);
-
     private static final Comparator<Intersection> comparatorY = Comparator.comparing( Intersection::getY);
 
     public static boolean isAreaAisInAreaB(EncircledArea areaA, EncircledArea AreaB, Board b) {
-        // a est dans b faire diff B-a.  si un negatif faux. Si un plus grans que 0 vrau sinon faux.
         ArrayList<Integer> offsets = new ArrayList<>();
         Integer BottomOffset = getMinY(areaA.getFullBorder(), b) - getMinY(AreaB.getFullBorder(), b);
         Integer leftOffset   = getMinX(areaA.getFullBorder(), b) - getMinX(AreaB.getFullBorder(), b);
@@ -35,7 +33,6 @@ public class EncirleAreaComparator {
     public static boolean isCloudIntersectionAisInCloudIntersectionB(
             List<Intersection> cloudA, List<Intersection> cloudB, Board b
     ) {
-        // a est dans b faire diff B-a.  si un negatif faux. Si un plus grans que 0 vrau sinon faux.
         ArrayList<Integer> offsets = new ArrayList<>();
         Integer BottomOffset = getMinY(cloudA, b) - getMinY(cloudB, b);
         Integer leftOffset   = getMinX(cloudA, b) - getMinX(cloudB, b);

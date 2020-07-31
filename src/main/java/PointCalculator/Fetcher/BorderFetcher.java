@@ -9,8 +9,8 @@ import java.util.*;
 
 public class BorderFetcher {
 
-    Board board;
-    List<Intersection> contenuAnneau;
+    private Board board;
+    private List<Intersection> contenuAnneau;
     private static final Comparator<Intersection> comparatorY = Comparator.comparing( Intersection::getY);
     private static final Comparator<Intersection> comparatorX = Comparator.comparing( Intersection::getX);
 

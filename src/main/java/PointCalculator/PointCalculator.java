@@ -15,8 +15,8 @@ import java.util.Optional;
 public class PointCalculator {
 
     private Board b;
-    List<EncircledArea> rootsAreas;
-    List<EncircledArea> calculatedRoorAreas = new ArrayList<EncircledArea>();
+    private List<EncircledArea> rootsAreas;
+    private List<EncircledArea> calculatedRoorAreas = new ArrayList<EncircledArea>();
     private EncircledAreaVisitor pointCalculatorVisitor;
     private EncircledAreaValidator takableRootValidator;
     private PlayersScoreStats playersScoreStats = new PlayersScoreStats();

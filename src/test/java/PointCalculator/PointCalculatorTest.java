@@ -5,7 +5,7 @@ import Board.Builder.BoardBuilder;
 import Board.Builder.BoardBuilderFromBoardRepresentation;
 import PointCalculator.EncircledAreaValidator.RootValidator;
 import PointCalculator.EncircledAreaValidator.TakableValidatorNaive;
-import PointCalculator.Fetcher.StructuratedsRootOfEncircledAreaFetcher;
+import PointCalculator.Fetcher.StructuredEncircledAreaFetcher;
 import PointCalculator.PlayersStats.PlayersScoreStats;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +24,7 @@ class PointCalculatorTest {
     }
 
     private PointCalculator generatePointCalculatorFromBoard(Board b) {
-        StructuratedsRootOfEncircledAreaFetcher structureFecther = new StructuratedsRootOfEncircledAreaFetcher(
+        StructuredEncircledAreaFetcher structureFecther = new StructuredEncircledAreaFetcher(
                 b, new RootValidator(b)
         );
         List<EncircledArea> rootElements = structureFecther.fetch();
