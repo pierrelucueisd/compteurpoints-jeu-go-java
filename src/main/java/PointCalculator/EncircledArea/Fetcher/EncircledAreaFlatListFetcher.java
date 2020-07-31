@@ -23,7 +23,7 @@ class EncircledAreaFlatListFetcher {
 
     public List<EncircledArea> fetchFlatListFromBoard() {
         List<EncircledArea> areas = new ArrayList<>();
-        EncircledAreaFetcher areaFecther = new EncircledAreaFetcher(b);
+        EncircledAreaFetcher areaFecther = new EncircledAreaFetcherImplem(b);
         Stack<Intersection> aTraiter = getEmptyBoardIntersectionsATraiter();
         while(!aTraiter.isEmpty()) {
             Intersection inter = aTraiter.pop();
@@ -48,7 +48,7 @@ class EncircledAreaFlatListFetcher {
     }
 
     private void generateStickyEncerclingInList(List<EncircledArea> flatlist) {
-        EncircledAreaFetcher fetcher = new EncircledAreaFetcher(b);
+        EncircledAreaFetcherImplem fetcher = new EncircledAreaFetcherImplem(b);
         ArrayList<EncircledArea> topAeraGenerated = new ArrayList<>();
         for(EncircledArea area : flatlist) {
             topAeraGenerated.addAll(fetcher.fetchTopStickyEncirledFlatList(area));

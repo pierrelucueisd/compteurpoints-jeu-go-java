@@ -6,6 +6,7 @@ import Board.Builder.BoardBuilder;
 import Board.Builder.BoardBuilderFromBoardRepresentation;
 import PointCalculator.EncircledArea.EncircledArea;
 import PointCalculator.EncircledArea.Fetcher.EncircledAreaFetcher;
+import PointCalculator.EncircledArea.Fetcher.EncircledAreaFetcherImplem;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -28,6 +29,10 @@ class EncirleAreaComparatorTest {
      *  2. Noir:    ○
      */
 
+    private EncircledAreaFetcher getFetchetFromBoard(Board b) {
+        return new EncircledAreaFetcherImplem(b);
+    }
+
     @Test
     void isAreaAisInAreaB() {
     }
@@ -49,7 +54,7 @@ class EncirleAreaComparatorTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
         Board b = buildBoard(representation, taille);
-        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+        EncircledAreaFetcher encircledAreaFetcher = getFetchetFromBoard(b);
 
         Intersection i = b.getIntersection(2, 4);
         Optional<EncircledArea> areaB = encircledAreaFetcher.fetchAreaFromIntersection(i);
@@ -75,7 +80,7 @@ class EncirleAreaComparatorTest {
                 "+-+-+-+-●-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
         Board b = buildBoard(representation, taille);
-        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+        EncircledAreaFetcher encircledAreaFetcher = getFetchetFromBoard(b);
 
         Intersection i = b.getIntersection(4, 4);
         Optional<EncircledArea> area = encircledAreaFetcher.fetchAreaFromIntersection(i);
@@ -96,7 +101,7 @@ class EncirleAreaComparatorTest {
                 "+-+-+-+-●-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
         Board b = buildBoard(representation, taille);
-        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+        EncircledAreaFetcher encircledAreaFetcher = getFetchetFromBoard(b);
 
         Intersection i = b.getIntersection(4, 4);
         Optional<EncircledArea> area = encircledAreaFetcher.fetchAreaFromIntersection(i);
@@ -117,7 +122,7 @@ class EncirleAreaComparatorTest {
                 "+-+-+-+-●-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
         Board b = buildBoard(representation, taille);
-        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+        EncircledAreaFetcher encircledAreaFetcher = getFetchetFromBoard(b);
 
         Intersection i = b.getIntersection(4, 4);
         Optional<EncircledArea> area = encircledAreaFetcher.fetchAreaFromIntersection(i);
@@ -138,7 +143,7 @@ class EncirleAreaComparatorTest {
                 "+-+-+-+-●-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
         Board b = buildBoard(representation, taille);
-        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+        EncircledAreaFetcher encircledAreaFetcher = getFetchetFromBoard(b);
 
         Intersection i = b.getIntersection(4, 4);
         Optional<EncircledArea> area = encircledAreaFetcher.fetchAreaFromIntersection(i);
@@ -159,7 +164,7 @@ class EncirleAreaComparatorTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
         Board b = buildBoard(representation, taille);
-        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+        EncircledAreaFetcher encircledAreaFetcher = getFetchetFromBoard(b);
 
         Intersection i = b.getIntersection(4, 5);
         Optional<EncircledArea> areaA = encircledAreaFetcher.fetchAreaFromIntersection(i);
@@ -168,7 +173,6 @@ class EncirleAreaComparatorTest {
         i = b.getIntersection(2, 4);
         Optional<EncircledArea> areaB = encircledAreaFetcher.fetchAreaFromIntersection(i);
         assertTrue(areaB.isPresent(), "ereure Areab non présente.");
-
         assertTrue(EncirleAreaComparator.isAreaAisInAreaB(areaA.get(), areaB.get(), b));
     }
 
@@ -185,16 +189,12 @@ class EncirleAreaComparatorTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
         Board b = buildBoard(representation, taille);
-        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+        EncircledAreaFetcher encircledAreaFetcher = getFetchetFromBoard(b);
 
         Intersection i = b.getIntersection(0, 5);
-        //Optional<EncircledArea> areaA = encircledAreaFetcher.fetchAreaFromIntersection(i);
-        //assertTrue(areaA.isPresent(), "ereure areaA non présente.");
-
         i = b.getIntersection(2, 3);
         Optional<EncircledArea> areaB = encircledAreaFetcher.fetchAreaFromIntersection(i);
         assertTrue(areaB.isPresent(), "ereure areaB non présente.");
 
-        //assertTrue(EncirleAreaComparator.isAreaAisInAreaB(areaA.get(), areaB.get(), b));
     }
 }

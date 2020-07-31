@@ -26,9 +26,10 @@ class BorderFetcherTest {
 
 
     List<Intersection> getAnneauContenu(int x, int y, Color colorBorder, Board b) {
-        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Intersection i = b.getIntersection(x-1, y-1);
-        List<Intersection> anneauContenu  = encircledAreaFetcher.getAnneauInterieur(i, colorBorder);
+        List<Intersection> anneauContenu  = AdjacencyFinder.findFromPredicate(i, b,
+                inter -> !inter.getOccupation().isPresent() || inter.getOccupation().get() != colorBorder
+        );
         return anneauContenu;
     }
 

@@ -6,6 +6,7 @@ import Board.Builder.BoardBuilderFromBoardRepresentation;
 import Board.Intersection;
 import PointCalculator.EncircledArea.EncircledArea;
 import PointCalculator.EncircledArea.Fetcher.EncircledAreaFetcher;
+import PointCalculator.EncircledArea.Fetcher.EncircledAreaFetcherImplem;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -19,6 +20,10 @@ class RootValidatorTest {
         Optional<Board> optB = builder.build();
         assertTrue(optB.isPresent(), "attention erreure d'initialisetion du board");
         return optB.get();
+    }
+
+    EncircledAreaFetcher getFetcherFromBoard(Board b) {
+        return new EncircledAreaFetcherImplem(b);
     }
 
     /* LÉGENDE
@@ -46,7 +51,7 @@ class RootValidatorTest {
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n";
         Board b = buildBoard(representation, 15);
         Intersection i = b.getIntersection(0, 0);
-        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+        EncircledAreaFetcher encircledAreaFetcher = getFetcherFromBoard(b);
         Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
         assertTrue(optArea.isPresent(), "Attention précondition zone existant fausse");
         RootValidator validator = new RootValidator(b);
@@ -70,7 +75,7 @@ class RootValidatorTest {
 
         Board b = buildBoard(representation, 9);
         Intersection i = b.getIntersection(0, 0);
-        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+        EncircledAreaFetcher encircledAreaFetcher = getFetcherFromBoard(b);
         Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
         assertTrue(optArea.isPresent(), "Attention précondition zone existant fausse");
         RootValidator validator = new RootValidator(b);
@@ -94,7 +99,7 @@ class RootValidatorTest {
 
         Board b = buildBoard(representation, 9);
         Intersection i = b.getIntersection(5, 0);
-        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+        EncircledAreaFetcher encircledAreaFetcher = getFetcherFromBoard(b);
         Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
         assertTrue(optArea.isPresent(), "Attention précondition zone existant fausse");
         RootValidator validator = new RootValidator(b);
@@ -118,7 +123,7 @@ class RootValidatorTest {
 
         Board b = buildBoard(representation, 9);
         Intersection i = b.getIntersection(5, 5);
-        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+        EncircledAreaFetcher encircledAreaFetcher = getFetcherFromBoard(b);
         Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
         assertTrue(optArea.isPresent(), "Attention précondition zone existant fausse");
         RootValidator validator = new RootValidator(b);
@@ -142,7 +147,7 @@ class RootValidatorTest {
 
         Board b = buildBoard(representation, 9);
         Intersection i = b.getIntersection(5, 5);
-        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+        EncircledAreaFetcher encircledAreaFetcher = getFetcherFromBoard(b);
         Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
         assertTrue(optArea.isPresent(), "Attention précondition zone existant fausse");
         RootValidator validator = new RootValidator(b);
@@ -166,7 +171,7 @@ class RootValidatorTest {
 
         Board b = buildBoard(representation, 9);
         Intersection i = b.getIntersection(5, 5);
-        EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
+        EncircledAreaFetcher encircledAreaFetcher = getFetcherFromBoard(b);
         Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
         assertTrue(optArea.isPresent(), "Attention précondition zone existant fausse");
         RootValidator validator = new RootValidator(b);

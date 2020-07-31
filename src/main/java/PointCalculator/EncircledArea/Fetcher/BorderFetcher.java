@@ -29,7 +29,7 @@ class BorderFetcher {
         aTraiter.addAll(bordureMinimale);
         while(!aTraiter.isEmpty()){
             Intersection intersectiontraiter = aTraiter.pop();
-            List<Intersection> tempBorderElemFullAdjacency = EncircledAreaFetcher.getAdjacencesTransitives(
+            List<Intersection> tempBorderElemFullAdjacency = AdjacencyFinder.findFromPredicate(
                     intersectiontraiter, board, intersection -> {
                         if(!intersection.getOccupation().isPresent()) return false;
                         Color colorIntersection = intersection.getOccupation().get();
@@ -45,7 +45,7 @@ class BorderFetcher {
     protected List<Intersection> fetchExternalMinimalBorder() {
         List<Intersection> bordure = new ArrayList<Intersection>();
         if(contenuAnneau.isEmpty()) return bordure;
-        bordure = EncircledAreaFetcher.getAdjacencesTransitives(contenuAnneau.get(0), board, intersection -> {
+        bordure = AdjacencyFinder.findFromPredicate(contenuAnneau.get(0), board, intersection -> {
             if(contenuAnneau.contains(intersection)) return true;
             Position p = new Position(intersection.getX(), intersection.getY());
             if(isInExternalBorder(p)) return true;
