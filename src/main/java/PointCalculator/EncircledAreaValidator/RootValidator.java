@@ -2,7 +2,7 @@ package PointCalculator.EncircledAreaValidator;
 
 import Board.Board;
 import Board.Intersection;
-import PointCalculator.EncircledAreaInterface;
+import PointCalculator.EncircledArea;
 import PointCalculator.EncirledAreaInterfaceComparator.EncirleAreaComparator;
 
 import java.util.ArrayList;
@@ -17,12 +17,12 @@ public class RootValidator extends EncircledAreaValidator {
     }
 
     @Override
-    public boolean test(EncircledAreaInterface area) {
+    public boolean test(EncircledArea area) {
         return !isAdjacentOfAllBoardSides(area) &&
                 !isToBigAndContentTouchingBoardBorder(area);
     }
 
-    protected boolean isToBigAndContentTouchingBoardBorder(EncircledAreaInterface area) {
+    protected boolean isToBigAndContentTouchingBoardBorder(EncircledArea area) {
         List<Intersection> minimalMembers = new ArrayList<Intersection>();
         minimalMembers.addAll(area.getMinimalBorder());
         minimalMembers.addAll(area.getFullContent());
@@ -35,7 +35,7 @@ public class RootValidator extends EncircledAreaValidator {
         return isTouching && isTooBig;
     }
 
-    protected boolean isAdjacentOfAllBoardSides(EncircledAreaInterface area) {
+    protected boolean isAdjacentOfAllBoardSides(EncircledArea area) {
         List<Intersection> content = area.getFullContent();
         int tailleBoard = b.getSize();
         if(content.size() == 0) return false;

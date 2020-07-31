@@ -1,21 +1,21 @@
 package PointCalculator.EncircledAreaValidator;
-import PointCalculator.EncircledAreaInterface;
+import PointCalculator.EncircledArea;
 
 import java.util.function.Predicate;
 
-public abstract class EncircledAreaValidator implements Predicate<EncircledAreaInterface> {
+public abstract class EncircledAreaValidator implements Predicate<EncircledArea> {
     @Override
-    public Predicate<EncircledAreaInterface> and(Predicate<? super EncircledAreaInterface> other) {
+    public Predicate<EncircledArea> and(Predicate<? super EncircledArea> other) {
         return (t) -> test(t) && other.test(t);
     }
 
     @Override
-    public Predicate<EncircledAreaInterface> negate() {
+    public Predicate<EncircledArea> negate() {
         return (t) -> !test(t);
     }
 
     @Override
-    public Predicate<EncircledAreaInterface> or(Predicate<? super EncircledAreaInterface> other) {
+    public Predicate<EncircledArea> or(Predicate<? super EncircledArea> other) {
         return (t) -> test(t) || other.test(t);
     }
 }

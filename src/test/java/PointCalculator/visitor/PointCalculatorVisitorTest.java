@@ -4,6 +4,7 @@ import Board.Board;
 import Board.Builder.BoardBuilder;
 import Board.Builder.BoardBuilderFromBoardRepresentation;
 import PointCalculator.EncircledArea;
+import PointCalculator.EncircledAreaImplem;
 import PointCalculator.Fetcher.EncircledAreaFlatListFetcher;
 import PointCalculator.Fetcher.EncircledAreaStructurator;
 import PointCalculator.EncircledAreaValidator.RootValidator;
@@ -18,8 +19,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PointCalculatorVisitorTest {
-
-    final static int taille = 9;
 
     Board buildBoard(String representation, int size) {
         BoardBuilder builder = new BoardBuilderFromBoardRepresentation(representation, size);

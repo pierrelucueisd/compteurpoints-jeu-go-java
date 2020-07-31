@@ -1,11 +1,11 @@
 package PointCalculator.Fetcher;
 
 import Board.Board;
-import Board.Position;
 import Board.Intersection;
 import Player.Color;
-import PointCalculator.EncirledAreaInterfaceComparator.EncirleAreaComparator;
 import PointCalculator.EncircledArea;
+import PointCalculator.EncirledAreaInterfaceComparator.EncirleAreaComparator;
+import PointCalculator.EncircledAreaImplem;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -27,7 +27,7 @@ public class EncircledAreaFetcher {
             return areaBlack.getRingContent().contains(intersection) && !intersection.getOccupation().isPresent();
         }).collect(Collectors.toList());
         return Optional.of(
-            new EncircledArea(
+            new EncircledAreaImplem(
                 retainedArea.getFullBorder(),
                 retainedArea.getMinimalBorder(),
                 retainedRing,
@@ -92,7 +92,7 @@ public class EncircledAreaFetcher {
             return intersection.getOccupation().isPresent() && intersection.getOccupation().get() == firstBorderColor;
         });
         if(!isBorder) return Optional.empty();
-        EncircledArea topArea = new EncircledArea(
+        EncircledAreaImplem topArea = new EncircledAreaImplem(
                 fetcher.fetchFullBorder(),
                 fetcher.fetchExternalMinimalBorder(),
                 new ArrayList<Intersection>(),
@@ -103,7 +103,7 @@ public class EncircledAreaFetcher {
         return Optional.of(topArea);
     }
 
-    protected EncircledArea fetchColorAreaFromIntersection(Intersection i, Color borderColor) {
+    protected EncircledAreaImplem fetchColorAreaFromIntersection(Intersection i, Color borderColor) {
         List<Intersection> contenuAnneau = getAnneauInterieur(i, borderColor);
         BorderFetcher fetcher = new BorderFetcher(b, contenuAnneau);
         List<Intersection> fullBorder = fetcher.fetchFullBorder();
@@ -111,7 +111,7 @@ public class EncircledAreaFetcher {
         List<Intersection> fullContent = getAdjacencesTransitives(i, b, intersection -> {
             return !fullBorder.contains(intersection);
         });
-        EncircledArea area = new EncircledArea(fullBorder, minimalBorder, contenuAnneau, fullContent, borderColor);
+        EncircledAreaImplem area = new EncircledAreaImplem(fullBorder, minimalBorder, contenuAnneau, fullContent, borderColor);
         return area;
     }
 

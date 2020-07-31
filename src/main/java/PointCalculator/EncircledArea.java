@@ -2,64 +2,17 @@ package PointCalculator;
 
 import Board.Intersection;
 import Player.Color;
-import PointCalculator.EncircledAreaInterface;
 import PointCalculator.visitor.EncircledAreaVisitor;
+import PointCalculator.visitor.VisitableEncirliedArea;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class EncircledArea implements EncircledAreaInterface {
-
-    private List<Intersection> fullBorder;
-    private List<Intersection> ringContent;
-    private List<Intersection> fullContent;
-    private List<Intersection> minimalBorder;
-    private Color borderColor;
-    private List<EncircledAreaInterface> childrens = new ArrayList<>();
-
-        public EncircledArea(
-            List<Intersection> fullBorder,
-            List<Intersection> minimalBorder,
-            List<Intersection> ringContent,
-            List<Intersection> fullContent,
-            Color borderColor
-    ) {
-        this.fullBorder = fullBorder;
-        this.ringContent = ringContent;
-        this.fullContent = fullContent;
-        this.borderColor = borderColor;
-        this.minimalBorder = minimalBorder;
-    }
-
-    public List<EncircledAreaInterface> getChildrens() {
-        return childrens;
-    }
-    public void addChildren(EncircledAreaInterface child) {
-        childrens.add(child);
-    }
-
-    public List<Intersection> getMinimalBorder() {
-        return minimalBorder;
-    }
-
-    public List<Intersection> getFullBorder() {
-        return fullBorder;
-    }
-
-    public List<Intersection> getRingContent() {
-        return ringContent;
-    }
-
-    public List<Intersection> getFullContent() {
-        return fullContent;
-    }
-
-    public Color getBorderColor() {
-        return borderColor;
-    }
-
-    @Override
-    public void accept(EncircledAreaVisitor visitor) {
-        visitor.visit(this);
-    }
+public interface EncircledArea extends VisitableEncirliedArea {
+    public List<Intersection> getFullBorder();
+    public List<Intersection> getMinimalBorder();
+    public List<Intersection> getRingContent();
+    public List<Intersection> getFullContent();
+    public Color getBorderColor();
+    public void addChildren(EncircledArea area);
+    public List<EncircledArea> getChildrens();
 }

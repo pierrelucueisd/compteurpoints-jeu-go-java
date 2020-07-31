@@ -2,8 +2,8 @@ package PointCalculator.visitor;
 
 import Board.Intersection;
 import Player.Color;
+import PointCalculator.EncircledAreaImplem;
 import PointCalculator.EncircledArea;
-import PointCalculator.EncircledAreaInterface;
 import PointCalculator.EncircledAreaValidator.EncircledAreaValidator;
 import PointCalculator.PlayersStats.PlayersScoreStats;
 
@@ -34,7 +34,7 @@ public class PointCalculatorVisitor implements EncircledAreaVisitor {
 
     @Override
     public void visit(EncircledArea area) {
-        for(EncircledAreaInterface child: area.getChildrens()) {
+        for(EncircledArea child: area.getChildrens()) {
             if(!takableChildValidator.test(child))
                 child.accept(this);
         }

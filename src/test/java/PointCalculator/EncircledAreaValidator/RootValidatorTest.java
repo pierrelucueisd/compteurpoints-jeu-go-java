@@ -14,8 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RootValidatorTest {
 
-    final static int taille = 9;
-
     Board buildBoard(String representation, int size) {
         BoardBuilder builder = new BoardBuilderFromBoardRepresentation(representation, size);
         Optional<Board> optB = builder.build();

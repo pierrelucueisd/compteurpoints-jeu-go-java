@@ -1,9 +1,9 @@
 package PointCalculator.EncircledAreaValidator;
-import PointCalculator.EncircledAreaInterface;
+import PointCalculator.EncircledArea;
 
 public class TakableValidatorNaive extends EncircledAreaValidator {
     @Override
-    public boolean test(EncircledAreaInterface encircledAreaInterface) {
+    public boolean test(EncircledArea encircledArea) {
         return false;
     }
 }

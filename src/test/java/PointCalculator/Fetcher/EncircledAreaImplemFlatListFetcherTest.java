@@ -11,7 +11,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class EncircledAreaFlatListFetcherTest {
+class EncircledAreaImplemFlatListFetcherTest {
 
     final static int taille = 9;
 

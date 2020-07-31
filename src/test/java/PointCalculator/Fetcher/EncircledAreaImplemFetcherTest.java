@@ -6,6 +6,7 @@ import Board.Builder.BoardBuilder;
 import Board.Builder.BoardBuilderFromBoardRepresentation;
 import Player.Color;
 import PointCalculator.EncircledArea;
+import PointCalculator.EncircledAreaImplem;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class EncircledAreaFetcherTest {
+class EncircledAreaImplemFetcherTest {
 
     final static int taille = 9;
 
@@ -179,7 +180,7 @@ class EncircledAreaFetcherTest {
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(3, 4);
-        EncircledArea area = encircledAreaFetcher.fetchColorAreaFromIntersection(i, Color.White);
+        EncircledAreaImplem area = encircledAreaFetcher.fetchColorAreaFromIntersection(i, Color.White);
         assertEquals(11, area.getFullBorder().size(), "Bordure non conforme");
         assertEquals(5, area.getFullContent().size(), "Contenu complet non conforme");
         assertEquals(5, area.getRingContent().size(), "Contenu aneau non conforme");
@@ -201,7 +202,7 @@ class EncircledAreaFetcherTest {
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(3, 4);
-        EncircledArea area = encircledAreaFetcher.fetchColorAreaFromIntersection(i, Color.White);
+        EncircledAreaImplem area = encircledAreaFetcher.fetchColorAreaFromIntersection(i, Color.White);
         assertEquals(18, area.getFullBorder().size(), "Bordure non conforme");
         assertEquals(12, area.getFullContent().size(), "Contenu complet non conforme");
         assertEquals(11, area.getRingContent().size(), "Contenu aneau non conforme");
@@ -223,7 +224,7 @@ class EncircledAreaFetcherTest {
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(2, 2);
-        EncircledArea area = encircledAreaFetcher.fetchColorAreaFromIntersection(i, Color.White);
+        EncircledAreaImplem area = encircledAreaFetcher.fetchColorAreaFromIntersection(i, Color.White);
         assertEquals(26, area.getFullBorder().size(), "Bordure non conforme");
         assertEquals(30, area.getFullContent().size(), "Contenu complet non conforme");
         assertEquals(18, area.getRingContent().size(), "Contenu aneau non conforme");
@@ -245,7 +246,7 @@ class EncircledAreaFetcherTest {
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
 
         Intersection i = b.getIntersection(3, 4);
-        EncircledArea area = encircledAreaFetcher.fetchColorAreaFromIntersection(i, Color.White);
+        EncircledAreaImplem area = encircledAreaFetcher.fetchColorAreaFromIntersection(i, Color.White);
         assertEquals(10, area.getFullBorder().size(), "Bordure non conforme");
         assertEquals(2, area.getFullContent().size(), "Contenu complet non conforme");
         assertEquals(2, area.getRingContent().size(), "Contenu aneau non conforme");

@@ -12,7 +12,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class StructuratedsRootOfEncircledAreaFetcherTest {
+class StructuratedsRootOfEncircledAreaImplemFetcherTest {
 
     final static int taille = 9;
 
