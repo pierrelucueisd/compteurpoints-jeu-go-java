@@ -4,9 +4,8 @@ import Board.Board;
 import Board.Builder.BoardBuilder;
 import Board.Builder.BoardBuilderFromBoardRepresentation;
 import PointCalculator.EncircledArea.EncircledArea;
-import PointCalculator.EncircledArea.Fetcher.EncircledAreaFlatListFetcher;
-import PointCalculator.EncircledArea.Fetcher.EncircledAreaStructurator;
-import PointCalculator.EncircledArea.Validator.EncircledAreaValidator;
+import PointCalculator.EncircledArea.Fetcher.StructuredEncircledAreaFetcher;
+import PointCalculator.EncircledArea.Fetcher.StructuredEncircledAreaFetcherImplem;
 import PointCalculator.EncircledArea.Validator.RootValidator;
 import PointCalculator.EncircledArea.Validator.TakableValidatorNaive;
 import PointCalculator.PlayersStats.PlayersScoreStats;
@@ -26,27 +25,13 @@ class PointCalculatorVisitorTest {
         return optB.get();
     }
 
-    private List<EncircledArea> fetchFlatListFromBoard(Board b) {
-        EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
-        return fetcher.fetchFlatListFromBoard();
-    }
-
-    private EncircledAreaStructurator generateStructurator(Board b) {
-        EncircledAreaValidator areaNotToBigValidator = new RootValidator(b);
-        return new EncircledAreaStructurator(b, areaNotToBigValidator);
-    }
-
     /* LÉGENDE
      *  1. Blanc:   ●
      *  2. Noir:    ○
      */
 
     @Test
-    void visit() {
-    }
-
-    @Test
-    void structurateElementsOfList_CasBasique5() {
+    void visit_CasBasique() {
         String representation =
                 "+-○-○-○-○-○-+-+-+\n" +
                 "+-○-●-●-●-○-+-+-+\n" +
@@ -58,9 +43,10 @@ class PointCalculatorVisitorTest {
                 "+-●-○-○-○-●-+-+-+\n" +
                 "+-●-○-+-○-●-+-+-+\n";
         Board b = buildBoard(representation, 9);
-        List<EncircledArea> areas = fetchFlatListFromBoard(b);
-        EncircledAreaStructurator structurator = generateStructurator(b);
-        List<EncircledArea> rootElements = structurator.structurateElementsOfList(areas);
+        StructuredEncircledAreaFetcher structureFecther = new StructuredEncircledAreaFetcherImplem(
+                b, new RootValidator(b)
+        );
+        List<EncircledArea> rootElements = structureFecther.fetch();
         EncircledAreaVisitor pointCalculatorVisitor = new PointCalculatorVisitor(
                 new TakableValidatorNaive(), new PlayersScoreStats()
         );

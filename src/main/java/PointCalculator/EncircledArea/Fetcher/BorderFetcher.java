@@ -7,19 +7,19 @@ import Player.Color;
 
 import java.util.*;
 
-public class BorderFetcher {
+class BorderFetcher {
 
     private Board board;
     private List<Intersection> contenuAnneau;
     private static final Comparator<Intersection> comparatorY = Comparator.comparing( Intersection::getY);
     private static final Comparator<Intersection> comparatorX = Comparator.comparing( Intersection::getX);
 
-    public BorderFetcher(Board b, List<Intersection> groupeContenu) {
+    protected BorderFetcher(Board b, List<Intersection> groupeContenu) {
         contenuAnneau = groupeContenu;
         board = b;
     }
 
-    public List<Intersection> fetchFullBorder() {
+    protected List<Intersection> fetchFullBorder() {
         List<Intersection> bordureComplete = new ArrayList<Intersection>();
         List<Intersection> bordureMinimale = fetchExternalMinimalBorder();
         if(bordureMinimale.isEmpty()) return bordureComplete;
@@ -42,7 +42,7 @@ public class BorderFetcher {
         return bordureComplete;
     }
 
-    public List<Intersection> fetchExternalMinimalBorder() {
+    protected List<Intersection> fetchExternalMinimalBorder() {
         List<Intersection> bordure = new ArrayList<Intersection>();
         if(contenuAnneau.isEmpty()) return bordure;
         bordure = EncircledAreaFetcher.getAdjacencesTransitives(contenuAnneau.get(0), board, intersection -> {

@@ -5,6 +5,7 @@ import Board.Builder.BoardBuilder;
 import Board.Builder.BoardBuilderFromBoardRepresentation;
 import PointCalculator.EncircledArea.EncircledArea;
 import PointCalculator.EncircledArea.Fetcher.StructuredEncircledAreaFetcher;
+import PointCalculator.EncircledArea.Fetcher.StructuredEncircledAreaFetcherImplem;
 import PointCalculator.EncircledArea.Validator.RootValidator;
 import PointCalculator.EncircledArea.Validator.TakableValidatorNaive;
 import PointCalculator.PlayersStats.PlayersScoreStats;
@@ -25,7 +26,7 @@ class PointCalculatorTest {
     }
 
     private PointCalculator generatePointCalculatorFromBoard(Board b) {
-        StructuredEncircledAreaFetcher structureFecther = new StructuredEncircledAreaFetcher(
+        StructuredEncircledAreaFetcher structureFecther = new StructuredEncircledAreaFetcherImplem(
                 b, new RootValidator(b)
         );
         List<EncircledArea> rootElements = structureFecther.fetch();

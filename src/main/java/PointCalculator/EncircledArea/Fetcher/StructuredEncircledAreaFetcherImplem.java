@@ -6,12 +6,12 @@ import PointCalculator.EncircledArea.Validator.EncircledAreaValidator;
 
 import java.util.List;
 
-public class StructuredEncircledAreaFetcher {
+public class StructuredEncircledAreaFetcherImplem implements StructuredEncircledAreaFetcher {
 
     private Board b;
     private EncircledAreaValidator rootValidator;
 
-    public StructuredEncircledAreaFetcher(Board b, EncircledAreaValidator rootValidator) {
+    public StructuredEncircledAreaFetcherImplem(Board b, EncircledAreaValidator rootValidator) {
         this.b = b;
         this.rootValidator = rootValidator;
     }
