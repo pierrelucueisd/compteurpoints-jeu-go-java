@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PointCalculatorFromEncircledAreas {
+class PointCalculatorFromEncircledAreas {
 
     private Board b;
     private List<EncircledArea> rootsAreas;
