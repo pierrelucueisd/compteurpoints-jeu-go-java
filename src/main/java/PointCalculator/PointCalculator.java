@@ -33,7 +33,7 @@ public class PointCalculator {
         this.pointCalculatorVisitor = new PointCalculatorVisitor(takableChildValidator, playersScoreStats);
     }
 
-    public void calculate() {
+    public PlayersScoreStats calculatePlayersScore() {
         addChildZonePointsToPlayersPoints(rootsAreas);
 
         List<Intersection> noMansIntersectionCloud = getIntersectionsCloudNotPossesedByEncircling();
@@ -41,14 +41,7 @@ public class PointCalculator {
         int nbCaseBlanches = countColorInIntersectionList(Color.White, noMansIntersectionCloud);
         playersScoreStats.addPlayerPoints(Color.Black, nbCaseNoires);
         playersScoreStats.addPlayerPoints(Color.White, nbCaseBlanches);
-    }
-
-    public int getBlackPoints() {
-        return playersScoreStats.getBlackPoints();
-    }
-
-    public int getWhitePoints() {
-        return playersScoreStats.getWhitePoints();
+        return this.playersScoreStats;
     }
 
     private int countColorInIntersectionList(Color color, List<Intersection> list) {

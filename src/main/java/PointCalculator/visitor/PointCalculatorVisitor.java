@@ -45,9 +45,9 @@ public class PointCalculatorVisitor implements EncircledAreaVisitor {
         Color playerColor = area.getBorderColor();
         playersScoreStats.addPlayerPoints(playerColor, untreatedBorder.size());
         playersScoreStats.addPlayerPoints(playerColor, untreatedContent.size());
-        nbZonesVisites++;
         intersectionsTraitees.addAll(untreatedContent);
         intersectionsTraitees.addAll(untreatedBorder);
+        nbZonesVisites++;
     }
 
     private List<Intersection> getUntreatedIntersectionsIn(List<Intersection> list) {
