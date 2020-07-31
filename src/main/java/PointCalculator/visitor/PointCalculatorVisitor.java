@@ -2,7 +2,6 @@ package PointCalculator.visitor;
 
 import Board.Intersection;
 import Player.Color;
-import PointCalculator.EncircledAreaImplem;
 import PointCalculator.EncircledArea;
 import PointCalculator.EncircledAreaValidator.EncircledAreaValidator;
 import PointCalculator.PlayersStats.PlayersScoreStats;

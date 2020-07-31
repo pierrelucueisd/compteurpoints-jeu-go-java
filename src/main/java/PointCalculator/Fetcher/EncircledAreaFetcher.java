@@ -92,7 +92,7 @@ public class EncircledAreaFetcher {
             return intersection.getOccupation().isPresent() && intersection.getOccupation().get() == firstBorderColor;
         });
         if(!isBorder) return Optional.empty();
-        EncircledAreaImplem topArea = new EncircledAreaImplem(
+        EncircledArea topArea = new EncircledAreaImplem(
                 fetcher.fetchFullBorder(),
                 fetcher.fetchExternalMinimalBorder(),
                 new ArrayList<Intersection>(),
@@ -103,7 +103,7 @@ public class EncircledAreaFetcher {
         return Optional.of(topArea);
     }
 
-    protected EncircledAreaImplem fetchColorAreaFromIntersection(Intersection i, Color borderColor) {
+    protected EncircledArea fetchColorAreaFromIntersection(Intersection i, Color borderColor) {
         List<Intersection> contenuAnneau = getAnneauInterieur(i, borderColor);
         BorderFetcher fetcher = new BorderFetcher(b, contenuAnneau);
         List<Intersection> fullBorder = fetcher.fetchFullBorder();
@@ -111,7 +111,7 @@ public class EncircledAreaFetcher {
         List<Intersection> fullContent = getAdjacencesTransitives(i, b, intersection -> {
             return !fullBorder.contains(intersection);
         });
-        EncircledAreaImplem area = new EncircledAreaImplem(fullBorder, minimalBorder, contenuAnneau, fullContent, borderColor);
+        EncircledArea area = new EncircledAreaImplem(fullBorder, minimalBorder, contenuAnneau, fullContent, borderColor);
         return area;
     }
 

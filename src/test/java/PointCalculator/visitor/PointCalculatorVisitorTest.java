@@ -4,7 +4,6 @@ import Board.Board;
 import Board.Builder.BoardBuilder;
 import Board.Builder.BoardBuilderFromBoardRepresentation;
 import PointCalculator.EncircledArea;
-import PointCalculator.EncircledAreaImplem;
 import PointCalculator.Fetcher.EncircledAreaFlatListFetcher;
 import PointCalculator.Fetcher.EncircledAreaStructurator;
 import PointCalculator.EncircledAreaValidator.RootValidator;
