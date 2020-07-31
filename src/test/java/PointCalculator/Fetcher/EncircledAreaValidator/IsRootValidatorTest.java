@@ -12,7 +12,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class EncircledAreaValidatorTest {
+class IsRootValidatorTest {
 
     final static int taille = 9;
 
@@ -51,7 +51,7 @@ class EncircledAreaValidatorTest {
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
         assertTrue(optArea.isPresent(), "Attention précondition zone existant fausse");
-        EncircledAreaValidator validator = new EncircledAreaValidator(b);
+        IsRootValidator validator = new IsRootValidator(b);
         assertTrue(
                 validator.isAdjacentOfAllBoardSides(optArea.get())
         );
@@ -75,7 +75,7 @@ class EncircledAreaValidatorTest {
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
         assertTrue(optArea.isPresent(), "Attention précondition zone existant fausse");
-        EncircledAreaValidator validator = new EncircledAreaValidator(b);
+        IsRootValidator validator = new IsRootValidator(b);
         assertTrue(
                 validator.isToBigAndContentTouchingBoardBorder(optArea.get())
         );
@@ -99,7 +99,7 @@ class EncircledAreaValidatorTest {
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
         assertTrue(optArea.isPresent(), "Attention précondition zone existant fausse");
-        EncircledAreaValidator validator = new EncircledAreaValidator(b);
+        IsRootValidator validator = new IsRootValidator(b);
         assertFalse(
                 validator.isToBigAndContentTouchingBoardBorder(optArea.get())
         );
@@ -123,7 +123,7 @@ class EncircledAreaValidatorTest {
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
         assertTrue(optArea.isPresent(), "Attention précondition zone existant fausse");
-        EncircledAreaValidator validator = new EncircledAreaValidator(b);
+        IsRootValidator validator = new IsRootValidator(b);
         assertFalse(
                 validator.isToBigAndContentTouchingBoardBorder(optArea.get())
         );
@@ -147,7 +147,7 @@ class EncircledAreaValidatorTest {
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
         assertTrue(optArea.isPresent(), "Attention précondition zone existant fausse");
-        EncircledAreaValidator validator = new EncircledAreaValidator(b);
+        IsRootValidator validator = new IsRootValidator(b);
         assertFalse(
                 validator.isToBigAndContentTouchingBoardBorder(optArea.get())
         );
@@ -171,7 +171,7 @@ class EncircledAreaValidatorTest {
         EncircledAreaFetcher encircledAreaFetcher = new EncircledAreaFetcher(b);
         Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
         assertTrue(optArea.isPresent(), "Attention précondition zone existant fausse");
-        EncircledAreaValidator validator = new EncircledAreaValidator(b);
+        IsRootValidator validator = new IsRootValidator(b);
         assertTrue(
                 validator.isToBigAndContentTouchingBoardBorder(optArea.get())
         );

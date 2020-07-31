@@ -8,15 +8,15 @@ import PointCalculator.EncirledAreaInterfaceComparator.EncirleAreaComparator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EncircledAreaValidator implements EncircledAreaValidatorInterface {
+public class IsRootValidator implements EncircledAreaValidatorInterface {
 
     private Board b;
 
-    public EncircledAreaValidator(Board b) {
+    public IsRootValidator(Board b) {
         this.b = b;
     }
 
-    public boolean isRootValidated (EncircledArea area) {
+    public boolean isValid(EncircledArea area) {
         return !isAdjacentOfAllBoardSides(area) &&
                 !isToBigAndContentTouchingBoardBorder(area);
     }

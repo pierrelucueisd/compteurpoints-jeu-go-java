@@ -4,7 +4,7 @@ import Board.Board;
 import Board.Builder.BoardBuilder;
 import Board.Builder.BoardBuilderFromBoardRepresentation;
 import PointCalculator.EncircledArea;
-import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidator;
+import PointCalculator.Fetcher.EncircledAreaValidator.IsRootValidator;
 import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidatorInterface;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +30,7 @@ class EncircledAreaStructuratorTest {
     }
 
     private EncircledAreaStructurator generateStructurator(Board b) {
-        EncircledAreaValidatorInterface areaNotToBigValidator = new EncircledAreaValidator(b);
+        EncircledAreaValidatorInterface areaNotToBigValidator = new IsRootValidator(b);
         return new EncircledAreaStructurator(b, areaNotToBigValidator);
     }
 

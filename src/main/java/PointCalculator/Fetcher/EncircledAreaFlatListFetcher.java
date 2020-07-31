@@ -3,7 +3,7 @@ package PointCalculator.Fetcher;
 import Board.Board;
 import Board.Intersection;
 import PointCalculator.EncircledArea;
-import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidator;
+import PointCalculator.Fetcher.EncircledAreaValidator.IsRootValidator;
 import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidatorInterface;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class EncircledAreaFlatListFetcher {
 
     public EncircledAreaFlatListFetcher(Board b) {
         this.b = b;
-        this.validator = new EncircledAreaValidator(b);
+        this.validator = new IsRootValidator(b);
     }
 
     public List<EncircledArea> fetchFlatListFromBoard() {
@@ -29,7 +29,7 @@ public class EncircledAreaFlatListFetcher {
             Intersection inter = aTraiter.pop();
             Optional<EncircledArea> optArea = areaFecther.fetchAreaFromIntersection(inter);
             if(optArea.isPresent()) {
-                if(validator.isRootValidated(optArea.get())) areas.add(optArea.get());
+                if(validator.isValid(optArea.get())) areas.add(optArea.get());
                 aTraiter.removeAll(optArea.get().getRingContent());
             }else aTraiter.remove(inter);
         }
