@@ -1,6 +1,5 @@
 package PointCalculator.Fetcher.EncircledAreaValidator;
 
-import PointCalculator.EncircledArea;
 import PointCalculator.EncircledAreaInterface;
 
 public class TakableValidatorNaive implements TakableValidator {

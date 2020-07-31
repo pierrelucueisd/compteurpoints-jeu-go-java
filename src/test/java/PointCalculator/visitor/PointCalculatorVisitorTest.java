@@ -9,6 +9,7 @@ import PointCalculator.Fetcher.EncircledAreaStructurator;
 import PointCalculator.Fetcher.EncircledAreaValidator.RootValidator;
 import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidator;
 import PointCalculator.Fetcher.EncircledAreaValidator.TakableValidatorNaive;
+import PointCalculator.PlayersStats.PlayersScoreStats;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -63,7 +64,7 @@ class PointCalculatorVisitorTest {
         EncircledAreaStructurator structurator = generateStructurator(b);
         List<EncircledArea> rootElements = structurator.structurateElementsOfList(areas);
         EncircledAreaVisitor pointCalculatorVisitor = new PointCalculatorVisitor(
-                new TakableValidatorNaive()
+                new TakableValidatorNaive(), new PlayersScoreStats()
         );
         for(EncircledArea area: rootElements) {
             pointCalculatorVisitor.visit(area);

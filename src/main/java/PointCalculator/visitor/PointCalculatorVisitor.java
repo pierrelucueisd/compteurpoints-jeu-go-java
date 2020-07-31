@@ -5,7 +5,9 @@ import Player.Color;
 import PointCalculator.EncircledArea;
 import PointCalculator.EncircledAreaInterface;
 import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidator;
+import PointCalculator.Fetcher.EncircledAreaValidator.TakableValidator;
 import PointCalculator.Fetcher.EncircledAreaValidator.TakableValidatorNaive;
+import PointCalculator.PlayersStats.PlayersScoreStats;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,21 +17,21 @@ public class PointCalculatorVisitor implements EncircledAreaVisitor {
 
     private int nbZonesVisites = 0;
     private List<Intersection> intersectionsTraitees = new ArrayList<>();
-    private int blackPlayerPoints = 0;
-    private int whitePlayerPoints = 0;
-    private TakableValidatorNaive takableChildValidator;
+    private TakableValidator takableChildValidator;
+    private PlayersScoreStats playersScoreStats;
 
 
-    public PointCalculatorVisitor(TakableValidatorNaive takableChildValidator) {
+    public PointCalculatorVisitor(TakableValidator takableChildValidator, PlayersScoreStats playersScoreStats) {
         this.takableChildValidator = takableChildValidator;
+        this.playersScoreStats = playersScoreStats;
     }
 
     public int getBlackPlayerPoints() {
-        return blackPlayerPoints;
+        return playersScoreStats.getBlackPoints();
     }
 
     public int getWhitePlayerPoints() {
-        return whitePlayerPoints;
+        return playersScoreStats.getWhitePoints();
     }
 
     @Override
@@ -41,18 +43,11 @@ public class PointCalculatorVisitor implements EncircledAreaVisitor {
         List<Intersection> untreatedContent =  getUntreatedIntersectionsIn(area.getFullContent());
         List<Intersection> untreatedBorder = getUntreatedIntersectionsIn(area.getFullBorder());
         Color playerColor = area.getBorderColor();
-        addPointsToPlayerColor(playerColor, untreatedBorder.size());
-        addPointsToPlayerColor(playerColor, untreatedContent.size());
+        playersScoreStats.addPlayerPoints(playerColor, untreatedBorder.size());
+        playersScoreStats.addPlayerPoints(playerColor, untreatedContent.size());
         nbZonesVisites++;
         intersectionsTraitees.addAll(untreatedContent);
         intersectionsTraitees.addAll(untreatedBorder);
-    }
-
-
-
-    private void addPointsToPlayerColor(Color playerColor, int points) {
-        if(playerColor == Color.Black) blackPlayerPoints += points;
-        else if(playerColor == Color.White) whitePlayerPoints += points;
     }
 
     private List<Intersection> getUntreatedIntersectionsIn(List<Intersection> list) {

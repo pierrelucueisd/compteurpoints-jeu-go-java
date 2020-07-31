@@ -4,6 +4,7 @@ import Board.Board;
 import Board.Builder.BoardBuilder;
 import Board.Builder.BoardBuilderFromBoardRepresentation;
 import PointCalculator.EncircledArea;
+import PointCalculator.Fetcher.EncircledAreaValidator.RootValidator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -51,8 +52,10 @@ class StructuratedsRootOfEncircledAreaFetcherTest {
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n";
         Board b = buildBoard(representation, 15);
-        StructuratedsRootOfEncircledAreaFetcher structureFecther = new StructuratedsRootOfEncircledAreaFetcher(b);
-        List<EncircledArea> rootElements = structureFecther.fetchRotts();
+        StructuratedsRootOfEncircledAreaFetcher structureFecther = new StructuratedsRootOfEncircledAreaFetcher(
+                b, new RootValidator(b)
+        );
+        List<EncircledArea> rootElements = structureFecther.fetch();
         assertEquals(3, rootElements.size());
     }
 
@@ -75,8 +78,10 @@ class StructuratedsRootOfEncircledAreaFetcherTest {
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n";
         Board b = buildBoard(representation, 15);
-        StructuratedsRootOfEncircledAreaFetcher structureFecther = new StructuratedsRootOfEncircledAreaFetcher(b);
-        List<EncircledArea> rootElements = structureFecther.fetchRotts();
+        StructuratedsRootOfEncircledAreaFetcher structureFecther = new StructuratedsRootOfEncircledAreaFetcher(
+                b, new RootValidator(b)
+        );
+        List<EncircledArea> rootElements = structureFecther.fetch();
         assertEquals(3, rootElements.size());
     }
 
@@ -99,8 +104,10 @@ class StructuratedsRootOfEncircledAreaFetcherTest {
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n";
         Board b = buildBoard(representation, 15);
-        StructuratedsRootOfEncircledAreaFetcher structureFecther = new StructuratedsRootOfEncircledAreaFetcher(b);
-        List<EncircledArea> rootElements = structureFecther.fetchRotts();
+        StructuratedsRootOfEncircledAreaFetcher structureFecther = new StructuratedsRootOfEncircledAreaFetcher(
+                b, new RootValidator(b)
+        );
+        List<EncircledArea> rootElements = structureFecther.fetch();
         assertEquals(2, rootElements.size());
     }
 
@@ -123,8 +130,10 @@ class StructuratedsRootOfEncircledAreaFetcherTest {
                 "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n";
         Board b = buildBoard(representation, 15);
-        StructuratedsRootOfEncircledAreaFetcher structureFecther = new StructuratedsRootOfEncircledAreaFetcher(b);
-        List<EncircledArea> rootElements = structureFecther.fetchRotts();
+        StructuratedsRootOfEncircledAreaFetcher structureFecther = new StructuratedsRootOfEncircledAreaFetcher(
+                b, new RootValidator(b)
+        );
+        List<EncircledArea> rootElements = structureFecther.fetch();
         assertEquals(1, rootElements.size());
     }
 
@@ -141,8 +150,10 @@ class StructuratedsRootOfEncircledAreaFetcherTest {
                 "+-●-○-○-○-●-+-+-+\n" +
                 "+-●-○-+-○-●-+-+-+\n";
         Board b = buildBoard(representation, 9);
-        StructuratedsRootOfEncircledAreaFetcher structureFecther = new StructuratedsRootOfEncircledAreaFetcher(b);
-        List<EncircledArea> rootElements = structureFecther.fetchRotts();
+        StructuratedsRootOfEncircledAreaFetcher structureFecther = new StructuratedsRootOfEncircledAreaFetcher(
+                b, new RootValidator(b)
+        );
+        List<EncircledArea> rootElements = structureFecther.fetch();
         assertEquals(2, rootElements.size());
     }
 }

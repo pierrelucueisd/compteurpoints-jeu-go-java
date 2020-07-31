@@ -3,23 +3,23 @@ package PointCalculator.Fetcher;
 import Board.Board;
 import PointCalculator.EncircledArea;
 import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidator;
-import PointCalculator.Fetcher.EncircledAreaValidator.RootValidator;
 
 import java.util.List;
 
 public class StructuratedsRootOfEncircledAreaFetcher {
 
     private Board b;
+    EncircledAreaValidator rootValidator;
 
-    public StructuratedsRootOfEncircledAreaFetcher(Board b) {
+    public StructuratedsRootOfEncircledAreaFetcher(Board b, EncircledAreaValidator rootValidator) {
         this.b = b;
+        this.rootValidator = rootValidator;
     }
 
-    public List<EncircledArea> fetchRotts() {
+    public List<EncircledArea> fetch() {
         EncircledAreaFlatListFetcher flarListFecther = new EncircledAreaFlatListFetcher(b);
         List<EncircledArea> areas = flarListFecther.fetchFlatListFromBoard();
-        EncircledAreaValidator areaNotToBigValidator = new RootValidator(b);
-        EncircledAreaStructurator structurator = new EncircledAreaStructurator(b, areaNotToBigValidator);
+        EncircledAreaStructurator structurator = new EncircledAreaStructurator(b, rootValidator);
         return structurator.structurateElementsOfList(areas);
     }
 }

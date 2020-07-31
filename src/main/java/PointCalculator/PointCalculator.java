@@ -3,8 +3,11 @@ package PointCalculator;
 import Board.Board;
 import Board.Intersection;
 import Player.Color;
+import PointCalculator.Fetcher.EncircledAreaValidator.TakableValidator;
 import PointCalculator.Fetcher.EncircledAreaValidator.TakableValidatorNaive;
+import PointCalculator.PlayersStats.PlayersScoreStats;
 import PointCalculator.visitor.EncircledAreaVisitor;
+import PointCalculator.visitor.PointCalculatorVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,19 +19,18 @@ public class PointCalculator {
     List<EncircledArea> rootsAreas;
     List<EncircledArea> calculatedRoorAreas = new ArrayList<EncircledArea>();
     private EncircledAreaVisitor pointCalculatorVisitor;
-    private int blackPoints = 0;
-    private int whitePoints = 0;
-    private TakableValidatorNaive takableRootValidator;
+    private TakableValidator takableRootValidator;
+    private PlayersScoreStats playersScoreStats = new PlayersScoreStats();
 
     public PointCalculator(Board b,
                            List<EncircledArea> rootsAreas,
-                           EncircledAreaVisitor pointCalculatorVisitor,
-                           TakableValidatorNaive takableRootValidator
+                           TakableValidator takableRootValidator,
+                           TakableValidator takableChildValidator
     ) {
-        this.pointCalculatorVisitor = pointCalculatorVisitor;
         this.b = b;
         this.rootsAreas = rootsAreas;
         this.takableRootValidator = takableRootValidator;
+        this.pointCalculatorVisitor = new PointCalculatorVisitor(takableChildValidator, playersScoreStats);
     }
 
     public void calculate() {
@@ -37,16 +39,16 @@ public class PointCalculator {
         List<Intersection> noMansIntersectionCloud = getIntersectionsCloudNotPossesedByEncircling();
         int nbCaseNoires   = countColorInIntersectionList(Color.Black, noMansIntersectionCloud);
         int nbCaseBlanches = countColorInIntersectionList(Color.White, noMansIntersectionCloud);
-        blackPoints += nbCaseNoires;
-        whitePoints += nbCaseBlanches;
+        playersScoreStats.addPlayerPoints(Color.Black, nbCaseNoires);
+        playersScoreStats.addPlayerPoints(Color.White, nbCaseBlanches);
     }
 
     public int getBlackPoints() {
-        return blackPoints;
+        return playersScoreStats.getBlackPoints();
     }
 
     public int getWhitePoints() {
-        return whitePoints;
+        return playersScoreStats.getWhitePoints();
     }
 
     private int countColorInIntersectionList(Color color, List<Intersection> list) {
@@ -73,8 +75,6 @@ public class PointCalculator {
                 calculatedRoorAreas.add(area);
             }
         }
-        this.blackPoints += pointCalculatorVisitor.getBlackPlayerPoints();
-        this.whitePoints += pointCalculatorVisitor.getWhitePlayerPoints();
     }
 
 }

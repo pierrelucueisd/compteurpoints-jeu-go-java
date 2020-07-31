@@ -3,11 +3,9 @@ package PointCalculator;
 import Board.Board;
 import Board.Builder.BoardBuilder;
 import Board.Builder.BoardBuilderFromBoardRepresentation;
-import PointCalculator.Fetcher.EncircledAreaFlatListFetcher;
-import PointCalculator.Fetcher.EncircledAreaStructurator;
 import PointCalculator.Fetcher.EncircledAreaValidator.RootValidator;
-import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidator;
 import PointCalculator.Fetcher.EncircledAreaValidator.TakableValidatorNaive;
+import PointCalculator.Fetcher.StructuratedsRootOfEncircledAreaFetcher;
 import PointCalculator.visitor.EncircledAreaVisitor;
 import PointCalculator.visitor.PointCalculatorVisitor;
 import org.junit.jupiter.api.Test;
@@ -19,8 +17,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PointCalculatorTest {
 
-    final static int taille = 9;
-
     Board buildBoard(String representation, int size) {
         BoardBuilder builder = new BoardBuilderFromBoardRepresentation(representation, size);
         Optional<Board> optB = builder.build();
@@ -28,24 +24,12 @@ class PointCalculatorTest {
         return optB.get();
     }
 
-    private List<EncircledArea> fetchFlatListFromBoard(Board b) {
-        EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
-        return fetcher.fetchFlatListFromBoard();
-    }
-
-    private EncircledAreaStructurator generateStructurator(Board b) {
-        EncircledAreaValidator areaNotToBigValidator = new RootValidator(b);
-        return new EncircledAreaStructurator(b, areaNotToBigValidator);
-    }
-
     private PointCalculator generatePointCalculatorFromBoard(Board b) {
-        List<EncircledArea> areas = fetchFlatListFromBoard(b);
-        EncircledAreaStructurator structurator = generateStructurator(b);
-        List<EncircledArea> rootElements = structurator.structurateElementsOfList(areas);
-        EncircledAreaVisitor pointCalculatorVisitor = new PointCalculatorVisitor(
-                new TakableValidatorNaive()
+        StructuratedsRootOfEncircledAreaFetcher structureFecther = new StructuratedsRootOfEncircledAreaFetcher(
+                b, new RootValidator(b)
         );
-        return new PointCalculator(b, rootElements, pointCalculatorVisitor,
+        List<EncircledArea> rootElements = structureFecther.fetch();
+        return new PointCalculator(b, rootElements, new TakableValidatorNaive(),
                 new TakableValidatorNaive());
     }
 
