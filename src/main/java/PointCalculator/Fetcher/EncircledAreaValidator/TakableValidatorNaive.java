@@ -1,10 +1,10 @@
 package PointCalculator.Fetcher.EncircledAreaValidator;
-
 import PointCalculator.EncircledAreaInterface;
 
-public class TakableValidatorNaive implements TakableValidator {
+public class TakableValidatorNaive extends TakableValidator {
+
     @Override
-    public boolean isValid(EncircledAreaInterface area) {
+    public boolean test(EncircledAreaInterface encircledAreaInterface) {
         return false;
     }
 }

@@ -2,14 +2,13 @@ package PointCalculator.Fetcher.EncircledAreaValidator;
 
 import Board.Board;
 import Board.Intersection;
-import PointCalculator.EncircledArea;
 import PointCalculator.EncircledAreaInterface;
 import PointCalculator.EncirledAreaInterfaceComparator.EncirleAreaComparator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RootValidator implements EncircledAreaValidator {
+public class RootValidator extends EncircledAreaValidator {
 
     private Board b;
 
@@ -17,7 +16,8 @@ public class RootValidator implements EncircledAreaValidator {
         this.b = b;
     }
 
-    public boolean isValid(EncircledAreaInterface area) {
+    @Override
+    public boolean test(EncircledAreaInterface area) {
         return !isAdjacentOfAllBoardSides(area) &&
                 !isToBigAndContentTouchingBoardBorder(area);
     }
@@ -34,9 +34,6 @@ public class RootValidator implements EncircledAreaValidator {
         boolean isTooBig = minimalMembers.size() >  (b.getSize()*b.getSize()/2);
         return isTouching && isTooBig;
     }
-
-    /*protected boolean isMinimalAreaSizeIsOverBoardHalfSize() {
-    }*/
 
     protected boolean isAdjacentOfAllBoardSides(EncircledAreaInterface area) {
         List<Intersection> content = area.getFullContent();

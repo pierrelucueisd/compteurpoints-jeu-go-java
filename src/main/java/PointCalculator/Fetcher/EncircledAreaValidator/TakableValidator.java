@@ -1,4 +1,4 @@
 package PointCalculator.Fetcher.EncircledAreaValidator;
 
-public interface TakableValidator extends EncircledAreaValidator {
+public abstract class TakableValidator extends EncircledAreaValidator {
 }

@@ -29,7 +29,7 @@ public class EncircledAreaFlatListFetcher {
             Intersection inter = aTraiter.pop();
             Optional<EncircledArea> optArea = areaFecther.fetchAreaFromIntersection(inter);
             if(optArea.isPresent()) {
-                if(validator.isValid(optArea.get())) areas.add(optArea.get());
+                if(validator.test(optArea.get())) areas.add(optArea.get());
                 aTraiter.removeAll(optArea.get().getRingContent());
             }else aTraiter.remove(inter);
         }

@@ -37,7 +37,7 @@ public class PointCalculatorVisitor implements EncircledAreaVisitor {
     @Override
     public void visit(EncircledArea area) {
         for(EncircledAreaInterface child: area.getChildrens()) {
-            if(!takableChildValidator.isValid(child))
+            if(!takableChildValidator.test(child))
                 child.accept(this);
         }
         List<Intersection> untreatedContent =  getUntreatedIntersectionsIn(area.getFullContent());

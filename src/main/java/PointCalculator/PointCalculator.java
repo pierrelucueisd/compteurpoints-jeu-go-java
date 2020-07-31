@@ -63,7 +63,7 @@ public class PointCalculator {
 
     private void addChildZonePointsToPlayersPoints(List<EncircledArea> rootsAreas) {
         for(EncircledArea area: rootsAreas) {
-            if(!takableRootValidator.isValid(area)) {
+            if(!takableRootValidator.test(area)) {
                 pointCalculatorVisitor.visit(area);
                 calculatedRoorAreas.add(area);
             }
