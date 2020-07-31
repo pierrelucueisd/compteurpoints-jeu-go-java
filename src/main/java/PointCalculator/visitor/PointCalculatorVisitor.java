@@ -5,8 +5,6 @@ import Player.Color;
 import PointCalculator.EncircledArea;
 import PointCalculator.EncircledAreaInterface;
 import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidator;
-import PointCalculator.Fetcher.EncircledAreaValidator.TakableValidator;
-import PointCalculator.Fetcher.EncircledAreaValidator.TakableValidatorNaive;
 import PointCalculator.PlayersStats.PlayersScoreStats;
 
 import java.util.ArrayList;
@@ -17,11 +15,11 @@ public class PointCalculatorVisitor implements EncircledAreaVisitor {
 
     private int nbZonesVisites = 0;
     private List<Intersection> intersectionsTraitees = new ArrayList<>();
-    private TakableValidator takableChildValidator;
+    private EncircledAreaValidator takableChildValidator;
     private PlayersScoreStats playersScoreStats;
 
 
-    public PointCalculatorVisitor(TakableValidator takableChildValidator, PlayersScoreStats playersScoreStats) {
+    public PointCalculatorVisitor(EncircledAreaValidator takableChildValidator, PlayersScoreStats playersScoreStats) {
         this.takableChildValidator = takableChildValidator;
         this.playersScoreStats = playersScoreStats;
     }

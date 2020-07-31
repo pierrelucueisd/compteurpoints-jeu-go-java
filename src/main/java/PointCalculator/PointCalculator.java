@@ -3,8 +3,7 @@ package PointCalculator;
 import Board.Board;
 import Board.Intersection;
 import Player.Color;
-import PointCalculator.Fetcher.EncircledAreaValidator.TakableValidator;
-import PointCalculator.Fetcher.EncircledAreaValidator.TakableValidatorNaive;
+import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidator;
 import PointCalculator.PlayersStats.PlayersScoreStats;
 import PointCalculator.visitor.EncircledAreaVisitor;
 import PointCalculator.visitor.PointCalculatorVisitor;
@@ -19,13 +18,13 @@ public class PointCalculator {
     List<EncircledArea> rootsAreas;
     List<EncircledArea> calculatedRoorAreas = new ArrayList<EncircledArea>();
     private EncircledAreaVisitor pointCalculatorVisitor;
-    private TakableValidator takableRootValidator;
+    private EncircledAreaValidator takableRootValidator;
     private PlayersScoreStats playersScoreStats = new PlayersScoreStats();
 
     public PointCalculator(Board b,
                            List<EncircledArea> rootsAreas,
-                           TakableValidator takableRootValidator,
-                           TakableValidator takableChildValidator
+                           EncircledAreaValidator takableRootValidator,
+                           EncircledAreaValidator takableChildValidator
     ) {
         this.b = b;
         this.rootsAreas = rootsAreas;
