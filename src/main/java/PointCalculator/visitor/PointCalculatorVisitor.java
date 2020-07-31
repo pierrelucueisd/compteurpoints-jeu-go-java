@@ -2,8 +2,8 @@ package PointCalculator.visitor;
 
 import Board.Intersection;
 import Player.Color;
-import PointCalculator.EncircledArea;
-import PointCalculator.EncircledAreaValidator.EncircledAreaValidator;
+import PointCalculator.EncircledArea.EncircledArea;
+import PointCalculator.EncircledArea.EncircledArea.EncircledAreaValidator.EncircledAreaValidator;
 import PointCalculator.PlayersStats.PlayersScoreStats;
 
 import java.util.ArrayList;

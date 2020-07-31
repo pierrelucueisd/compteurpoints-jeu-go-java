@@ -1,10 +1,10 @@
-package PointCalculator.Fetcher;
+package PointCalculator.EncircledArea.Fetcher;
 
 import Board.Board;
 import Board.Intersection;
-import PointCalculator.EncircledArea;
-import PointCalculator.EncircledAreaValidator.RootValidator;
-import PointCalculator.EncircledAreaValidator.EncircledAreaValidator;
+import PointCalculator.EncircledArea.EncircledArea;
+import PointCalculator.EncircledArea.EncircledArea.EncircledAreaValidator.RootValidator;
+import PointCalculator.EncircledArea.EncircledArea.EncircledAreaValidator.EncircledAreaValidator;
 
 import java.util.ArrayList;
 import java.util.List;

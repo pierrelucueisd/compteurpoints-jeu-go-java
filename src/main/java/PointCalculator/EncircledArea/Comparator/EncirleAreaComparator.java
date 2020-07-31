@@ -1,8 +1,8 @@
-package PointCalculator.EncirledAreaInterfaceComparator;
+package PointCalculator.EncircledArea.Comparator;
 
 import Board.Board;
 import Board.Intersection;
-import PointCalculator.EncircledArea;
+import PointCalculator.EncircledArea.EncircledArea;
 
 import java.util.ArrayList;
 import java.util.Comparator;

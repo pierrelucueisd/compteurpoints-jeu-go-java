@@ -3,9 +3,10 @@ package PointCalculator;
 import Board.Board;
 import Board.Builder.BoardBuilder;
 import Board.Builder.BoardBuilderFromBoardRepresentation;
-import PointCalculator.EncircledAreaValidator.RootValidator;
-import PointCalculator.EncircledAreaValidator.TakableValidatorNaive;
-import PointCalculator.Fetcher.StructuredEncircledAreaFetcher;
+import PointCalculator.EncircledArea.EncircledArea;
+import PointCalculator.EncircledArea.EncircledArea.EncircledAreaValidator.RootValidator;
+import PointCalculator.EncircledArea.EncircledArea.EncircledAreaValidator.TakableValidatorNaive;
+import PointCalculator.EncircledArea.Fetcher.StructuredEncircledAreaFetcher;
 import PointCalculator.PlayersStats.PlayersScoreStats;
 import org.junit.jupiter.api.Test;
 

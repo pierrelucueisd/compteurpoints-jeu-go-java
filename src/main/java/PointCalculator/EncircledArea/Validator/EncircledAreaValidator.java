@@ -1,5 +1,5 @@
-package PointCalculator.EncircledAreaValidator;
-import PointCalculator.EncircledArea;
+package PointCalculator.EncircledArea.Validator;
+import PointCalculator.EncircledArea.EncircledArea;
 
 import java.util.function.Predicate;
 

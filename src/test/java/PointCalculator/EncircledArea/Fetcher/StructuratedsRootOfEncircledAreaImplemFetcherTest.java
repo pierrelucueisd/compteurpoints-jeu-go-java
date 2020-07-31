@@ -1,10 +1,10 @@
-package PointCalculator.Fetcher;
+package PointCalculator.EncircledArea.Fetcher;
 
 import Board.Board;
 import Board.Builder.BoardBuilder;
 import Board.Builder.BoardBuilderFromBoardRepresentation;
-import PointCalculator.EncircledArea;
-import PointCalculator.EncircledAreaValidator.RootValidator;
+import PointCalculator.EncircledArea.EncircledArea;
+import PointCalculator.EncircledArea.EncircledArea.EncircledAreaValidator.RootValidator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

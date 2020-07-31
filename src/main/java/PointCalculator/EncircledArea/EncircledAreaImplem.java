@@ -1,4 +1,4 @@
-package PointCalculator;
+package PointCalculator.EncircledArea;
 
 import Board.Intersection;
 import Player.Color;

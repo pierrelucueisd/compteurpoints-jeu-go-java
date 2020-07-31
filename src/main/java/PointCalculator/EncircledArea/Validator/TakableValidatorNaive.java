@@ -1,5 +1,5 @@
-package PointCalculator.EncircledAreaValidator;
-import PointCalculator.EncircledArea;
+package PointCalculator.EncircledArea.Validator;
+import PointCalculator.EncircledArea.EncircledArea;
 
 public class TakableValidatorNaive extends EncircledAreaValidator {
     @Override

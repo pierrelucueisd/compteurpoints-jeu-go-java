@@ -1,8 +1,7 @@
-package PointCalculator;
+package PointCalculator.EncircledArea;
 
 import Board.Intersection;
 import Player.Color;
-import PointCalculator.visitor.EncircledAreaVisitor;
 import PointCalculator.visitor.VisitableEncirliedArea;
 
 import java.util.List;

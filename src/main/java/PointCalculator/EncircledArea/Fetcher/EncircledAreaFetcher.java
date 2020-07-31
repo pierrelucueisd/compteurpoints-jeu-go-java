@@ -1,11 +1,11 @@
-package PointCalculator.Fetcher;
+package PointCalculator.EncircledArea.Fetcher;
 
 import Board.Board;
 import Board.Intersection;
 import Player.Color;
-import PointCalculator.EncircledArea;
-import PointCalculator.EncirledAreaInterfaceComparator.EncirleAreaComparator;
-import PointCalculator.EncircledAreaImplem;
+import PointCalculator.EncircledArea.EncircledArea;
+import PointCalculator.EncircledArea.Comparator.EncirleAreaComparator;
+import PointCalculator.EncircledArea.EncircledAreaImplem;
 
 import java.util.*;
 import java.util.function.Predicate;

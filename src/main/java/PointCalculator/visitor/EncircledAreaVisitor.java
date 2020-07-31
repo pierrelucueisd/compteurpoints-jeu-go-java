@@ -1,6 +1,6 @@
 package PointCalculator.visitor;
 
-import PointCalculator.EncircledArea;
+import PointCalculator.EncircledArea.EncircledArea;
 
 public interface EncircledAreaVisitor {
     public void visit(EncircledArea area);

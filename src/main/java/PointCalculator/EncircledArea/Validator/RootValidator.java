@@ -1,9 +1,9 @@
-package PointCalculator.EncircledAreaValidator;
+package PointCalculator.EncircledArea.Validator;
 
 import Board.Board;
 import Board.Intersection;
-import PointCalculator.EncircledArea;
-import PointCalculator.EncirledAreaInterfaceComparator.EncirleAreaComparator;
+import PointCalculator.EncircledArea.EncircledArea;
+import PointCalculator.EncircledArea.Comparator.EncirleAreaComparator;
 
 import java.util.ArrayList;
 import java.util.List;

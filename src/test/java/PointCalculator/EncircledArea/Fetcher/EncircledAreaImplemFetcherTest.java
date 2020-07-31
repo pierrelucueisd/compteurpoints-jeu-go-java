@@ -1,11 +1,11 @@
-package PointCalculator.Fetcher;
+package PointCalculator.EncircledArea.Fetcher;
 
 import Board.Board;
 import Board.Intersection;
 import Board.Builder.BoardBuilder;
 import Board.Builder.BoardBuilderFromBoardRepresentation;
 import Player.Color;
-import PointCalculator.EncircledArea;
+import PointCalculator.EncircledArea.EncircledArea;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
