@@ -3,7 +3,6 @@ package PointCalculator;
 import Board.Board;
 import Board.Intersection;
 import Player.Color;
-import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidator;
 import PointCalculator.Fetcher.EncircledAreaValidator.TakableValidatorNaive;
 import PointCalculator.visitor.EncircledAreaVisitor;
 
