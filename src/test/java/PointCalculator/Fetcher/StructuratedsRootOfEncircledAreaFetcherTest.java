@@ -4,7 +4,7 @@ import Board.Board;
 import Board.Builder.BoardBuilder;
 import Board.Builder.BoardBuilderFromBoardRepresentation;
 import PointCalculator.EncircledArea;
-import PointCalculator.Fetcher.EncircledAreaValidator.RootValidator;
+import PointCalculator.EncircledAreaValidator.RootValidator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

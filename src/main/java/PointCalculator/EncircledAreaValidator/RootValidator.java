@@ -1,4 +1,4 @@
-package PointCalculator.Fetcher.EncircledAreaValidator;
+package PointCalculator.EncircledAreaValidator;
 
 import Board.Board;
 import Board.Intersection;

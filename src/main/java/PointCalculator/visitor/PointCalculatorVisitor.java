@@ -4,7 +4,7 @@ import Board.Intersection;
 import Player.Color;
 import PointCalculator.EncircledArea;
 import PointCalculator.EncircledAreaInterface;
-import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidator;
+import PointCalculator.EncircledAreaValidator.EncircledAreaValidator;
 import PointCalculator.PlayersStats.PlayersScoreStats;
 
 import java.util.ArrayList;

@@ -3,8 +3,8 @@ package PointCalculator.Fetcher;
 import Board.Board;
 import Board.Intersection;
 import PointCalculator.EncircledArea;
-import PointCalculator.Fetcher.EncircledAreaValidator.RootValidator;
-import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidator;
+import PointCalculator.EncircledAreaValidator.RootValidator;
+import PointCalculator.EncircledAreaValidator.EncircledAreaValidator;
 
 import java.util.ArrayList;
 import java.util.List;

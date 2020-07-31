@@ -1,4 +1,4 @@
-package PointCalculator.Fetcher.EncircledAreaValidator;
+package PointCalculator.EncircledAreaValidator;
 import PointCalculator.EncircledAreaInterface;
 
 import java.util.function.Predicate;
