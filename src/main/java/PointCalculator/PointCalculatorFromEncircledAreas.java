@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PointCalculator {
+public class PointCalculatorFromEncircledAreas {
 
     private Board b;
     private List<EncircledArea> rootsAreas;
@@ -22,10 +22,10 @@ public class PointCalculator {
     private EncircledAreaValidator takableRootValidator;
     private PlayersScoreStats playersScoreStats = new PlayersScoreStats();
 
-    public PointCalculator(Board b,
-                           List<EncircledArea> rootsAreas,
-                           EncircledAreaValidator takableRootValidator,
-                           EncircledAreaValidator takableChildValidator
+    public PointCalculatorFromEncircledAreas(Board b,
+                                             List<EncircledArea> rootsAreas,
+                                             EncircledAreaValidator takableRootValidator,
+                                             EncircledAreaValidator takableChildValidator
     ) {
         this.b = b;
         this.rootsAreas = rootsAreas;

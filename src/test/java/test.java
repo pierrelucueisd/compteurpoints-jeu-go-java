@@ -1,7 +1,18 @@
+import Board.Board;
+import Board.Builder.BoardBuilderForTests;
 import Game.GameController;
+import PointCalculator.BoardPointCalculator;
+import PointCalculator.EncircledArea.EncircledArea;
+import PointCalculator.EncircledArea.Fetcher.StructuredEncircledAreaFetcher;
+import PointCalculator.EncircledArea.Fetcher.StructuredEncircledAreaFetcherImplem;
+import PointCalculator.EncircledArea.Validator.RootValidator;
+import PointCalculator.EncircledArea.Validator.TakableValidatorNaive;
+import PointCalculator.PlayersStats.PlayersScoreStats;
+import PointCalculator.PointCalculatorFromEncircledAreas;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -137,5 +148,38 @@ class MainTest {
                 "3 +-+-+-+-+-+-+-+-+\n" +
                 "2 +-+-+-+-+-+-+-+-+\n" +
                 "1 +-+-+-+-+-+-+-+-+\n");
+    }
+
+
+    @Test
+    void calculateNaive_CasBasique_exempleInterfacePublique() {
+        String representation =
+                "+-+-○-+-+-○-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-○-○-○-○-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-●-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-●-●-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-+-+-+-+-●-●-●-●-+-+-+-+-+\n" +
+                "+-+-●-●-●-●-+-+-+-+-●-+-+-+-+\n" +
+                "+-+-●-○-○-○-●-●-●-+-●-+-+-+-+\n" +
+                "+-+-●-○-+-○-●-+-●-+-●-+-+-+-+\n" +
+                "+-+-●-○-○-○-●-●-●-+-●-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-●-+-+-+-+\n" +
+                "+-+-●-●-●-●-●-●-●-●-●-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
+                "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n";
+        Board b = BoardBuilderForTests.buildBoard(representation, 15);
+        BoardPointCalculator boardPointsCalculator = new BoardPointCalculator(
+                b,
+                new RootValidator(b),
+                new TakableValidatorNaive(),
+                new TakableValidatorNaive()
+        );
+        PlayersScoreStats playersScoreStats = boardPointsCalculator.calculate();
+        int whitePoints = playersScoreStats.getWhitePoints();
+        int blackPoints = playersScoreStats.getBlackPoints();
+        assertEquals(17, blackPoints, "Problème de décompte de points de noir");
+        assertEquals(17+9+8+3+26, whitePoints, "Problème de décompte de points avec Blanc");
     }
 }

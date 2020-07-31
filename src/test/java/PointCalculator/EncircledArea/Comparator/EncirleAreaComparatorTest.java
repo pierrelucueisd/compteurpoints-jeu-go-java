@@ -2,8 +2,7 @@ package PointCalculator.EncircledArea.Comparator;
 
 import Board.Board;
 import Board.Intersection;
-import Board.Builder.BoardBuilder;
-import Board.Builder.BoardBuilderFromBoardRepresentation;
+import Board.Builder.BoardBuilderForTests;
 import PointCalculator.EncircledArea.EncircledArea;
 import PointCalculator.EncircledArea.Fetcher.EncircledAreaFetcher;
 import PointCalculator.EncircledArea.Fetcher.EncircledAreaFetcherImplem;
@@ -16,13 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class EncirleAreaComparatorTest {
 
     private final static int taille = 9;
-
-    Board buildBoard(String representation, int size) {
-        BoardBuilder builder = new BoardBuilderFromBoardRepresentation(representation, size);
-        Optional<Board> optB = builder.build();
-        assertTrue(optB.isPresent(), "attention erreure d'initialisetion du board");
-        return optB.get();
-    }
 
     /* LÉGENDE
      *  1. Blanc:   ●
@@ -53,7 +45,7 @@ class EncirleAreaComparatorTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = getFetchetFromBoard(b);
 
         Intersection i = b.getIntersection(2, 4);
@@ -79,7 +71,7 @@ class EncirleAreaComparatorTest {
                 "+-+-+-●-+-●-+-+-+\n" +
                 "+-+-+-+-●-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = getFetchetFromBoard(b);
 
         Intersection i = b.getIntersection(4, 4);
@@ -100,7 +92,7 @@ class EncirleAreaComparatorTest {
                 "+-+-+-●-+-●-+-+-+\n" +
                 "+-+-+-+-●-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = getFetchetFromBoard(b);
 
         Intersection i = b.getIntersection(4, 4);
@@ -121,7 +113,7 @@ class EncirleAreaComparatorTest {
                 "+-+-+-●-+-●-+-+-+\n" +
                 "+-+-+-+-●-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = getFetchetFromBoard(b);
 
         Intersection i = b.getIntersection(4, 4);
@@ -142,7 +134,7 @@ class EncirleAreaComparatorTest {
                 "+-+-+-●-+-●-+-+-+\n" +
                 "+-+-+-+-●-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = getFetchetFromBoard(b);
 
         Intersection i = b.getIntersection(4, 4);
@@ -163,7 +155,7 @@ class EncirleAreaComparatorTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = getFetchetFromBoard(b);
 
         Intersection i = b.getIntersection(4, 5);
@@ -188,7 +180,7 @@ class EncirleAreaComparatorTest {
                 "+-+-●-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcher encircledAreaFetcher = getFetchetFromBoard(b);
 
         Intersection i = b.getIntersection(0, 5);

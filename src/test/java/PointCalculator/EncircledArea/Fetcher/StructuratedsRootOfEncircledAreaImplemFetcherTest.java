@@ -1,27 +1,16 @@
 package PointCalculator.EncircledArea.Fetcher;
 
 import Board.Board;
-import Board.Builder.BoardBuilder;
-import Board.Builder.BoardBuilderFromBoardRepresentation;
+import Board.Builder.BoardBuilderForTests;
 import PointCalculator.EncircledArea.EncircledArea;
 import PointCalculator.EncircledArea.Validator.RootValidator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class StructuratedsRootOfEncircledAreaImplemFetcherTest {
-
-    final static int taille = 9;
-
-    Board buildBoard(String representation, int size) {
-        BoardBuilder builder = new BoardBuilderFromBoardRepresentation(representation, size);
-        Optional<Board> optB = builder.build();
-        assertTrue(optB.isPresent(), "attention erreure d'initialisetion du board");
-        return optB.get();
-    }
 
     /* LÉGENDE
      *  1. Blanc:   ●
@@ -51,7 +40,7 @@ class StructuratedsRootOfEncircledAreaImplemFetcherTest {
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, 15);
+        Board b = BoardBuilderForTests.buildBoard(representation, 15);
         StructuredEncircledAreaFetcherImplem structureFecther = new StructuredEncircledAreaFetcherImplem(
                 b, new RootValidator(b)
         );
@@ -77,7 +66,7 @@ class StructuratedsRootOfEncircledAreaImplemFetcherTest {
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, 15);
+        Board b = BoardBuilderForTests.buildBoard(representation, 15);
         StructuredEncircledAreaFetcherImplem structureFecther = new StructuredEncircledAreaFetcherImplem(
                 b, new RootValidator(b)
         );
@@ -103,7 +92,7 @@ class StructuratedsRootOfEncircledAreaImplemFetcherTest {
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, 15);
+        Board b = BoardBuilderForTests.buildBoard(representation, 15);
         StructuredEncircledAreaFetcherImplem structureFecther = new StructuredEncircledAreaFetcherImplem(
                 b, new RootValidator(b)
         );
@@ -129,7 +118,7 @@ class StructuratedsRootOfEncircledAreaImplemFetcherTest {
                 "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, 15);
+        Board b = BoardBuilderForTests.buildBoard(representation, 15);
         StructuredEncircledAreaFetcherImplem structureFecther = new StructuredEncircledAreaFetcherImplem(
                 b, new RootValidator(b)
         );
@@ -149,7 +138,7 @@ class StructuratedsRootOfEncircledAreaImplemFetcherTest {
                 "+-●-●-●-●-●-+-+-+\n" +
                 "+-●-○-○-○-●-+-+-+\n" +
                 "+-●-○-+-○-●-+-+-+\n";
-        Board b = buildBoard(representation, 9);
+        Board b = BoardBuilderForTests.buildBoard(representation, 9);
         StructuredEncircledAreaFetcherImplem structureFecther = new StructuredEncircledAreaFetcherImplem(
                 b, new RootValidator(b)
         );

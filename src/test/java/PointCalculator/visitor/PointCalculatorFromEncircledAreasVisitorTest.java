@@ -1,8 +1,7 @@
 package PointCalculator.visitor;
 
 import Board.Board;
-import Board.Builder.BoardBuilder;
-import Board.Builder.BoardBuilderFromBoardRepresentation;
+import Board.Builder.BoardBuilderForTests;
 import PointCalculator.EncircledArea.EncircledArea;
 import PointCalculator.EncircledArea.Fetcher.StructuredEncircledAreaFetcher;
 import PointCalculator.EncircledArea.Fetcher.StructuredEncircledAreaFetcherImplem;
@@ -16,14 +15,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PointCalculatorVisitorTest {
-
-    Board buildBoard(String representation, int size) {
-        BoardBuilder builder = new BoardBuilderFromBoardRepresentation(representation, size);
-        Optional<Board> optB = builder.build();
-        assertTrue(optB.isPresent(), "attention erreure d'initialisetion du board");
-        return optB.get();
-    }
+class PointCalculatorFromEncircledAreasVisitorTest {
 
     /* LÉGENDE
      *  1. Blanc:   ●
@@ -42,7 +34,7 @@ class PointCalculatorVisitorTest {
                 "+-●-●-●-●-●-+-+-+\n" +
                 "+-●-○-○-○-●-+-+-+\n" +
                 "+-●-○-+-○-●-+-+-+\n";
-        Board b = buildBoard(representation, 9);
+        Board b = BoardBuilderForTests.buildBoard(representation, 9);
         StructuredEncircledAreaFetcher structureFecther = new StructuredEncircledAreaFetcherImplem(
                 b, new RootValidator(b)
         );

@@ -1,8 +1,7 @@
 package PointCalculator;
 
 import Board.Board;
-import Board.Builder.BoardBuilder;
-import Board.Builder.BoardBuilderFromBoardRepresentation;
+import Board.Builder.BoardBuilderForTests;
 import PointCalculator.EncircledArea.EncircledArea;
 import PointCalculator.EncircledArea.Fetcher.StructuredEncircledAreaFetcher;
 import PointCalculator.EncircledArea.Fetcher.StructuredEncircledAreaFetcherImplem;
@@ -12,25 +11,18 @@ import PointCalculator.PlayersStats.PlayersScoreStats;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PointCalculatorTest {
+class PointCalculatorFromEncircledAreasTest {
+    
 
-    Board buildBoard(String representation, int size) {
-        BoardBuilder builder = new BoardBuilderFromBoardRepresentation(representation, size);
-        Optional<Board> optB = builder.build();
-        assertTrue(optB.isPresent(), "attention erreure d'initialisetion du board");
-        return optB.get();
-    }
-
-    private PointCalculator generatePointCalculatorFromBoard(Board b) {
+    private PointCalculatorFromEncircledAreas generatePointCalculatorFromBoard(Board b) {
         StructuredEncircledAreaFetcher structureFecther = new StructuredEncircledAreaFetcherImplem(
                 b, new RootValidator(b)
         );
         List<EncircledArea> rootElements = structureFecther.fetch();
-        return new PointCalculator(b, rootElements, new TakableValidatorNaive(),
+        return new PointCalculatorFromEncircledAreas(b, rootElements, new TakableValidatorNaive(),
                 new TakableValidatorNaive());
     }
 
@@ -51,9 +43,9 @@ class PointCalculatorTest {
                 "+-●-●-●-●-●-+-+-+\n" +
                 "+-●-○-○-○-●-+-○-+\n" +
                 "+-●-○-+-○-●-+-+-+\n";
-        Board b = buildBoard(representation, 9);
-        PointCalculator pointCalculator = generatePointCalculatorFromBoard(b);
-        PlayersScoreStats playersScore = pointCalculator.calculatePlayersScore();
+        Board b = BoardBuilderForTests.buildBoard(representation, 9);
+        PointCalculatorFromEncircledAreas pointCalculatorFromEncircledAreas = generatePointCalculatorFromBoard(b);
+        PlayersScoreStats playersScore = pointCalculatorFromEncircledAreas.calculatePlayersScore();
         int whitePoints = playersScore.getWhitePoints();
         int blackPoints = playersScore.getBlackPoints();
         
@@ -73,9 +65,9 @@ class PointCalculatorTest {
                 "+-+-+-○-○-○-+-+-+\n" +
                 "●-+-+-○-+-○-+-+-+\n" +
                 "●-+-+-○-○-○-+-+-+\n";
-        Board b = buildBoard(representation, 9);
-        PointCalculator pointCalculator = generatePointCalculatorFromBoard(b);
-        PlayersScoreStats playersScore = pointCalculator.calculatePlayersScore();
+        Board b = BoardBuilderForTests.buildBoard(representation, 9);
+        PointCalculatorFromEncircledAreas pointCalculatorFromEncircledAreas = generatePointCalculatorFromBoard(b);
+        PlayersScoreStats playersScore = pointCalculatorFromEncircledAreas.calculatePlayersScore();
         int whitePoints = playersScore.getWhitePoints();
         int blackPoints = playersScore.getBlackPoints();
         assertEquals(17, blackPoints, "Problème de décompte de points de noir");
@@ -94,9 +86,9 @@ class PointCalculatorTest {
                 "+-+-+-○-○-○-+-+-+\n" +
                 "●-+-+-○-+-○-+-+-+\n" +
                 "●-+-+-○-○-○-+-+-+\n";
-        Board b = buildBoard(representation, 9);
-        PointCalculator pointCalculator = generatePointCalculatorFromBoard(b);
-        PlayersScoreStats playersScore = pointCalculator.calculatePlayersScore();
+        Board b = BoardBuilderForTests.buildBoard(representation, 9);
+        PointCalculatorFromEncircledAreas pointCalculatorFromEncircledAreas = generatePointCalculatorFromBoard(b);
+        PlayersScoreStats playersScore = pointCalculatorFromEncircledAreas.calculatePlayersScore();
         int whitePoints = playersScore.getWhitePoints();
         int blackPoints = playersScore.getBlackPoints();
         assertEquals(17, blackPoints, "Problème de décompte de points de noir");
@@ -115,9 +107,9 @@ class PointCalculatorTest {
                 "+-+-+-○-○-○-●-+-+\n" +
                 "●-+-+-○-+-○-●-+-+\n" +
                 "●-+-+-○-○-○-●-+-+\n";
-        Board b = buildBoard(representation, 9);
-        PointCalculator pointCalculator = generatePointCalculatorFromBoard(b);
-        PlayersScoreStats playersScore = pointCalculator.calculatePlayersScore();
+        Board b = BoardBuilderForTests.buildBoard(representation, 9);
+        PointCalculatorFromEncircledAreas pointCalculatorFromEncircledAreas = generatePointCalculatorFromBoard(b);
+        PlayersScoreStats playersScore = pointCalculatorFromEncircledAreas.calculatePlayersScore();
         int whitePoints = playersScore.getWhitePoints();
         int blackPoints = playersScore.getBlackPoints();
         assertEquals(17, blackPoints, "Problème de décompte de points de noir");
@@ -143,9 +135,9 @@ class PointCalculatorTest {
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, 15);
-        PointCalculator pointCalculator = generatePointCalculatorFromBoard(b);
-        PlayersScoreStats playersScore = pointCalculator.calculatePlayersScore();
+        Board b = BoardBuilderForTests.buildBoard(representation, 15);
+        PointCalculatorFromEncircledAreas pointCalculatorFromEncircledAreas = generatePointCalculatorFromBoard(b);
+        PlayersScoreStats playersScore = pointCalculatorFromEncircledAreas.calculatePlayersScore();
         int whitePoints = playersScore.getWhitePoints();
         int blackPoints = playersScore.getBlackPoints();
         assertEquals(17, blackPoints, "Problème de décompte de points de noir");
@@ -164,9 +156,9 @@ class PointCalculatorTest {
                 "+-+-●-●-●-●-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, 9);
-        PointCalculator pointCalculator = generatePointCalculatorFromBoard(b);
-        PlayersScoreStats playersScore = pointCalculator.calculatePlayersScore();
+        Board b = BoardBuilderForTests.buildBoard(representation, 9);
+        PointCalculatorFromEncircledAreas pointCalculatorFromEncircledAreas = generatePointCalculatorFromBoard(b);
+        PlayersScoreStats playersScore = pointCalculatorFromEncircledAreas.calculatePlayersScore();
         int whitePoints = playersScore.getWhitePoints();
         int blackPoints = playersScore.getBlackPoints();
         assertEquals(15, blackPoints, "Problème de décompte de points de noir");
@@ -185,9 +177,9 @@ class PointCalculatorTest {
                 "+-●-●-●-●-●-+-+-+\n" +
                 "+-●-○-○-○-●-+-+-+\n" +
                 "+-●-○-+-○-●-+-+-+\n";
-        Board b = buildBoard(representation, 9);
-        PointCalculator pointCalculator = generatePointCalculatorFromBoard(b);
-        PlayersScoreStats playersScore = pointCalculator.calculatePlayersScore();
+        Board b = BoardBuilderForTests.buildBoard(representation, 9);
+        PointCalculatorFromEncircledAreas pointCalculatorFromEncircledAreas = generatePointCalculatorFromBoard(b);
+        PlayersScoreStats playersScore = pointCalculatorFromEncircledAreas.calculatePlayersScore();
         int whitePoints = playersScore.getWhitePoints();
         int blackPoints = playersScore.getBlackPoints();
         assertEquals(6+16, blackPoints, "Problème de décompte de points de noir");
@@ -206,9 +198,9 @@ class PointCalculatorTest {
                 "+-+-+-+-○-●-+-+-+\n" +
                 "+-+-+-+-○-●-+-+-+\n" +
                 "+-+-+-+-○-●-+-+-+\n";
-        Board b = buildBoard(representation, 9);
-        PointCalculator pointCalculator = generatePointCalculatorFromBoard(b);
-        PlayersScoreStats playersScore = pointCalculator.calculatePlayersScore();
+        Board b = BoardBuilderForTests.buildBoard(representation, 9);
+        PointCalculatorFromEncircledAreas pointCalculatorFromEncircledAreas = generatePointCalculatorFromBoard(b);
+        PlayersScoreStats playersScore = pointCalculatorFromEncircledAreas.calculatePlayersScore();
         int whitePoints = playersScore.getWhitePoints();
         int blackPoints = playersScore.getBlackPoints();
         assertEquals(9, blackPoints, "Problème de décompte de points de noir");
@@ -227,9 +219,9 @@ class PointCalculatorTest {
                 "+-+-+-○-+-●-+-+-+\n" +
                 "+-+-+-○-+-●-+-+-+\n" +
                 "+-+-+-○-+-●-+-+-+\n";
-        Board b = buildBoard(representation, 9);
-        PointCalculator pointCalculator = generatePointCalculatorFromBoard(b);
-        PlayersScoreStats playersScore = pointCalculator.calculatePlayersScore();
+        Board b = BoardBuilderForTests.buildBoard(representation, 9);
+        PointCalculatorFromEncircledAreas pointCalculatorFromEncircledAreas = generatePointCalculatorFromBoard(b);
+        PlayersScoreStats playersScore = pointCalculatorFromEncircledAreas.calculatePlayersScore();
         int whitePoints = playersScore.getWhitePoints();
         int blackPoints = playersScore.getBlackPoints();
         assertEquals(36, blackPoints, "Problème de décompte de points de noir");
@@ -248,9 +240,9 @@ class PointCalculatorTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, 9);
-        PointCalculator pointCalculator = generatePointCalculatorFromBoard(b);
-        PlayersScoreStats playersScore = pointCalculator.calculatePlayersScore();
+        Board b = BoardBuilderForTests.buildBoard(representation, 9);
+        PointCalculatorFromEncircledAreas pointCalculatorFromEncircledAreas = generatePointCalculatorFromBoard(b);
+        PlayersScoreStats playersScore = pointCalculatorFromEncircledAreas.calculatePlayersScore();
         int whitePoints = playersScore.getWhitePoints();
         int blackPoints = playersScore.getBlackPoints();
         assertEquals(36, blackPoints, "Problème de décompte de points de noir");
@@ -269,9 +261,9 @@ class PointCalculatorTest {
                 "●-+-+-+-○-○-○-●-+\n" +
                 "●-●-●-●-●-●-●-●-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, 9);
-        PointCalculator pointCalculator = generatePointCalculatorFromBoard(b);
-        PlayersScoreStats playersScore = pointCalculator.calculatePlayersScore();
+        Board b = BoardBuilderForTests.buildBoard(representation, 9);
+        PointCalculatorFromEncircledAreas pointCalculatorFromEncircledAreas = generatePointCalculatorFromBoard(b);
+        PlayersScoreStats playersScore = pointCalculatorFromEncircledAreas.calculatePlayersScore();
         int whitePoints = playersScore.getWhitePoints();
         int blackPoints = playersScore.getBlackPoints();
         assertEquals(0, blackPoints, "Problème de décompte de points de noir");

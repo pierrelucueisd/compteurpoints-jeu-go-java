@@ -1,9 +1,8 @@
 package PointCalculator.EncircledArea.Fetcher;
 
 import Board.Board;
+import Board.Builder.BoardBuilderForTests;
 import Board.Intersection;
-import Board.Builder.BoardBuilder;
-import Board.Builder.BoardBuilderFromBoardRepresentation;
 import Player.Color;
 import PointCalculator.EncircledArea.EncircledArea;
 import org.junit.jupiter.api.Test;
@@ -16,13 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class EncircledAreaImplemFetcherTest {
 
     final static int taille = 9;
-
-    Board buildBoard(String representation, int size) {
-        BoardBuilder builder = new BoardBuilderFromBoardRepresentation(representation, size);
-        Optional<Board> optB = builder.build();
-        assertTrue(optB.isPresent(), "attention erreure d'initialisetion du board");
-        return optB.get();
-    }
 
     /* LÉGENDE
      *  1. Blanc:   ●
@@ -41,7 +33,7 @@ class EncircledAreaImplemFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
 
         Intersection i = b.getIntersection(3, 4);
@@ -61,7 +53,7 @@ class EncircledAreaImplemFetcherTest {
                         "+-+-●-+-○-+-+-●-+\n" +
                         "●-+-●-●-●-●-●-●-+\n" +
                         "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
         Intersection i = b.getIntersection(3, 2);
         List<Intersection> anneauContenuNoir  = encircledAreaFetcherImplem.getAnneauInterieur(i, Color.White);
@@ -80,7 +72,7 @@ class EncircledAreaImplemFetcherTest {
                 "+-+-●-+-○-○-○-●-+\n" +
                 "●-+-●-●-●-●-●-●-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
         Intersection i = b.getIntersection(3, 2);
         List<Intersection> anneauContenuNoir  = encircledAreaFetcherImplem.getAnneauInterieur(i, Color.White);
@@ -99,7 +91,7 @@ class EncircledAreaImplemFetcherTest {
                 "+-+-●-+-○-○-○-●-+\n" +
                 "●-+-●-●-●-●-●-●-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
         Intersection i = b.getIntersection(3, 2);
         List<Intersection> anneauContenuNoir  = encircledAreaFetcherImplem.getAnneauInterieur(i, Color.White);
@@ -118,7 +110,7 @@ class EncircledAreaImplemFetcherTest {
                 "+-●-+-○-○-○-○-●-+\n" +
                 "+-●-●-●-●-●-●-●-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
         Intersection i = b.getIntersection(2, 2);
         List<Intersection> anneauContenuNoir  = encircledAreaFetcherImplem.getAnneauInterieur(i, Color.White);
@@ -137,7 +129,7 @@ class EncircledAreaImplemFetcherTest {
                 "+-●-○-○-○-○-○-●-+\n" +
                 "+-●-●-●-●-●-●-●-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
         Intersection i = b.getIntersection(2, 2);
         List<Intersection> anneauContenuNoir  = encircledAreaFetcherImplem.getAnneauInterieur(i, Color.White);
@@ -156,7 +148,7 @@ class EncircledAreaImplemFetcherTest {
                 "+-○-+-+-●-●-●-○-+\n" +
                 "+-○-○-○-○-○-○-○-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
         Intersection i = b.getIntersection(2, 2);
         List<Intersection> anneauContenuNoir  = encircledAreaFetcherImplem.getAnneauInterieur(i, Color.Black);
@@ -175,7 +167,7 @@ class EncircledAreaImplemFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
 
         Intersection i = b.getIntersection(3, 4);
@@ -197,7 +189,7 @@ class EncircledAreaImplemFetcherTest {
                 "+-+-●-+-○-○-○-●-+\n" +
                 "●-+-●-●-●-●-●-●-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
 
         Intersection i = b.getIntersection(3, 4);
@@ -219,7 +211,7 @@ class EncircledAreaImplemFetcherTest {
                 "●-+-+-+-○-○-○-●-+\n" +
                 "●-●-●-●-●-●-●-●-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
 
         Intersection i = b.getIntersection(2, 2);
@@ -241,7 +233,7 @@ class EncircledAreaImplemFetcherTest {
                 "●-+-+-+-○-○-○-●-+\n" +
                 "●-●-●-●-●-●-●-●-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
 
         Intersection i = b.getIntersection(3, 4);
@@ -263,7 +255,7 @@ class EncircledAreaImplemFetcherTest {
                 "+-+-●-+-○-○-○-●-+\n" +
                 "●-+-●-●-●-●-●-●-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
 
         Intersection i = b.getIntersection(3, 4);
@@ -286,7 +278,7 @@ class EncircledAreaImplemFetcherTest {
                         "+-+-●-+-○-○-○-●-+\n" +
                         "●-+-●-●-●-●-●-●-+\n" +
                         "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
 
         Intersection i = b.getIntersection(3, 4);
@@ -309,7 +301,7 @@ class EncircledAreaImplemFetcherTest {
                 "●-+-+-+-○-○-○-●-+\n" +
                 "●-●-●-●-●-●-●-●-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
 
         Intersection i = b.getIntersection(2, 2);
@@ -332,7 +324,7 @@ class EncircledAreaImplemFetcherTest {
                 "●-+-+-+-○-○-○-●-+\n" +
                 "●-●-●-●-●-●-●-●-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
 
         Intersection i = b.getIntersection(3, 4);
@@ -355,7 +347,7 @@ class EncircledAreaImplemFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
 
         Intersection i = b.getIntersection(3, 5);
@@ -382,7 +374,7 @@ class EncircledAreaImplemFetcherTest {
                         "+-+-+-+-○-+-+-+-+\n" +
                         "+-+-+-+-+-+-+-+-+\n" +
                         "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
 
         Intersection i = b.getIntersection(3, 5);
@@ -409,7 +401,7 @@ class EncircledAreaImplemFetcherTest {
                 "+-+-+-+-○-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
 
         Intersection i = b.getIntersection(3, 5);
@@ -439,7 +431,7 @@ class EncircledAreaImplemFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
 
         Intersection i = b.getIntersection(3, 5);
@@ -464,7 +456,7 @@ class EncircledAreaImplemFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
 
         Intersection i = b.getIntersection(3, 5);
@@ -489,7 +481,7 @@ class EncircledAreaImplemFetcherTest {
                 "+-+-●-●-●-●-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
 
         Intersection i = b.getIntersection(3, 5);
@@ -516,7 +508,7 @@ class EncircledAreaImplemFetcherTest {
                 "+-+-+-○-○-○-●-+-+\n" +
                 "●-+-+-○-+-○-●-+-+\n" +
                 "●-+-+-○-○-○-●-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
 
         Intersection i = b.getIntersection(3, 8);
@@ -542,7 +534,7 @@ class EncircledAreaImplemFetcherTest {
                 "+-+-+-○-+-●-+-+-+\n" +
                 "+-+-+-○-+-●-+-+-+\n" +
                 "+-+-+-○-+-●-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
 
         Intersection i = b.getIntersection(4, 0);
@@ -564,7 +556,7 @@ class EncircledAreaImplemFetcherTest {
                 "+-+-●-●-●-●-●-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
 
         Intersection i = b.getIntersection(4, 4);
@@ -587,7 +579,7 @@ class EncircledAreaImplemFetcherTest {
                 "+-○-●-●-●-●-●-○-+\n" +
                 "+-○-○-○-○-○-○-○-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
 
         Intersection i = b.getIntersection(4, 4);
@@ -612,7 +604,7 @@ class EncircledAreaImplemFetcherTest {
                 "+-○-○-○-●-○-○-○-+-+-+\n" +
                 "+-○-○-○-○-○-○-○-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, 11);
+        Board b = BoardBuilderForTests.buildBoard(representation, 11);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
 
         Intersection i = b.getIntersection(4, 6);
@@ -637,7 +629,7 @@ class EncircledAreaImplemFetcherTest {
                 "+-+-+-○-●-○-+-+-+-+-+\n" +
                 "+-+-+-+-○-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, 11);
+        Board b = BoardBuilderForTests.buildBoard(representation, 11);
         EncircledAreaFetcherImplem encircledAreaFetcherImplem = new EncircledAreaFetcherImplem(b);
 
         Intersection i = b.getIntersection(4, 6);

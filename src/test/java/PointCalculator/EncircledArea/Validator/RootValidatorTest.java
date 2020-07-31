@@ -1,8 +1,7 @@
 package PointCalculator.EncircledArea.Validator;
 
 import Board.Board;
-import Board.Builder.BoardBuilder;
-import Board.Builder.BoardBuilderFromBoardRepresentation;
+import Board.Builder.BoardBuilderForTests;
 import Board.Intersection;
 import PointCalculator.EncircledArea.EncircledArea;
 import PointCalculator.EncircledArea.Fetcher.EncircledAreaFetcher;
@@ -14,13 +13,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RootValidatorTest {
-
-    Board buildBoard(String representation, int size) {
-        BoardBuilder builder = new BoardBuilderFromBoardRepresentation(representation, size);
-        Optional<Board> optB = builder.build();
-        assertTrue(optB.isPresent(), "attention erreure d'initialisetion du board");
-        return optB.get();
-    }
 
     EncircledAreaFetcher getFetcherFromBoard(Board b) {
         return new EncircledAreaFetcherImplem(b);
@@ -49,7 +41,7 @@ class RootValidatorTest {
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, 15);
+        Board b = BoardBuilderForTests.buildBoard(representation, 15);
         Intersection i = b.getIntersection(0, 0);
         EncircledAreaFetcher encircledAreaFetcher = getFetcherFromBoard(b);
         Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
@@ -73,7 +65,7 @@ class RootValidatorTest {
                 "+-+-+-+-●-+-+-+-+\n" +
                 "+-+-+-+-●-+-+-+-+\n";
 
-        Board b = buildBoard(representation, 9);
+        Board b = BoardBuilderForTests.buildBoard(representation, 9);
         Intersection i = b.getIntersection(0, 0);
         EncircledAreaFetcher encircledAreaFetcher = getFetcherFromBoard(b);
         Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
@@ -97,7 +89,7 @@ class RootValidatorTest {
                 "+-+-+-+-●-+-+-+-+\n" +
                 "+-+-+-+-●-+-+-+-+\n";
 
-        Board b = buildBoard(representation, 9);
+        Board b = BoardBuilderForTests.buildBoard(representation, 9);
         Intersection i = b.getIntersection(5, 0);
         EncircledAreaFetcher encircledAreaFetcher = getFetcherFromBoard(b);
         Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
@@ -121,7 +113,7 @@ class RootValidatorTest {
                 "+-●-●-●-●-●-●-●-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
 
-        Board b = buildBoard(representation, 9);
+        Board b = BoardBuilderForTests.buildBoard(representation, 9);
         Intersection i = b.getIntersection(5, 5);
         EncircledAreaFetcher encircledAreaFetcher = getFetcherFromBoard(b);
         Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
@@ -145,7 +137,7 @@ class RootValidatorTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
 
-        Board b = buildBoard(representation, 9);
+        Board b = BoardBuilderForTests.buildBoard(representation, 9);
         Intersection i = b.getIntersection(5, 5);
         EncircledAreaFetcher encircledAreaFetcher = getFetcherFromBoard(b);
         Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);
@@ -169,7 +161,7 @@ class RootValidatorTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+\n";
 
-        Board b = buildBoard(representation, 9);
+        Board b = BoardBuilderForTests.buildBoard(representation, 9);
         Intersection i = b.getIntersection(5, 5);
         EncircledAreaFetcher encircledAreaFetcher = getFetcherFromBoard(b);
         Optional<EncircledArea> optArea = encircledAreaFetcher.fetchAreaFromIntersection(i);

@@ -1,29 +1,19 @@
 package PointCalculator.EncircledArea.Fetcher;
 
 import Board.Board;
+import Board.Builder.BoardBuilderForTests;
 import Board.Position;
 import Board.Intersection;
-import Board.Builder.BoardBuilder;
-import Board.Builder.BoardBuilderFromBoardRepresentation;
 import Player.Color;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BorderFetcherTest {
 
     final static int taille = 9;
-
-    Board buildBoard(String representation, int size) {
-        BoardBuilder builder = new BoardBuilderFromBoardRepresentation(representation, size);
-        Optional<Board> optB = builder.build();
-        assertTrue(optB.isPresent(), "attention erreure d'initialisetion du board");
-        return optB.get();
-    }
-
 
     List<Intersection> getAnneauContenu(int x, int y, Color colorBorder, Board b) {
         Intersection i = b.getIntersection(x-1, y-1);
@@ -50,7 +40,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isLeftAdjacentOfGroup(new Position(2, 4));
@@ -69,7 +59,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isLeftAdjacentOfGroup(new Position(1, 4));
@@ -88,7 +78,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isLeftAdjacentOfGroup(new Position(3, 4));
@@ -107,7 +97,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isLeftAdjacentOfGroup(new Position(2, 5));
@@ -126,7 +116,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isLeftAdjacentOfGroup(new Position(3, 3));
@@ -145,7 +135,7 @@ class BorderFetcherTest {
                         "+-+-+-+-+-+-+-+-+\n" +
                         "●-+-+-+-+-+-+-+-+\n" +
                         "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isRightAdjacentOfGroup(new Position(6, 4));
@@ -164,7 +154,7 @@ class BorderFetcherTest {
                         "+-+-+-+-+-+-+-+-+\n" +
                         "●-+-+-+-+-+-+-+-+\n" +
                         "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isRightAdjacentOfGroup(new Position(5, 5));
@@ -183,7 +173,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isRightAdjacentOfGroup(new Position(7, 4));
@@ -202,7 +192,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isRightAdjacentOfGroup(new Position(5, 4));
@@ -221,7 +211,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isRightAdjacentOfGroup(new Position(5, 3));
@@ -240,7 +230,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isRightAdjacentOfGroup(new Position(2, 4));
@@ -259,7 +249,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isBottomAdjacentOfGroup(new Position(3, 3));
@@ -278,7 +268,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isBottomAdjacentOfGroup(new Position(4, 3));
@@ -297,7 +287,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isBottomAdjacentOfGroup(new Position(3, 2));
@@ -316,7 +306,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isBottomAdjacentOfGroup(new Position(3, 4));
@@ -335,7 +325,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isBottomAdjacentOfGroup(new Position(3, 6));
@@ -354,7 +344,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isBottomAdjacentOfGroup(new Position(2, 4));
@@ -373,7 +363,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isTopAdjacentOfGroup(new Position(3, 6));
@@ -392,7 +382,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isTopAdjacentOfGroup(new Position(4, 6));
@@ -411,7 +401,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isTopAdjacentOfGroup(new Position(5, 5));
@@ -430,7 +420,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isTopAdjacentOfGroup(new Position(3, 7));
@@ -449,7 +439,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isTopAdjacentOfGroup(new Position(3, 5));
@@ -468,7 +458,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isTopAdjacentOfGroup(new Position(3, 3));
@@ -487,7 +477,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isTopAdjacentOfGroup(new Position(2, 4));
@@ -506,7 +496,7 @@ class BorderFetcherTest {
                         "+-+-+-+-+-+-+-+-+\n" +
                         "●-+-+-+-+-+-+-+-+\n" +
                         "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isInExternalBorder(new Position(3, 3));
@@ -525,7 +515,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isInExternalBorder(new Position(3, 6));
@@ -544,7 +534,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isInExternalBorder(new Position(2, 4));
@@ -563,7 +553,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isInExternalBorder(new Position(6, 4));
@@ -582,7 +572,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isInExternalBorder(new Position(3, 4));
@@ -601,7 +591,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isInExternalBorder(new Position(5, 4));
@@ -620,7 +610,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isInExternalBorder(new Position(3, 5));
@@ -639,7 +629,7 @@ class BorderFetcherTest {
                         "+-+-+-+-+-+-+-+-+\n" +
                         "●-+-+-+-+-+-+-+-+\n" +
                         "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isInExternalBorder(new Position(4, 5));
@@ -658,7 +648,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isInExternalBorder(new Position(4, 4));
@@ -677,7 +667,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isInExternalBorder(new Position(1, 4));
@@ -696,7 +686,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isInExternalBorder(new Position(2, 3));
@@ -715,7 +705,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isInExternalBorder(new Position(6, 3));
@@ -734,7 +724,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isInExternalBorder(new Position(3, 2));
@@ -753,7 +743,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isInExternalBorder(new Position(7, 4));
@@ -772,7 +762,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isInExternalBorder(new Position(6, 7));
@@ -791,7 +781,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenuNoir = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenuNoir);
         boolean result = fetcher.isInExternalBorder(new Position(3, 7));
@@ -816,7 +806,7 @@ class BorderFetcherTest {
                 "+-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenu = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenu);
         List<Intersection> bordure = fetcher.fetchExternalMinimalBorder();
@@ -836,7 +826,7 @@ class BorderFetcherTest {
                 "+-+-+-●-+-●-+-+-+\n" +
                 "●-+-+-+-●-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenu = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenu);
         List<Intersection> bordure = fetcher.fetchExternalMinimalBorder();
@@ -856,7 +846,7 @@ class BorderFetcherTest {
                 "+-+-+-●-+-●-+-+-+\n" +
                 "●-+-+-+-●-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenu = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenu);
         List<Intersection> bordure = fetcher.fetchExternalMinimalBorder();
@@ -876,7 +866,7 @@ class BorderFetcherTest {
                 "+-+-+-●-+-●-+-+-+\n" +
                 "●-+-+-+-●-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenu = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenu);
         List<Intersection> bordure = fetcher.fetchFullBorder();
@@ -896,7 +886,7 @@ class BorderFetcherTest {
                 "+-+-+-●-+-●-+-+-+\n" +
                 "●-+-+-+-●-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenu = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenu);
         List<Intersection> bordure = fetcher.fetchFullBorder();
@@ -916,7 +906,7 @@ class BorderFetcherTest {
                 "+-+-+-●-+-●-+-+-+\n" +
                 "●-+-+-+-●-+-+-+-+\n" +
                 "●-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, taille);
+        Board b = BoardBuilderForTests.buildBoard(representation, taille);
         List<Intersection> anneauContenu = getAnneauContenu(4,5, Color.White, b);
         BorderFetcher fetcher = new BorderFetcher(b, anneauContenu);
         List<Intersection> bordure = fetcher.fetchFullBorder();

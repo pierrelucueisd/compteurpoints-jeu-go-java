@@ -2,6 +2,7 @@ package PointCalculator.EncircledArea.Fetcher;
 
 import Board.Board;
 import Board.Builder.BoardBuilder;
+import Board.Builder.BoardBuilderForTests;
 import Board.Builder.BoardBuilderFromBoardRepresentation;
 import PointCalculator.EncircledArea.EncircledArea;
 import PointCalculator.EncircledArea.Validator.EncircledAreaValidator;
@@ -16,13 +17,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class EncircledAreaImplemStructuratorTest {
 
     final static int taille = 9;
-
-    Board buildBoard(String representation, int size) {
-        BoardBuilder builder = new BoardBuilderFromBoardRepresentation(representation, size);
-        Optional<Board> optB = builder.build();
-        assertTrue(optB.isPresent(), "attention erreure d'initialisetion du board");
-        return optB.get();
-    }
 
     private List<EncircledArea> fetchFlatListFromBoard(Board b) {
         EncircledAreaFlatListFetcher fetcher = new EncircledAreaFlatListFetcher(b);
@@ -57,7 +51,7 @@ class EncircledAreaImplemStructuratorTest {
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, 15);
+        Board b = BoardBuilderForTests.buildBoard(representation, 15);
         List<EncircledArea> areas = fetchFlatListFromBoard(b);
         EncircledAreaStructurator structurator = generateStructurator(b);
         List<EncircledArea> rootElements = structurator.structurateElementsOfList(areas);
@@ -82,7 +76,7 @@ class EncircledAreaImplemStructuratorTest {
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, 15);
+        Board b = BoardBuilderForTests.buildBoard(representation, 15);
         List<EncircledArea> areas = fetchFlatListFromBoard(b);
         EncircledAreaStructurator structurator = generateStructurator(b);
         List<EncircledArea> rootElements = structurator.structurateElementsOfList(areas);
@@ -107,7 +101,7 @@ class EncircledAreaImplemStructuratorTest {
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-●-+-+-+-+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, 15);
+        Board b = BoardBuilderForTests.buildBoard(representation, 15);
         List<EncircledArea> areas = fetchFlatListFromBoard(b);
         EncircledAreaStructurator structurator = generateStructurator(b);
         List<EncircledArea> rootElements = structurator.structurateElementsOfList(areas);
@@ -132,7 +126,7 @@ class EncircledAreaImplemStructuratorTest {
                 "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n" +
                 "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n";
-        Board b = buildBoard(representation, 15);
+        Board b = BoardBuilderForTests.buildBoard(representation, 15);
         List<EncircledArea> areas = fetchFlatListFromBoard(b);
         EncircledAreaStructurator structurator = generateStructurator(b);
         List<EncircledArea> rootElements = structurator.structurateElementsOfList(areas);
@@ -152,7 +146,7 @@ class EncircledAreaImplemStructuratorTest {
                 "+-●-●-●-●-●-+-+-+\n" +
                 "+-●-○-○-○-●-+-+-+\n" +
                 "+-●-○-+-○-●-+-+-+\n";
-        Board b = buildBoard(representation, 9);
+        Board b = BoardBuilderForTests.buildBoard(representation, 9);
         List<EncircledArea> areas = fetchFlatListFromBoard(b);
         EncircledAreaStructurator structurator = generateStructurator(b);
         List<EncircledArea> rootElements = structurator.structurateElementsOfList(areas);
