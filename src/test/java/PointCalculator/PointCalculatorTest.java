@@ -4,9 +4,9 @@ import Board.Board;
 import Board.Builder.BoardBuilder;
 import Board.Builder.BoardBuilderFromBoardRepresentation;
 import PointCalculator.EncircledArea.EncircledArea;
-import PointCalculator.EncircledArea.EncircledArea.EncircledAreaValidator.RootValidator;
-import PointCalculator.EncircledArea.EncircledArea.EncircledAreaValidator.TakableValidatorNaive;
 import PointCalculator.EncircledArea.Fetcher.StructuredEncircledAreaFetcher;
+import PointCalculator.EncircledArea.Validator.RootValidator;
+import PointCalculator.EncircledArea.Validator.TakableValidatorNaive;
 import PointCalculator.PlayersStats.PlayersScoreStats;
 import org.junit.jupiter.api.Test;
 

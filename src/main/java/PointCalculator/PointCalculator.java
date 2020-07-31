@@ -4,7 +4,7 @@ import Board.Board;
 import Board.Intersection;
 import Player.Color;
 import PointCalculator.EncircledArea.EncircledArea;
-import PointCalculator.EncircledArea.EncircledArea.EncircledAreaValidator.EncircledAreaValidator;
+import PointCalculator.EncircledArea.Validator.EncircledAreaValidator;
 import PointCalculator.PlayersStats.PlayersScoreStats;
 import PointCalculator.visitor.EncircledAreaVisitor;
 import PointCalculator.visitor.PointCalculatorVisitor;

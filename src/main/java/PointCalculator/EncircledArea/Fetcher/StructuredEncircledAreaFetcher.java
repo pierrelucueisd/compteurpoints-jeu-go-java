@@ -2,7 +2,7 @@ package PointCalculator.EncircledArea.Fetcher;
 
 import Board.Board;
 import PointCalculator.EncircledArea.EncircledArea;
-import PointCalculator.EncircledArea.EncircledArea.EncircledAreaValidator.EncircledAreaValidator;
+import PointCalculator.EncircledArea.Validator.EncircledAreaValidator;
 
 import java.util.List;
 
