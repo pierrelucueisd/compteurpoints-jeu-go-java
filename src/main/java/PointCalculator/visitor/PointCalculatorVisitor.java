@@ -4,6 +4,8 @@ import Board.Intersection;
 import Player.Color;
 import PointCalculator.EncircledArea;
 import PointCalculator.EncircledAreaInterface;
+import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidator;
+import PointCalculator.Fetcher.EncircledAreaValidator.TakableValidatorNaive;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +13,16 @@ import java.util.stream.Collectors;
 
 public class PointCalculatorVisitor implements EncircledAreaVisitor {
 
-    int nbZonesVisites = 0;
-    List<Intersection> intersectionsTraitees = new ArrayList<>();
-    int blackPlayerPoints = 0;
-    int whitePlayerPoints = 0;
+    private int nbZonesVisites = 0;
+    private List<Intersection> intersectionsTraitees = new ArrayList<>();
+    private int blackPlayerPoints = 0;
+    private int whitePlayerPoints = 0;
+    private TakableValidatorNaive takableChildValidator;
+
+
+    public PointCalculatorVisitor(TakableValidatorNaive takableChildValidator) {
+        this.takableChildValidator = takableChildValidator;
+    }
 
     public int getBlackPlayerPoints() {
         return blackPlayerPoints;
@@ -27,7 +35,8 @@ public class PointCalculatorVisitor implements EncircledAreaVisitor {
     @Override
     public void visit(EncircledArea area) {
         for(EncircledAreaInterface child: area.getChildrens()) {
-            child.accept(this);
+            if(!takableChildValidator.isValid(child))
+                child.accept(this);
         }
         List<Intersection> untreatedContent =  getUntreatedIntersectionsIn(area.getFullContent());
         List<Intersection> untreatedBorder = getUntreatedIntersectionsIn(area.getFullBorder());

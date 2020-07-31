@@ -3,9 +3,11 @@ package PointCalculator;
 import Board.Board;
 import Board.Intersection;
 import Player.Color;
+import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidator;
+import PointCalculator.Fetcher.EncircledAreaValidator.TakableValidatorNaive;
 import PointCalculator.visitor.EncircledAreaVisitor;
-import PointCalculator.visitor.PointCalculatorVisitor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,14 +15,21 @@ public class PointCalculator {
 
     private Board b;
     List<EncircledArea> rootsAreas;
+    List<EncircledArea> calculatedRoorAreas = new ArrayList<EncircledArea>();
     private EncircledAreaVisitor pointCalculatorVisitor;
     private int blackPoints = 0;
     private int whitePoints = 0;
+    private TakableValidatorNaive takableRootValidator;
 
-    public PointCalculator(Board b, List<EncircledArea> rootsAreas, EncircledAreaVisitor pointCalculatorVisitor) {
+    public PointCalculator(Board b,
+                           List<EncircledArea> rootsAreas,
+                           EncircledAreaVisitor pointCalculatorVisitor,
+                           TakableValidatorNaive takableRootValidator
+    ) {
         this.pointCalculatorVisitor = pointCalculatorVisitor;
         this.b = b;
         this.rootsAreas = rootsAreas;
+        this.takableRootValidator = takableRootValidator;
     }
 
     public void calculate() {
@@ -51,7 +60,7 @@ public class PointCalculator {
 
     private List<Intersection> getIntersectionsCloudNotPossesedByEncircling() {
         List<Intersection> notOwnedArea = b.getAllIntersections();
-        for(EncircledArea area : rootsAreas) {
+        for(EncircledArea area : calculatedRoorAreas) {
             notOwnedArea.removeAll(area.getFullBorder());
             notOwnedArea.removeAll(area.getFullContent());
         }
@@ -60,7 +69,10 @@ public class PointCalculator {
 
     private void addChildZonePointsToPlayersPoints(List<EncircledArea> rootsAreas) {
         for(EncircledArea area: rootsAreas) {
-            pointCalculatorVisitor.visit(area);
+            if(!takableRootValidator.isValid(area)) {
+                pointCalculatorVisitor.visit(area);
+                calculatedRoorAreas.add(area);
+            }
         }
         this.blackPoints += pointCalculatorVisitor.getBlackPlayerPoints();
         this.whitePoints += pointCalculatorVisitor.getWhitePlayerPoints();

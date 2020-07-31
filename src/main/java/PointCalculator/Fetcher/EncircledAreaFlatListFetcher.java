@@ -3,8 +3,8 @@ package PointCalculator.Fetcher;
 import Board.Board;
 import Board.Intersection;
 import PointCalculator.EncircledArea;
-import PointCalculator.Fetcher.EncircledAreaValidator.IsRootValidator;
-import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidatorInterface;
+import PointCalculator.Fetcher.EncircledAreaValidator.RootValidator;
+import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 
 public class EncircledAreaFlatListFetcher {
     private Board b;
-    private EncircledAreaValidatorInterface validator;
+    private EncircledAreaValidator validator;
 
     public EncircledAreaFlatListFetcher(Board b) {
         this.b = b;
-        this.validator = new IsRootValidator(b);
+        this.validator = new RootValidator(b);
     }
 
     public List<EncircledArea> fetchFlatListFromBoard() {

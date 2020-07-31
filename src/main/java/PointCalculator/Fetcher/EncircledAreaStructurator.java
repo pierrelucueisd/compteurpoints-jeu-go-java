@@ -3,7 +3,7 @@ package PointCalculator.Fetcher;
 import Board.Board;
 import PointCalculator.EncircledArea;
 import PointCalculator.EncirledAreaInterfaceComparator.EncirleAreaComparator;
-import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidatorInterface;
+import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public class EncircledAreaStructurator {
 
     private Board b;
 
-    public EncircledAreaStructurator(Board b, EncircledAreaValidatorInterface areaNotToBigValidator) {
+    public EncircledAreaStructurator(Board b, EncircledAreaValidator areaNotToBigValidator) {
         this.b = b;
     }
 

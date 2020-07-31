@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface EncircledAreaInterface extends VisitableEncirliedArea {
     public List<Intersection> getFullBorder();
+    public List<Intersection> getMinimalBorder();
     public List<Intersection> getRingContent();
     public List<Intersection> getFullContent();
     public Color getBorderColor();

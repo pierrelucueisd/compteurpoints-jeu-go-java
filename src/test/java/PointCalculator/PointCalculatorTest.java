@@ -5,8 +5,9 @@ import Board.Builder.BoardBuilder;
 import Board.Builder.BoardBuilderFromBoardRepresentation;
 import PointCalculator.Fetcher.EncircledAreaFlatListFetcher;
 import PointCalculator.Fetcher.EncircledAreaStructurator;
-import PointCalculator.Fetcher.EncircledAreaValidator.IsRootValidator;
-import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidatorInterface;
+import PointCalculator.Fetcher.EncircledAreaValidator.RootValidator;
+import PointCalculator.Fetcher.EncircledAreaValidator.EncircledAreaValidator;
+import PointCalculator.Fetcher.EncircledAreaValidator.TakableValidatorNaive;
 import PointCalculator.visitor.EncircledAreaVisitor;
 import PointCalculator.visitor.PointCalculatorVisitor;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ class PointCalculatorTest {
     }
 
     private EncircledAreaStructurator generateStructurator(Board b) {
-        EncircledAreaValidatorInterface areaNotToBigValidator = new IsRootValidator(b);
+        EncircledAreaValidator areaNotToBigValidator = new RootValidator(b);
         return new EncircledAreaStructurator(b, areaNotToBigValidator);
     }
 
@@ -41,8 +42,11 @@ class PointCalculatorTest {
         List<EncircledArea> areas = fetchFlatListFromBoard(b);
         EncircledAreaStructurator structurator = generateStructurator(b);
         List<EncircledArea> rootElements = structurator.structurateElementsOfList(areas);
-        EncircledAreaVisitor pointCalculatorVisitor = new PointCalculatorVisitor();
-        return new PointCalculator(b, rootElements, pointCalculatorVisitor);
+        EncircledAreaVisitor pointCalculatorVisitor = new PointCalculatorVisitor(
+                new TakableValidatorNaive()
+        );
+        return new PointCalculator(b, rootElements, pointCalculatorVisitor,
+                new TakableValidatorNaive());
     }
 
     /* LÉGENDE
