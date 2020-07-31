@@ -3,6 +3,7 @@ package PointCalculator;
 import Board.Intersection;
 import Player.Color;
 import PointCalculator.EncircledAreaInterface;
+import PointCalculator.visitor.EncircledAreaVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +17,7 @@ public class EncircledArea implements EncircledAreaInterface {
     private Color borderColor;
     private List<EncircledAreaInterface> childrens = new ArrayList<>();
 
-    public List<EncircledAreaInterface> getChildrens() {
-        return childrens;
-    }
-
-    public EncircledArea(
+        public EncircledArea(
             List<Intersection> fullBorder,
             List<Intersection> minimalBorder,
             List<Intersection> ringContent,
@@ -34,6 +31,9 @@ public class EncircledArea implements EncircledAreaInterface {
         this.minimalBorder = minimalBorder;
     }
 
+    public List<EncircledAreaInterface> getChildrens() {
+        return childrens;
+    }
     public void addChildren(EncircledAreaInterface child) {
         childrens.add(child);
     }
@@ -56,5 +56,10 @@ public class EncircledArea implements EncircledAreaInterface {
 
     public Color getBorderColor() {
         return borderColor;
+    }
+
+    @Override
+    public void accept(EncircledAreaVisitor visitor) {
+        visitor.visit(this);
     }
 }
