@@ -27,9 +27,7 @@ public class GameConsole implements ErrorObserver {
     }
 
     public void promptActionMessage(Player p){
-        String msg = String.format("%s player, enter your next move, you can write \"PASS\" or a " +
-                "position like \"B3 or F8\":", p.toString());
-        System.out.println(msg);
+        System.out.printf("%s player's turn. Enter your next move. %s\n", p.toString(), getActionMessage());
     }
 
     public void printScore(PlayersScoreStats stats){
@@ -60,6 +58,9 @@ public class GameConsole implements ErrorObserver {
             case InvalidPosition:
                 System.out.println("The entered position is invalid.");
                 break;
+            case InvalidAction:
+                System.out.printf("The entered action is invalid. Play again. %s\n", getActionMessage());
+                break;
             case Suicide:
                 System.out.println("The entered position is a suicide move.");
                 break;
@@ -69,5 +70,9 @@ public class GameConsole implements ErrorObserver {
             case Ko:
                 System.out.println("The entered position is refused because of the eternity rule(Ko).");
         }
+    }
+
+    private String getActionMessage() {
+        return "You can write \"PASS\" or a position like \"B3 or F8\":";
     }
 }

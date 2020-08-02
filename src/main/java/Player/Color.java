@@ -2,7 +2,7 @@ package Player;
 
 public enum Color {
     Black("○", "Black"),
-    White("●", "white");
+    White("●", "White");
 
     private final String symbol;
     private final String name;

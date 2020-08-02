@@ -66,10 +66,11 @@ public class GameController {
 
     private void playTurn(IDualScanner scanner, Player p) {
         p.resetPass();
-        Optional<Action> action;
-        do {
+        Optional<Action> action = gameConsole.readAction(scanner.next(), observable);
+        while(!action.isPresent()) {
+            observable.notifyObservers(ErrorType.InvalidAction);
             action = gameConsole.readAction(scanner.next(), observable);
-        } while(!action.isPresent());
+        }
         action.get().execute(boardController, p);
         gameConsole.printBoard(getBoardToString());
     }
