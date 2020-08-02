@@ -1,7 +1,6 @@
 import Board.Board;
 import Board.Builder.BoardBuilderForTests;
-import Board.LecteurEntree.LecteurEntree;
-import Board.LecteurEntree.LecteurEntreeFromString;
+import Game.DualScannerMock;
 import Game.GameController;
 import PointCalculator.BoardPointCalculator;
 import PointCalculator.BoardPointCalculatorImpl;
@@ -14,23 +13,18 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MainTest {
-    private GameController gc;
 
     @BeforeEach
     void setUp() {
     }
 
     void testBoard(String input, String expected) {
-        LecteurEntree lecteur = new LecteurEntreeFromString(input);
-        gc = new GameController(9, lecteur);
-        gc.startGame();
+        GameController gc = new GameController(9);
+        gc.startGame(new DualScannerMock(input));
         String result = gc.getBoardToString();
         assertEquals(result, expected);
     }
 
-    void initBoard(String input) {
-        gc.startGame();
-    }
 
     @Test
     void test1() {
