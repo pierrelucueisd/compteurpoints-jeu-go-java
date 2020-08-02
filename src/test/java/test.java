@@ -2,7 +2,6 @@ import Board.Board;
 import Board.Builder.BoardBuilderForTests;
 import Board.LecteurEntree.LecteurEntree;
 import Board.LecteurEntree.LecteurEntreeFromString;
-import Board.LecteurEntree.LecteurEntreeImpl;
 import Game.GameController;
 import PointCalculator.BoardPointCalculator;
 import PointCalculator.BoardPointCalculatorImpl;
@@ -11,8 +10,6 @@ import PointCalculator.EncircledArea.Validator.TakableValidatorNaive;
 import PointCalculator.PlayersStats.PlayersScoreStats;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.io.FileNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
