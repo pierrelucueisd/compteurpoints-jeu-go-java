@@ -7,26 +7,29 @@ import Action.PassAction;
 import Board.Deserializer;
 import Board.Position;
 import Board.PositionDeserializer;
+import Player.Player;
 import PointCalculator.PlayersStats.PlayersScoreStats;
 
 import java.util.Optional;
 
 public class GameConsole implements ErrorObserver {
 
-    public Optional<Action> readAction(String input){
+    public Optional<Action> readAction(String input, ErrorObservable observable){
         Deserializer<Position> pd = new PositionDeserializer();
         if (input.toLowerCase().equals("pass"))
             return Optional.of(new PassAction());
         Optional<Position> pos = pd.deserialize(input);
-        return pos.map(p -> new PlayOnBoardAction(new PlayAction(p), p));
+        return pos.map(p -> new PlayOnBoardAction(new PlayAction(p), p, observable));
     }
 
     public void printBoard(String board) {
         System.out.println(board);
     }
 
-    public void promptActionMessage(){
-        System.out.println("Enter your next move, you can write \"PASS\" or a position like \"B3 or F8\":");
+    public void promptActionMessage(Player p){
+        String msg = String.format("%s player, enter your next move, you can write \"PASS\" or a " +
+                "position like \"B3 or F8\":", p.toString());
+        System.out.println(msg);
     }
 
     public void printScore(PlayersScoreStats stats){

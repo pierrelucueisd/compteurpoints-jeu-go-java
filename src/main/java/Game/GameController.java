@@ -20,10 +20,13 @@ public class GameController {
 
     private final GameConsole gameConsole;
     private final IBoardController boardController;
+    private final ErrorObservable observable;
 
     public GameController(int size) {
         this.boardController = new BoardController(size);
         this.gameConsole = new GameConsole();
+        this.observable = new ErrorObservable();
+
     }
 
     public void startGame (IDualScanner scanner) {
@@ -32,17 +35,16 @@ public class GameController {
                 .collect(Collectors.toList());
         PlayerCarousel carousel = new PlayerCarousel(players);
 
-        ErrorObservable obs = new ErrorObservable();
         List<ErrorObserver> observers = Stream.of(carousel, gameConsole).collect(Collectors.toList());
-        observers.forEach(obs::attach);
+        observers.forEach(observable::attach);
 
         while (!allPlayerHavePassed(players)) {
             Player p = carousel.getCurrentPlayer();
-            gameConsole.promptActionMessage();
+            gameConsole.promptActionMessage(p);
             playTurn(scanner, p);
             carousel.nextTurn();
         }
-        observers.forEach(obs::detach);
+        observers.forEach(observable::detach);
 
         endGame();
     }
@@ -66,7 +68,7 @@ public class GameController {
         p.resetPass();
         Optional<Action> action;
         do {
-            action = gameConsole.readAction(scanner.next());
+            action = gameConsole.readAction(scanner.next(), observable);
         } while(!action.isPresent());
         action.get().execute(boardController, p);
         gameConsole.printBoard(getBoardToString());

@@ -19,7 +19,7 @@ class PlayOnBoardActionTest {
     BoardControllerMock bc;
     Player player;
     PlayOnBoardAction action;
-    ErrorObservable observable = ErrorObservable.getSingleton();
+    ErrorObservable observable = new ErrorObservable();
     ErrorObserverMock obs = new ErrorObserverMock();
 
     public PlayOnBoardActionTest() {
@@ -30,7 +30,7 @@ class PlayOnBoardActionTest {
     void setUp() {
         Position pos = new Position(0, 0);
         player = new Player(Color.Black);
-        action = new PlayOnBoardAction(new PlayAction(pos), pos);
+        action = new PlayOnBoardAction(new PlayAction(pos), pos, observable);
         bc = new BoardControllerMock(9);
     }
 

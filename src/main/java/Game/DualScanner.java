@@ -15,7 +15,7 @@ public class DualScanner implements IDualScanner {
         try {
             this.sc = new Scanner(new File(fileName));
         } catch (FileNotFoundException e){
-            System.out.print("File not found, console mode activated.");
+            System.out.print("File not found, console mode activated.\n");
             this.sc = new Scanner(System.in);
         }
     }

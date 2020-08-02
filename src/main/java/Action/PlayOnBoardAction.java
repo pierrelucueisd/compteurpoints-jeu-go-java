@@ -2,6 +2,7 @@ package Action;
 
 import Board.IBoardController;
 import Board.Position;
+import Game.ErrorObservable;
 import Game.ErrorType;
 import Player.Player;
 
@@ -11,8 +12,8 @@ public class PlayOnBoardAction extends ValidableAction {
 
     Position position;
 
-    public PlayOnBoardAction(Action action, Position position) {
-        super(action);
+    public PlayOnBoardAction(Action action, Position position, ErrorObservable observable) {
+        super(action, observable);
         this.position = position;
     }
 

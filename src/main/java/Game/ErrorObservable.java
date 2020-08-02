@@ -6,16 +6,9 @@ import java.util.Set;
 public class ErrorObservable {
 
     protected final Set<ErrorObserver> observers;
-    private static ErrorObservable singleton = null;
 
     public ErrorObservable() {
         this.observers = new HashSet<>();
-    }
-
-    public static ErrorObservable getSingleton() {
-        if(singleton == null)
-            singleton = new ErrorObservable();
-        return singleton;
     }
 
     public void attach(ErrorObserver o) {

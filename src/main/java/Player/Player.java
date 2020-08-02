@@ -29,4 +29,9 @@ public class Player {
     public void resetPass() {
         this.hasPassed = false;
     }
+
+    @Override
+    public String toString() {
+        return color.toString();
+    }
 }

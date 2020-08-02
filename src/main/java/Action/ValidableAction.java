@@ -9,9 +9,11 @@ import java.util.Optional;
 
 public abstract class ValidableAction implements Action {
     Action action;
+    ErrorObservable observable;
 
-    public ValidableAction(Action action) {
+    public ValidableAction(Action action, ErrorObservable observable) {
         this.action = action;
+        this.observable = observable;
     }
 
     public abstract Optional<ErrorType> validate(IBoardController bc, Player p);
@@ -20,7 +22,7 @@ public abstract class ValidableAction implements Action {
     public void execute(IBoardController bc, Player p) {
         Optional<ErrorType> err = validate(bc, p);
         if(err.isPresent())
-            ErrorObservable.getSingleton().notifyObservers(err.get());
+            observable.notifyObservers(err.get());
         else
             action.execute(bc, p);
     }
