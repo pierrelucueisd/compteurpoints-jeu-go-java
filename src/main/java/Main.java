@@ -1,3 +1,5 @@
+import Board.LecteurEntree.LecteurEntree;
+import Board.LecteurEntree.LecteurEntreeImpl;
 import Game.GameController;
 
 import java.io.File;
@@ -8,12 +10,16 @@ public class Main {
 
     public static void main(String[] args) {
         int boardSize = 9;
-        GameController gc = new GameController(boardSize);
+
 
         if (args.length > 0)
             try {
-                Scanner scanner = new Scanner(new File(args[0]));
-                gc.startGame(scanner);
+                LecteurEntree lecteur = new LecteurEntreeImpl(args[0]);
+                GameController gc = new GameController(
+                        boardSize,
+                        lecteur
+                );
+                gc.startGame();
             } catch (FileNotFoundException e) {
                 System.out.println("File not found.");
             }

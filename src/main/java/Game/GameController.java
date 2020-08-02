@@ -3,12 +3,12 @@ package Game;
 import Action.Action;
 import Board.BoardController;
 import Board.IBoardController;
+import Board.LecteurEntree.LecteurEntree;
 import Player.*;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -16,13 +16,15 @@ public class GameController {
 
     private final GameConsole gameConsole;
     private final IBoardController boardController;
+    private LecteurEntree lecteur;
 
-    public GameController(int size) {
+    public GameController(int size, LecteurEntree lecteur) {
         this.boardController = new BoardController(size);
         this.gameConsole = new GameConsole();
+        this.lecteur = lecteur;
     }
 
-    public void startGame (Scanner scanner) {
+    public void startGame () {
         List<Player> players = Arrays.stream(Color.values())
                 .map(Player::new)
                 .collect(Collectors.toList());
@@ -32,9 +34,9 @@ public class GameController {
         List<ErrorObserver> observers = Stream.of(carousel, gameConsole).collect(Collectors.toList());
         observers.forEach(obs::attach);
 
-        while (!allPlayerHavePassed(players) && scanner.hasNext()) {
+        while (!allPlayerHavePassed(players) && this.lecteur.hasNext()) {
             Player p = carousel.getCurrentPlayer();
-            playTurn(scanner, p);
+            playTurn(lecteur, p);
             carousel.nextTurn();
         }
         gameConsole.printBoard(getBoardToString());
@@ -45,7 +47,7 @@ public class GameController {
         return boardController.getCurrentBoard().toString();
     }
 
-    private void playTurn(Scanner scanner, Player p) {
+    private void playTurn(LecteurEntree scanner, Player p) {
         p.resetPass();
         Optional<Action> action;
         do {
