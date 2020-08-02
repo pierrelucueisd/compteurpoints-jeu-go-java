@@ -4,14 +4,11 @@ import Action.Action;
 import Board.Board;
 import Board.BoardController;
 import Board.IBoardController;
-import Board.LecteurEntree.LecteurEntree;
 import Player.*;
 import PointCalculator.BoardPointCalculator;
 import PointCalculator.BoardPointCalculatorImpl;
 import PointCalculator.EncircledArea.Validator.RootValidator;
 import PointCalculator.EncircledArea.Validator.TakableValidatorNaive;
-import PointCalculator.PlayersStats.PlayersScoreStats;
-import PointCalculator.visitor.PointCalculatorVisitor;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,41 +20,36 @@ public class GameController {
 
     private final GameConsole gameConsole;
     private final IBoardController boardController;
-    private LecteurEntree lecteur;
 
-    public GameController(int size, LecteurEntree lecteur) {
+    public GameController(int size) {
         this.boardController = new BoardController(size);
         this.gameConsole = new GameConsole();
-        this.lecteur = lecteur;
     }
 
-    public void startGame () {
+    public void startGame (IDualScanner scanner) {
         List<Player> players = Arrays.stream(Color.values())
                 .map(Player::new)
                 .collect(Collectors.toList());
         PlayerCarousel carousel = new PlayerCarousel(players);
 
-        ErrorObservable obs = ErrorObservable.getSingleton();
+        ErrorObservable obs = new ErrorObservable();
         List<ErrorObserver> observers = Stream.of(carousel, gameConsole).collect(Collectors.toList());
         observers.forEach(obs::attach);
 
-        while (!allPlayerHavePassed(players) && this.lecteur.hasNext()) {
+        while (!allPlayerHavePassed(players)) {
             Player p = carousel.getCurrentPlayer();
-            //Testing the msg wont be placed here
             gameConsole.promptActionMessage();
-            playTurn(lecteur, p);
+            playTurn(scanner, p, obs);
             carousel.nextTurn();
         }
-        // Needs to be print for every move when scanner is from System.in
-        gameConsole.printBoard(getBoardToString());
 
         // Will be in main eventually
-        gameOver();
+        endGame();
 
         observers.forEach(obs::detach);
     }
 
-    public void gameOver(){
+    public void endGame(){
         Board b = new Board(boardController.getCurrentBoard());
         BoardPointCalculator boardPointsCalculator = new BoardPointCalculatorImpl(
                 b,
@@ -68,19 +60,18 @@ public class GameController {
         gameConsole.printScore(boardPointsCalculator.calculate());
     }
 
-
-
     public String getBoardToString() {
         return boardController.getCurrentBoard().toString();
     }
 
-    private void playTurn(LecteurEntree scanner, Player p) {
+    private void playTurn(IDualScanner scanner, Player p, ErrorObservable obs) {
         p.resetPass();
         Optional<Action> action;
         do {
             action = gameConsole.readAction(scanner.next());
-            action.ifPresent(a -> a.execute(boardController, p));
-        } while(!action.isPresent() && scanner.hasNext());
+        } while(!action.isPresent());
+        action.get().execute(boardController, p);
+        gameConsole.printBoard(getBoardToString());
     }
 
     private boolean allPlayerHavePassed(List<Player> players) {

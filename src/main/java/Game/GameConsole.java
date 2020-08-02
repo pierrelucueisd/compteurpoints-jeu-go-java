@@ -11,8 +11,6 @@ import PointCalculator.PlayersStats.PlayersScoreStats;
 
 import java.util.Optional;
 
-
-
 public class GameConsole implements ErrorObserver {
 
     public Optional<Action> readAction(String input){
@@ -44,11 +42,11 @@ public class GameConsole implements ErrorObserver {
 
         System.out.println(str);
         int winner = black - white;
-        if(winner > 0){
+        if (winner > 0){
             System.out.println("\nBLACK WINS!!!");
-        }else if(winner < 0){
+        } else if (winner < 0){
             System.out.println("\nWHITE WINS!!!");
-        }else{
+        } else {
             System.out.println("\nIT'S A TIE!!!");
         }
     }
