@@ -1,5 +1,8 @@
 import Board.Board;
 import Board.Builder.BoardBuilderForTests;
+import Board.LecteurEntree.LecteurEntree;
+import Board.LecteurEntree.LecteurEntreeFromString;
+import Board.LecteurEntree.LecteurEntreeImpl;
 import Game.GameController;
 import PointCalculator.BoardPointCalculator;
 import PointCalculator.BoardPointCalculatorImpl;
@@ -9,29 +12,27 @@ import PointCalculator.PlayersStats.PlayersScoreStats;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Scanner;
+import java.io.FileNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MainTest {
-    GameController gc;
+    private GameController gc;
 
     @BeforeEach
     void setUp() {
-        int boardSize = 9;
-        gc = new GameController(boardSize);
     }
 
     void testBoard(String input, String expected) {
-        Scanner scanner = new Scanner(input);
-        gc.startGame(scanner);
+        LecteurEntree lecteur = new LecteurEntreeFromString(input);
+        gc = new GameController(9, lecteur);
+        gc.startGame();
         String result = gc.getBoardToString();
         assertEquals(result, expected);
     }
 
     void initBoard(String input) {
-        Scanner scanner = new Scanner(input);
-        gc.startGame(scanner);
+        gc.startGame();
     }
 
     @Test
