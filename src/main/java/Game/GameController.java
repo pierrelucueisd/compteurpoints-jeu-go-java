@@ -39,14 +39,12 @@ public class GameController {
         while (!allPlayerHavePassed(players)) {
             Player p = carousel.getCurrentPlayer();
             gameConsole.promptActionMessage();
-            playTurn(scanner, p, obs);
+            playTurn(scanner, p);
             carousel.nextTurn();
         }
-
-        // Will be in main eventually
-        endGame();
-
         observers.forEach(obs::detach);
+
+        endGame();
     }
 
     public void endGame(){
@@ -64,7 +62,7 @@ public class GameController {
         return boardController.getCurrentBoard().toString();
     }
 
-    private void playTurn(IDualScanner scanner, Player p, ErrorObservable obs) {
+    private void playTurn(IDualScanner scanner, Player p) {
         p.resetPass();
         Optional<Action> action;
         do {
