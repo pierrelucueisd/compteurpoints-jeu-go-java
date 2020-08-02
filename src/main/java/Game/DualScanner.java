@@ -7,6 +7,10 @@ import java.util.Scanner;
 public class DualScanner implements IDualScanner {
     private Scanner sc;
 
+    public DualScanner()  {
+        this.sc = new Scanner(System.in);
+    }
+
     public DualScanner(String fileName)  {
         try {
             this.sc = new Scanner(new File(fileName));

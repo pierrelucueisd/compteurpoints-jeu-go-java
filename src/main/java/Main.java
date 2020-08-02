@@ -6,6 +6,10 @@ public class Main {
     public static void main(String[] args) {
         int boardSize = 9;
         GameController gc = new GameController(boardSize);
-        gc.startGame(new DualScanner(args[1]));
+        if (args.length > 0)
+            gc.startGame(new DualScanner(args[1]));
+        else
+            gc.startGame(new DualScanner());
+
     }
 }
