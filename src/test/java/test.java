@@ -10,6 +10,11 @@ import PointCalculator.PlayersStats.PlayersScoreStats;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MainTest {
@@ -21,8 +26,34 @@ class MainTest {
     void testBoard(String input, String expected) {
         GameController gc = new GameController(9);
         gc.startGame(new DualScannerMock(input));
-        String result = gc.getBoardToString();
+        String result = gc.getBoardToString(true);
         assertEquals(result, expected);
+    }
+
+    void testScore(String input, int black, int white) {
+        GameController gc = new GameController(9);
+        gc.startGame(new DualScannerMock(input));
+        Board b = BoardBuilderForTests.buildBoard(gc.getBoardToString(false), 9);
+        BoardPointCalculator calculator = new BoardPointCalculatorImpl(
+                b,
+                new RootValidator(b),
+                new TakableValidatorNaive(),
+                new TakableValidatorNaive());
+        PlayersScoreStats stats = calculator.calculate();
+        assertEquals(stats.getBlackPoints(), black, "Wrong scoring for black player");
+        assertEquals(stats.getWhitePoints(), white, "Wrong scoring for white player");
+    }
+
+    String inputBuilder(String filename, String input) throws FileNotFoundException{
+        File file = new File("src/test/files/" + filename);
+        StringBuilder s = new StringBuilder();
+        if(file.exists()){
+            s.append(new Scanner(file).nextLine());
+        }else{
+            System.out.println("File can't be found");
+        }
+        s.append(input);
+        return s.toString();
     }
 
 
@@ -169,5 +200,73 @@ class MainTest {
         int blackPoints = playersScoreStats.getBlackPoints();
         assertEquals(17, blackPoints, "Problème de décompte de points de noir");
         assertEquals(17+9+8+3+26, whitePoints, "Problème de décompte de points avec Blanc");
+    }
+
+    @Test
+    void playGoWithConsoleOnly(){
+        String input = "D7 D6 C6 D5 E6 E5 F5 E4 D4 PASS E3 PASS F4 PASS C5";
+        testBoard(input, "  A B C D E F G H J\n"+
+                "9 +-+-+-+-+-+-+-+-+\n" +
+                "8 +-+-+-+-+-+-+-+-+\n" +
+                "7 +-+-+-○-+-+-+-+-+\n" +
+                "6 +-+-○-+-○-+-+-+-+\n" +
+                "5 +-+-○-+-+-○-+-+-+\n" +
+                "4 +-+-+-○-+-○-+-+-+\n" +
+                "3 +-+-+-+-○-+-+-+-+\n" +
+                "2 +-+-+-+-+-+-+-+-+\n" +
+                "1 +-+-+-+-+-+-+-+-+\n");
+        testScore(input, 12, 0);
+    }
+
+    @Test
+    void playGoWithIncompleteFile() throws FileNotFoundException{
+        String console = " F5 E9 PASS PASS";
+        String input = inputBuilder("6.txt", console);
+
+        testBoard(input, "  A B C D E F G H J\n"+
+                "9 +-+-+-+-○-+-+-+-+\n" +
+                "8 +-+-+-+-+-+-+-+-+\n" +
+                "7 ○-+-+-+-+-+-+-+-+\n" +
+                "6 +-○-+-+-+-+-+-+-+\n" +
+                "5 +-+-○-+-+-●-+-+-+\n" +
+                "4 +-○-+-+-+-+-+-+-+\n" +
+                "3 ○-+-+-+-+-+-+-+-+\n" +
+                "2 +-+-+-+-+-+-+-+-+\n" +
+                "1 +-+-+-+-+-+-+-+-+\n");
+        testScore(input, 10, 1);
+    }
+
+    @Test
+    void playGoWithConsoleEmptyMatch(){
+        String input = "PASS PASS";
+
+        testBoard(input, "  A B C D E F G H J\n"+
+                "9 +-+-+-+-+-+-+-+-+\n" +
+                "8 +-+-+-+-+-+-+-+-+\n" +
+                "7 +-+-+-+-+-+-+-+-+\n" +
+                "6 +-+-+-+-+-+-+-+-+\n" +
+                "5 +-+-+-+-+-+-+-+-+\n" +
+                "4 +-+-+-+-+-+-+-+-+\n" +
+                "3 +-+-+-+-+-+-+-+-+\n" +
+                "2 +-+-+-+-+-+-+-+-+\n" +
+                "1 +-+-+-+-+-+-+-+-+\n");
+        testScore(input, 0, 0);
+    }
+
+    @Test
+    void playGoWithFileAndConsoleEyes() throws FileNotFoundException {
+        String console = " PASS PASS";
+        String input = inputBuilder("7.txt", console);
+        testBoard(input, "  A B C D E F G H J\n"+
+                "9 +-+-+-+-+-+-+-+-+\n" +
+                "8 +-+-+-+-+-+-+-+-+\n" +
+                "7 +-+-●-○-○-○-+-+-+\n" +
+                "6 +-○-○-+-+-+-○-+-+\n" +
+                "5 +-○-○-+-○-+-○-+-+\n" +
+                "4 +-○-○-+-+-+-○-+-+\n" +
+                "3 +-+-+-○-○-○-+-+-+\n" +
+                "2 +-+-+-+-+-+-+-+-+\n" +
+                "1 +-+-+-+-+-+-+-+-+\n");
+        testScore(input, 24, 1);
     }
 }

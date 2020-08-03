@@ -60,8 +60,9 @@ public class GameController {
         gameConsole.printScore(boardPointsCalculator.calculate());
     }
 
-    public String getBoardToString() {
-        return boardController.getCurrentBoard().toString();
+    public String getBoardToString(boolean axis) {
+        return axis ? boardController.getCurrentBoard().toString()
+                : new Board(boardController.getCurrentBoard()).toStringWithoutAxis();
     }
 
     private void playTurn(IDualScanner scanner, Player p) {
@@ -72,7 +73,7 @@ public class GameController {
             action = gameConsole.readAction(scanner.next(), observable);
         }
         action.get().execute(boardController, p);
-        gameConsole.printBoard(getBoardToString());
+        gameConsole.printBoard(getBoardToString(true));
     }
 
     private boolean allPlayerHavePassed(List<Player> players) {
