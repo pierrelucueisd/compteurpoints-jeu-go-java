@@ -54,10 +54,7 @@ class PointCalculatorFromEncircledAreas {
 
     private List<Intersection> getIntersectionsCloudNotPossesedByEncircling() {
         List<Intersection> notOwnedArea = b.getAllIntersections();
-        for(EncircledArea area : calculatedRoorAreas) {
-            notOwnedArea.removeAll(area.getFullBorder());
-            notOwnedArea.removeAll(area.getFullContent());
-        }
+        notOwnedArea.removeAll(pointCalculatorVisitor.getIntersectionsTraitees());
         return notOwnedArea;
     }
 

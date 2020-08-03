@@ -270,6 +270,27 @@ class PointCalculatorFromEncircledAreasTest {
         assertEquals(56, whitePoints, "Problème de décompte de points avec Blanc");
     }
 
+    @Test
+    void calculateNaive_CasBasique12() {
+        String representation =
+            "+-+-+-+-+-+-+-+-+\n" +
+            "+-+-+-+-+-+-+-+-+\n" +
+            "+-+-○-○-+-○-+-+-+\n" +
+            "+-○-+-+-○-+-○-+-+\n" +
+            "+-○-+-+-+-○-+-○-+\n" +
+            "+-○-+-+-+-+-+-○-+\n" +
+            "+-+-○-○-○-○-○-+-+\n" +
+            "+-+-+-+-+-+-+-+-+\n" +
+            "+-+-+-+-+-+-+-+-+\n";
+        Board b = BoardBuilderForTests.buildBoard(representation, 9);
+        PointCalculatorFromEncircledAreas pointCalculatorFromEncircledAreas = generatePointCalculatorFromBoard(b);
+        PlayersScoreStats playersScore = pointCalculatorFromEncircledAreas.calculatePlayersScore();
+        int whitePoints = playersScore.getWhitePoints();
+        int blackPoints = playersScore.getBlackPoints();
+        assertEquals(28, blackPoints, "Problème de décompte de points de noir");
+        assertEquals(0, whitePoints, "Problème de décompte de points avec Blanc");
+    }
+
 
 
 

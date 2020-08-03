@@ -17,6 +17,9 @@ public class PointCalculatorVisitor implements EncircledAreaVisitor {
     private EncircledAreaValidator takableChildValidator;
     private PlayersScoreStats playersScoreStats;
 
+    public List<Intersection> getIntersectionsTraitees() {
+        return intersectionsTraitees;
+    }
 
     public PointCalculatorVisitor(EncircledAreaValidator takableChildValidator, PlayersScoreStats playersScoreStats) {
         this.takableChildValidator = takableChildValidator;
