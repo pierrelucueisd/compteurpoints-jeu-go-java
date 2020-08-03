@@ -95,6 +95,19 @@ public class Board implements IBoard {
         }
     }
 
+    public String toStringWithoutAxis() {
+        StringBuilder board = new StringBuilder();
+        for(int y = size - 1; y >= 0; y--) {
+            for (int x = 0; x < size; x++) {
+                Optional<Color> occupation = getIntersection(x, y).getOccupation();
+                String symbol = occupation.isPresent() ? occupation.get().getSymbol() : "+";
+                board.append(symbol);
+                board.append((x == size - 1) ? "\n" : "-");
+            }
+        }
+        return board.toString();
+    }
+
     @Override
     public String toString() {
         StringBuilder board = new StringBuilder();
