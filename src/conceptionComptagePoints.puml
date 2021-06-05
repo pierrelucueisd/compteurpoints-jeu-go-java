@@ -1,79 +1,166 @@
 @startuml
 
+Board .. EncirleAreaComparator
 
-class PlayerPointsCalculator {
-    +PlayerPointsCalculator(\n\t int maxTeritorySize, \n\t EncircledAreaInterface encircledRoot \n)
-    +CalculatePlayerPoint(Player p) : int
-}
-PlayerPointsCalculator .. CalculatePlayerPointsVisitorInterface
-PlayerPointsCalculator .. EncircledAreaInterface
-
-interface CalculatePlayerPointsVisitorInterface {
-    +getReachedIntersections(): List<Intersections>
-    +getPoints(): int
-}
-CalculatePlayerPointsVisitorInterface <|-- CalculatePlayerPointVisitor
-
-interface Visitor {
-    +visit(EncircledAreaInterface)
-}
-Visitor <|- CalculatePlayerPointsVisitorInterface
-EncircledAreaInterface . Visitor
-
-
-Interface EncircledAreaInterface {
-    +accept(Visitor v)
-    +getColor(): Optional<color>
-    +getBorderConnectedStones() : Optional<List<Intersections>>
-    +getDirectContent() : List<intersections>
-    +getContentAndSubContent() : List<intersections>
-    +getSubEncircledArea() : List<EncircledAreaInterface>=
-    + static getDifference (\n\t List<Intersection> fullContent, \n\t EncircledAreaInterface subArea\n): List<Intersectionnteresection>
-    + addChildrenEncircledArea(EncircledAreaInterface)
-}
-class EncircledArea{
-  -List<Intersection> borderConnectedStones
-  -List<Intersection> directContent
-  -List<EncircledAreaInterface> subAreas
+class EncirleAreaComparator {
+    + boolean isAreaAisInAreaB(EncircledArea areaA, EncircledArea AreaB, Board b)
+    + boolean isCloudIntersectionAisInCloudIntersectionB
+    + boolean isCommonContentIsNoMansLand(EncircledArea areaA, EncircledArea areaB)
+    + boolean isMinleftOfAreaAisafterBMinLeft(EncircledArea areaA, EncircledArea areaB)
+    + Integer getMinX(List<Intersection> intersections, Board b)
+    + Integer getMaxX(List<Intersection> intersections, Board b)
+    + Integer getMinY(List<Intersection> intersections, Board b)
+    + Integer getMaxY(List<Intersection> intersections, Board b)
 }
 
-EncircledAreaInterface <-- EncircledArea
-EncircledAreaInterface --o EncircledArea
-
-
-class EncircledAreaFetcher{
-    +EncircledAreaFetcher(\n\t List<intersections> liste, \n)
-    +fetch(): List<EncircledAreaInterface>
-    -fetchFromIntersection(\n\t Color color, \n\t Intersection, \n\t List<Intersection> contexte \n): EncircledAreaInterface
-    -getParentAreaWithStickingBorder(\n): Optional<EncircledAreaInterface>
-    -getSurroundedByColorStoperAdjacency(\n\t Color c, \n\t Intersection i \n) : List<Intersection>
-    -getExternalBorder(List<Intersection> contenu) : List<Intersection>
-    -extendsBorder(\n\t List<Intersection> toutLeContenu, \n\t List<Intersection> bordure\n) : List<Intersection>
-}
-EncircledAreaFetcher . EncircledAreaInterface
-
-class EncircleAreaStructurator {
-    EncircleAreaStructurator(\n\t List<EncircledAreaInterface> \n)
-    -isEncircledAreaIsIn(EncircledAreaInterface)
-    -minLeftBorderDistanceBetween(EncircledAreaInterface, EncircledAreaInterface)
-    -findDirectParent(EncircledAreaInterface, List<EncircledAreaInterface>): Optional<EncircledAreaInterface>
-    +structurate(): EncircledAreaInterface
-}
-EncircledAreaFetcher .. ExternalBorderFetcher
-class ExternalBorderFetcher {
-    +ExternalBorderFetcher(List<Intersection> contenu)
-    +fetch(): List<Intersection>
-    -getMinHorizontalPosition() : int
-    -getMaxPorizontalPosition(): int
-    -getMinHeightPosition(): int
-    -getMaxHeightPosition(): int
-    -getBorderLeftPosAtPos(int): int
-    -getBorderRightPosAtPos(int): int
-    -getBorderBottomPosAtPos(int): int
-    -getBorderTopPosAtPos(int): int
+interface EncircledAreaFetcher {
++Optional<EncircledArea> fetchAreaFromIntersection(Intersection i)
 }
 
-EncircleAreaStructurator .. EncircledAreaFetcher
-EncircleAreaStructurator .. EncircledAreaInterface
+EncircledAreaFetcher <-- EncircledAreaFetcherImplem
+
+class EncircledAreaFetcherImplem {
+ + EncircledAreaFetcherImplem(Board b)
+ + Optional<EncircledArea> fetchAreaFromIntersection(Intersection i)
+}
+
+interface StructuredEncircledAreaFetcher {
+ + List<EncircledArea> fetch()
+}
+
+
+Board .. StructuredEncircledAreaFetcherImplem
+
+StructuredEncircledAreaFetcher <-- StructuredEncircledAreaFetcherImplem
+
+EncircledAreaFetcher . StructuredEncircledAreaFetcherImplem
+EncirleAreaComparator .. StructuredEncircledAreaFetcherImplem
+
+class StructuredEncircledAreaFetcherImplem {
+ + StructuredEncircledAreaFetcherImplem(Board b, EncircledAreaValidator rootValidator)
+ + List<EncircledArea> fetch()
+}
+
+interface Predicate
+
+Predicate <-- EncircledAreaValidator
+
+abstract class EncircledAreaValidator {
+    +Predicate<EncircledArea> and(Predicate<? super EncircledArea> other)
+    +Predicate<EncircledArea> negate()
+    +Predicate<EncircledArea> or()
+}
+
+EncircledAreaValidator <-- RootValidator
+
+class RootValidator {
+ + boolean test(EncircledArea area)
+ + boolean isToBigAndContentTouchingBoardBorder(EncircledArea area)
+ + boolean isAdjacentOfAllBoardSides(EncircledArea area)
+}
+
+EncircledAreaValidator <-- TakableValidatorNaive
+
+class TakableValidatorNaive {
+ +test(EncircledArea encircledArea)
+}
+
+StructuredEncircledAreaFetcherImplem . EncircledAreaValidator
+
+BoardPointCalculator .. BoardPointCalculatorImpl
+BoardPointCalculatorImpl . PointCalculatorFromEncircledArea
+
+class PointCalculatorFromEncircledArea {
+    +PointCalculatorFromEncircledArea(\n\t Board b, \n\t List<EncircledArea> rootsAreas, \n\t EncircledAreaValidator takableRootValidator, \n\t EncircledAreaValidator takableChildValidator \n)
+    +calculatePlayersScore() : PlayersScoreStats
+    }
+
+class BoardPointCalculatorImpl {
+    +BoardPointCalculatorImpl(\n\t Board b, \n\t EncircledAreaValidator rootValidator, \n\t EncircledAreaValidator takableRootValidator, \n\t EncircledAreaValidator takableChildValidator)
+    +calculate(): PlayersScoreStats
+}
+
+Interface BoardPointCalculator {
+    +calculate() : PlayersScoreStats
+}
+
+
+
+
+
+
+
+
+
+
+
+class PlayersScoreStats {
+    +getBlackPlayerPoints() : int
+    +getWhitePlayerPoints() : int
+    +addPlayerPoints(\n\t Color c, \n\t int points\n) : void
+}
+
+
+class PointCalculatorFromEncircledArea {
+    +PointCalculatorFromEncircledArea(\n\t Board b, \n\t List<EncircledArea> rootsAreas, \n\t EncircledAreaValidator takableRootValidator, \n\t EncircledAreaValidator takableChildValidator \n)
+    +calculatePlayersScore() : PlayersScoreStats
+    }
+
+class BoardPointCalculatorImpl {
+    +BoardPointCalculatorImpl(\n\t Board b, \n\t EncircledAreaValidator rootValidator, \n\t EncircledAreaValidator takableRootValidator, \n\t EncircledAreaValidator takableChildValidator)
+    +calculate(): PlayersScoreStats
+}
+
+Interface BoardPointCalculator {
+    +calculate() : PlayersScoreStats
+}
+Interface VisitableEncircledArea {
+    +VisitableEncircledArea
+    +accept(\n\t EncircledAreaValidator visitator): void
+}
+
+EncircledAreaFetcher .. EncircledArea
+
+class PointCalculatorVisitor{
+  +getIntersectionsTraitees() : List<Intersection>
+  +PointCalculatorVisitor(\n\t EncircledAreaValidator takableChildValidator, \n\t PlayersScoreStats playersScoreStats \n)
+  +getBlackPlayerPoints() : int
+  +getWhitePlayerPoints() : int
+  +visit(EncircledArea area) : void
+}
+
+Interface EncircledAreaVisitor{
+    +visit(EncircledArea area) : void
+    +getIntersectionsTraitees() : List<Intersection>
+    +getBlackPlayerPoints() : int
+    +getWhitePlayerPoints() : int
+}
+
+EncircledAreaVisitor <-- PointCalculatorVisitor
+
+EncircledAreaVisitor . VisitableEncircledArea
+
+
+EncircledArea .. EncircledAreaImplem
+EncircledArea . VisitableEncircledArea
+
+EncircledAreaImplem -- EncircledArea
+
+interface EncircledArea {
+ + List<EncircledArea> getChildrens()
+ + addChildren(EncircledArea child)
+ + List<Intersection> getMinimalBorder()
+ + List<Intersection> getFullBorder()
+ + List<Intersection> getRingContent()
+ + List<Intersection> getFullContent()
+ + Color getBorderColor()
+ + accept(EncircledAreaVisitor visitor)
+}
+
+class EncircledAreaImplem{
+}
+
+
+
 
 @enduml
